@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAB II – Ruang Lingkup dan Tujuan Pengelolaan Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Nunito:wght@300;400;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   ROOT & RESET
+══════════════════════════════════════ */
+:root{
+  --bg:#f0f4f8;
+  --bg2:#e2e8f0;
+  --surface:#ffffff;
+  --ink:#1a202c;
+  --ink2:#4a5568;
+  --ink3:#718096;
+  --navy:#1a365d;
+  --navy2:#2a4a7f;
+  --navy-p:#ebf0fa;
+  --teal:#1d6b6b;
+  --teal2:#2d9d9d;
+  --teal-p:#e0f5f5;
+  --amber:#b7791f;
+  --amber-p:#fef3c7;
+  --rose:#9b2c2c;
+  --rose-p:#fff5f5;
+  --green:#276749;
+  --green-p:#f0fff4;
+  --purple:#553c9a;
+  --purple-p:#faf5ff;
+  --border:#cbd5e0;
+  --shadow:rgba(26,32,44,.10);
+  --shadow2:rgba(26,32,44,.18);
+  --r:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:'Nunito',sans-serif;line-height:1.75;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--navy2);border-radius:3px}
+
+/* ══════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════ */
+.sidebar{
+  width:268px;position:fixed;top:0;left:0;bottom:0;
+  background:var(--navy);color:#ccd6f6;
+  display:flex;flex-direction:column;
+  overflow-y:auto;z-index:200;
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.sb-brand{padding:26px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-eyebrow{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:var(--teal2);text-transform:uppercase;margin-bottom:6px}
+.sb-name{font-size:11px;color:#718096;margin-bottom:8px;line-height:1.5}
+.sb-bab{font-family:'Playfair Display',serif;font-size:13px;color:#e2e8f0;line-height:1.4}
+.sb-nav{flex:1;padding:12px 0}
+.sb-sec{margin-bottom:4px}
+.sb-sec-lbl{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:3px;color:var(--teal2);text-transform:uppercase;padding:10px 20px 4px;display:block}
+.sb-a{
+  display:flex;align-items:flex-start;gap:9px;
+  padding:8px 20px 8px 26px;
+  font-size:12px;color:#7a8fa8;
+  border-left:3px solid transparent;
+  cursor:pointer;transition:all .2s;line-height:1.4;
+  text-decoration:none;
+}
+.sb-a .si{font-size:13px;flex-shrink:0;width:16px;text-align:center;margin-top:1px}
+.sb-a:hover{color:#e2e8f0;background:rgba(255,255,255,.05);border-left-color:rgba(45,157,157,.4)}
+.sb-a.on{color:#e2e8f0;background:rgba(45,157,157,.13);border-left-color:var(--teal2)}
+.sb-foot{padding:14px 20px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;color:#4a5568;line-height:1.6}
+.sb-foot strong{color:#8a9ab8}
+
+.main{margin-left:268px}
+.hbg{display:none;position:fixed;top:13px;left:13px;z-index:400;background:var(--navy2);color:#fff;border:none;border-radius:7px;width:40px;height:40px;font-size:18px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(42,74,127,.4)}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero{
+  background:linear-gradient(145deg,#0d1b2a 0%,#1a365d 50%,#1d4e7a 100%);
+  padding:64px 60px 54px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 70% at 75% 55%,rgba(45,157,157,.2) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 50% at 15% 80%,rgba(183,121,31,.12) 0%,transparent 55%);
+}
+.hero::after{
+  content:'';position:absolute;
+  bottom:-80px;right:-80px;width:300px;height:300px;
+  border:1px solid rgba(45,157,157,.12);border-radius:50%;
+}
+.hero-in{position:relative;z-index:1}
+.h-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(45,157,157,.18);border:1px solid rgba(45,157,157,.35);
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;
+  color:var(--teal2);text-transform:uppercase;
+  padding:6px 16px;border-radius:3px;margin-bottom:20px;
+}
+.hero h1{font-family:'Playfair Display',serif;font-weight:900;font-size:38px;color:#e8f0fc;line-height:1.2;margin-bottom:8px}
+.hero h1 em{display:block;color:var(--teal2);font-size:27px;font-weight:400;font-style:italic;margin-top:4px}
+.hero-sub{font-size:15px;color:#6a8ba8;max-width:520px;line-height:1.7;margin-top:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:26px}
+.hm{display:flex;align-items:center;gap:8px;font-size:12px;color:#5a788a}
+.hm strong{color:#9ab8cc}
+.hm .dot{width:5px;height:5px;border-radius:50%;background:var(--teal2);flex-shrink:0}
+.prog-wrap{margin-top:28px}
+.prog-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal2),#5ed4d4);border-radius:2px;transition:width .4s}
+.prog-meta{display:flex;justify-content:space-between;font-size:11px;color:#3a5a6e;margin-top:5px}
+
+/* ══════════════════════════════════════
+   CONTENT
+══════════════════════════════════════ */
+.content{padding:0 60px 100px}
+
+/* capaian */
+.capaian{
+  margin:44px 0 0;
+  background:linear-gradient(135deg,var(--navy-p),var(--bg2));
+  border:1px solid rgba(26,54,93,.18);
+  border-left:4px solid var(--navy2);
+  border-radius:var(--r);padding:24px 28px;
+}
+.cap-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cap-hd .ico{font-size:22px}
+.cap-hd span{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.5px;color:var(--navy2);text-transform:uppercase}
+.capaian ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.capaian li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink2);line-height:1.65}
+.capaian li::before{content:'✓';color:var(--navy2);font-weight:700;font-size:13px;flex-shrink:0;margin-top:2px}
+
+/* ── SECTION ── */
+.section{
+  padding:52px 0 22px;border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(26px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.section.vis{opacity:1;transform:translateY(0)}
+.section:last-child{border-bottom:none}
+.s-eye{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3.5px;color:var(--teal2);text-transform:uppercase;margin-bottom:10px}
+.section h2{
+  font-family:'Playfair Display',serif;font-size:26px;font-weight:700;
+  color:var(--ink);line-height:1.3;margin-bottom:22px;
+  padding-bottom:14px;border-bottom:2px solid var(--navy-p);position:relative;
+}
+.section h2::after{content:'';position:absolute;bottom:-2px;left:0;width:50px;height:2px;background:var(--navy2)}
+.section h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy2);margin:26px 0 10px}
+.section p{font-size:15px;color:var(--ink2);margin-bottom:14px;line-height:1.8}
+
+/* ── DEF BOX ── */
+.def{border-left:4px solid var(--navy2);background:var(--surface);box-shadow:0 2px 12px var(--shadow);border-radius:0 var(--r) var(--r) 0;padding:18px 22px;margin:20px 0}
+.def-term{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--navy2);margin-bottom:6px}
+.def-text{font-size:14px;color:var(--ink2);line-height:1.75}
+.def-src{font-size:11.5px;color:var(--ink3);margin-top:8px;font-style:italic}
+
+/* ── QUOTE ── */
+.bq{border-left:4px solid var(--amber);background:var(--amber-p);border-radius:0 var(--r) var(--r) 0;padding:16px 22px;margin:20px 0;font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:var(--ink2);line-height:1.7}
+.bq cite{display:block;margin-top:10px;font-style:normal;font-size:12px;color:var(--amber);font-family:'Nunito',sans-serif;font-weight:700}
+
+/* ── INFOBOX ── */
+.box{border-radius:var(--r);padding:18px 22px;margin:20px 0;display:flex;gap:14px;border:1px solid}
+.box .bi{font-size:22px;flex-shrink:0;padding-top:1px}
+.box-body{}
+.box-t{font-weight:700;font-size:14px;margin-bottom:5px}
+.box-x{font-size:14px;color:var(--ink2);line-height:1.7}
+.box.info{background:var(--navy-p);border-color:rgba(26,54,93,.2)} .box.info .box-t{color:var(--navy2)}
+.box.tip{background:var(--teal-p);border-color:rgba(29,107,107,.2)} .box.tip .box-t{color:var(--teal)}
+.box.warn{background:var(--amber-p);border-color:rgba(183,121,31,.2)} .box.warn .box-t{color:var(--amber)}
+.box.key{background:var(--rose-p);border-color:rgba(155,44,44,.2)} .box.key .box-t{color:var(--rose)}
+.box.good{background:var(--green-p);border-color:rgba(39,103,73,.2)} .box.good .box-t{color:var(--green)}
+
+/* ── CARDS ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:16px;margin:22px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;transition:transform .2s,box-shadow .2s;cursor:default}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 30px var(--shadow2)}
+.card-ico{font-size:30px;margin-bottom:12px}
+.card-t{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.4}
+.card-x{font-size:12.5px;color:var(--ink2);line-height:1.65}
+
+/* ── TABLE ── */
+.tw{overflow-x:auto;margin:20px 0;border-radius:var(--r);box-shadow:0 2px 12px var(--shadow)}
+table{width:100%;border-collapse:collapse;font-size:14px;background:var(--surface)}
+thead tr{background:var(--navy);color:#fff}
+th{padding:13px 16px;text-align:left;font-weight:700;font-size:13px;white-space:nowrap}
+td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--ink2);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--navy-p)}
+
+/* ── ACCORDION ── */
+.accordion{margin:22px 0;display:flex;flex-direction:column;gap:8px}
+.acc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.acc-h{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;cursor:pointer;font-size:14px;font-weight:700;color:var(--ink);user-select:none;transition:background .2s;gap:10px}
+.acc-h:hover{background:var(--navy-p)}
+.acc-h.on{background:var(--navy);color:#fff}
+.acc-arr{font-size:11px;transition:transform .28s;flex-shrink:0}
+.acc-h.on .acc-arr{transform:rotate(180deg)}
+.acc-b{max-height:0;overflow:hidden;transition:max-height .38s ease,padding .3s;font-size:14px;color:var(--ink2);line-height:1.75;padding:0 20px}
+.acc-b.on{max-height:800px;padding:16px 20px 20px}
+.acc-b ul{padding-left:18px;margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.acc-b li{line-height:1.65}
+
+/* ── TABS ── */
+.tabs{margin:22px 0}
+.tab-btns{display:flex;gap:3px;flex-wrap:wrap;border-bottom:2px solid var(--border)}
+.tab-btn{padding:10px 18px;font-size:13px;font-weight:700;color:var(--ink2);background:none;border:none;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:all .2s;font-family:'Nunito',sans-serif;border-radius:6px 6px 0 0}
+.tab-btn:hover{color:var(--navy2);background:var(--navy-p)}
+.tab-btn.on{color:var(--navy2);border-bottom-color:var(--navy2)}
+.tab-pane{display:none;padding:24px 0;animation:fUp .3s ease}
+.tab-pane.on{display:block}
+@keyframes fUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:14px;margin:18px 0}
+.step{display:flex;gap:16px;align-items:flex-start}
+.sn{width:32px;height:32px;border-radius:50%;background:var(--navy2);color:#fff;font-family:'Cinzel',serif;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.st{}
+.st-t{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:4px}
+.st-x{font-size:13.5px;color:var(--ink2);line-height:1.65}
+
+/* ── TIMELINE ── */
+.tl{position:relative;margin:24px 0;padding-left:28px}
+.tl::before{content:'';position:absolute;left:10px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--navy2),var(--teal2),transparent)}
+.tl-item{position:relative;margin-bottom:22px}
+.tl-item::before{content:'';position:absolute;left:-22px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--teal2);border:2px solid var(--surface);box-shadow:0 0 0 2px var(--teal2)}
+.tl-h{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--navy2);margin-bottom:5px}
+.tl-x{font-size:14px;color:var(--ink2);line-height:1.7}
+
+/* ── STAT GRID ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin:20px 0}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 16px;text-align:center;transition:transform .2s,box-shadow .2s}
+.stat:hover{transform:translateY(-3px);box-shadow:0 8px 24px var(--shadow2)}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--navy2);line-height:1}
+.stat-u{font-size:12px;color:var(--ink3);margin-top:4px}
+.stat-l{font-size:12.5px;color:var(--ink2);margin-top:8px;font-weight:600;line-height:1.4}
+
+/* ── COMPARE ── */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.cmp-c{border-radius:var(--r);padding:20px;border:1px solid}
+.cmp-c.g{background:var(--green-p);border-color:rgba(39,103,73,.2)}
+.cmp-c.r{background:var(--rose-p);border-color:rgba(155,44,44,.2)}
+.cmp-c h4{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;margin-bottom:10px}
+.cmp-c.g h4{color:var(--green)}
+.cmp-c.r h4{color:var(--rose)}
+.cmp-c ul{padding-left:18px;font-size:13.5px;color:var(--ink2);line-height:1.85}
+
+/* ── ICON SECTION HEADER ── */
+.sec-icon-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:0 2px 8px var(--shadow)}
+.sih-ico{font-size:36px;flex-shrink:0}
+.sih-body{}
+.sih-t{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy2);margin-bottom:3px}
+.sih-x{font-size:13px;color:var(--ink3)}
+
+/* ══════════════════════════════════════
+   PENUTUP
+══════════════════════════════════════ */
+.ptup-div{margin:58px 0 0;padding-top:26px;border-top:3px solid var(--navy2);display:flex;align-items:center;gap:16px}
+.ptup-div span{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--navy2);text-transform:uppercase;white-space:nowrap}
+.ptup-div::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--navy2),transparent)}
+
+/* rangkuman */
+.rangk{background:linear-gradient(140deg,#0d1b2a 0%,#1a365d 70%,#1d4e7a 100%);border-radius:var(--r);padding:32px 36px;margin:20px 0}
+.rangk h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--teal2);margin-bottom:18px}
+.rng-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.rng-list li{display:flex;align-items:flex-start;gap:12px;font-size:13.5px;color:#8a9ab8;line-height:1.7;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.rng-list li:last-child{border-bottom:none;padding-bottom:0}
+.rng-list li::before{content:'◆';color:var(--teal2);font-size:9px;flex-shrink:0;margin-top:5px}
+
+/* quiz */
+.quiz-wrap{margin:20px 0;display:flex;flex-direction:column;gap:16px}
+.qc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px 26px}
+.qn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--teal2);text-transform:uppercase;margin-bottom:10px}
+.qq{font-family:'Playfair Display',serif;font-size:15.5px;font-weight:700;color:var(--ink);margin-bottom:16px;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:flex-start;gap:11px;padding:11px 16px;border:1.5px solid var(--border);border-radius:6px;background:none;cursor:pointer;font-size:14px;color:var(--ink2);text-align:left;font-family:'Nunito',sans-serif;transition:all .2s;line-height:1.5;width:100%}
+.opt:hover{border-color:var(--navy2);background:var(--navy-p)}
+.opt.correct{border-color:var(--green);background:var(--green-p);color:var(--green)}
+.opt.wrong{border-color:var(--rose);background:var(--rose-p);color:var(--rose)}
+.opt.disabled{cursor:not-allowed;pointer-events:none}
+.olbl{font-family:'Cinzel',serif;font-size:10.5px;font-weight:600;color:var(--navy2);flex-shrink:0;padding-top:2px;min-width:16px}
+.opt.correct .olbl{color:var(--green)}
+.opt.wrong .olbl{color:var(--rose)}
+.qfb{margin-top:12px;padding:11px 16px;border-radius:6px;font-size:13.5px;line-height:1.6;display:none}
+.qfb.show{display:block}
+.qfb.c{background:var(--green-p);color:var(--green);border:1px solid rgba(39,103,73,.2)}
+.qfb.w{background:var(--rose-p);color:var(--rose);border:1px solid rgba(155,44,44,.2)}
+.q-act{display:flex;justify-content:center;margin-top:12px}
+.btn-p{background:var(--navy2);color:#fff;border:none;padding:13px 38px;border-radius:7px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;letter-spacing:.3px;transition:background .2s}
+.btn-p:hover{background:var(--navy)}
+.sbox{display:none;margin-top:20px;text-align:center;padding:32px;border-radius:var(--r);border:2px solid var(--navy2);background:var(--navy-p)}
+.sbox-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--navy2);text-transform:uppercase;margin-bottom:8px}
+.sbox-num{font-family:'Playfair Display',serif;font-size:60px;font-weight:900;color:var(--navy2);display:block;margin:4px 0;line-height:1}
+.sbox-msg{font-size:14px;color:var(--ink2);margin-top:10px;line-height:1.6}
+.sbox-retry{margin-top:16px;background:none;border:2px solid var(--navy2);color:var(--navy2);padding:9px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s}
+.sbox-retry:hover{background:var(--navy2);color:#fff}
+
+/* feedback */
+.fb-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:30px 34px;margin:20px 0}
+.fb-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.fb-row{margin-bottom:18px}
+.fb-lbl{display:block;font-size:11.5px;font-weight:700;color:var(--ink);margin-bottom:7px;font-family:'Cinzel',serif;letter-spacing:.8px;text-transform:uppercase}
+.fb-in,.fb-sel,.fb-ta{width:100%;padding:11px 15px;border:1.5px solid var(--border);border-radius:7px;font-size:14px;font-family:'Nunito',sans-serif;color:var(--ink);background:var(--bg);transition:border-color .2s,background .2s;outline:none}
+.fb-in:focus,.fb-sel:focus,.fb-ta:focus{border-color:var(--navy2);background:var(--surface)}
+.fb-ta{resize:vertical;min-height:96px}
+.stars{display:flex;gap:7px;margin-top:4px}
+.star{font-size:30px;cursor:pointer;color:var(--border);transition:color .15s,transform .15s}
+.star:hover,.star.on{color:#d97706;transform:scale(1.1)}
+.chkgroup{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.chk-lbl{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink2);cursor:pointer}
+.chk-lbl input{accent-color:var(--navy2);width:15px;height:15px}
+.fb-btn{background:var(--navy2);color:#fff;border:none;padding:13px 34px;border-radius:7px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s}
+.fb-btn:hover{background:var(--navy)}
+.fb-ok{display:none;text-align:center;padding:38px 20px}
+.fb-ok .oico{font-size:52px;margin-bottom:14px}
+.fb-ok h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy2);margin-bottom:8px}
+.fb-ok p{font-size:14px;color:var(--ink2)}
+
+/* tindak lanjut */
+.tl-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.tlc{border-radius:var(--r);padding:22px;border:1px solid}
+.tlc.r{background:var(--rose-p);border-color:rgba(155,44,44,.2)}
+.tlc.g{background:var(--green-p);border-color:rgba(39,103,73,.2)}
+.tlc h4{font-family:'Playfair Display',serif;font-size:15.5px;font-weight:700;margin-bottom:12px}
+.tlc.r h4{color:var(--rose)}
+.tlc.g h4{color:var(--green)}
+.tlc ul{padding-left:18px;font-size:13.5px;color:var(--ink2);line-height:1.85}
+.ref-list{list-style:none;margin:16px 0;display:flex;flex-direction:column;gap:10px}
+.ref-list li{display:flex;gap:12px;font-size:13.5px;color:var(--ink2);line-height:1.6;padding:10px 0;border-bottom:1px solid var(--border)}
+.ref-list li:last-child{border-bottom:none}
+.ref-list li::before{content:'📄';font-size:14px;flex-shrink:0;margin-top:2px}
+.sign-off{text-align:center;margin-top:40px;padding:36px;background:linear-gradient(135deg,var(--navy-p),var(--bg2));border-radius:var(--r);border:1px solid rgba(26,54,93,.18)}
+.sign-off .t{font-size:44px;margin-bottom:12px}
+.sign-off h3{font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;color:var(--navy2);margin-bottom:6px;text-transform:uppercase}
+.sign-off p{font-size:13px;color:var(--ink2)}
+
+/* back to top */
+.btt{position:fixed;bottom:28px;right:28px;background:var(--navy2);color:#fff;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:0;transform:translateY(12px);transition:all .3s;z-index:300;box-shadow:0 4px 18px rgba(42,74,127,.4)}
+.btt.show{opacity:1;transform:translateY(0)}
+.btt:hover{background:var(--navy)}
+
+/* ICT platform grid */
+.pf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin:18px 0}
+.pf-c{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;transition:transform .2s,box-shadow .2s}
+.pf-c:hover{transform:translateY(-3px);box-shadow:0 8px 22px var(--shadow2)}
+.pf-ico{font-size:26px;margin-bottom:8px}
+.pf-n{font-weight:700;font-size:13px;color:var(--ink);margin-bottom:4px}
+.pf-x{font-size:12px;color:var(--ink2);line-height:1.6}
+
+/* color accent bars */
+.s-bar{display:flex;gap:3px;margin-bottom:20px}
+.s-bar span{height:4px;border-radius:2px;flex:1}
+
+/* number badge in section */
+.nbadge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--navy2);color:#fff;
+  font-family:'Cinzel',serif;font-size:12px;
+  margin-right:8px;vertical-align:middle;flex-shrink:0;
+}
+
+/* responsive */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-268px)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .hbg{display:flex}
+  .hero{padding:68px 24px 44px}
+  .hero h1{font-size:26px}
+  .hero h1 em{font-size:20px}
+  .content{padding:0 24px 80px}
+  .fb-grid{grid-template-columns:1fr}
+  .tl-grid{grid-template-columns:1fr}
+  .cmp{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  .cards{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<button class="hbg" id="hbgBtn" onclick="togSb()">☰</button>
+
+<!-- ══════ SIDEBAR ══════ -->
+<nav class="sidebar" id="sb">
+  <div class="sb-brand">
+    <div class="sb-eyebrow">Pengelolaan Pendidikan</div>
+    <div class="sb-name">Mata Kuliah Wajib — Program Studi Pendidikan</div>
+    <div class="sb-bab">BAB II — Ruang Lingkup dan Tujuan Pengelolaan Pendidikan</div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-sec">
+      <span class="sb-sec-lbl">Pembuka</span>
+      <a class="sb-a on" href="#hero" onclick="closeSb()"><span class="si">🏠</span>Beranda Bab</a>
+      <a class="sb-a" href="#capaian" onclick="closeSb()"><span class="si">🎯</span>Capaian Pembelajaran</a>
+    </div>
+    <div class="sb-sec">
+      <span class="sb-sec-lbl">Penyajian</span>
+      <a class="sb-a" href="#s1" onclick="closeSb()"><span class="si">🗺️</span>1 · Ruang Lingkup</a>
+      <a class="sb-a" href="#s2" onclick="closeSb()"><span class="si">📖</span>2 · Pengelolaan Kurikulum</a>
+      <a class="sb-a" href="#s3" onclick="closeSb()"><span class="si">👨‍🎓</span>3 · Pengelolaan Peserta Didik</a>
+      <a class="sb-a" href="#s4" onclick="closeSb()"><span class="si">👩‍🏫</span>4 · Pendidik & Tenaga Kependidikan</a>
+      <a class="sb-a" href="#s5" onclick="closeSb()"><span class="si">🏫</span>5 · Sarana & Prasarana</a>
+      <a class="sb-a" href="#s6" onclick="closeSb()"><span class="si">💰</span>6 · Keuangan Pendidikan</a>
+      <a class="sb-a" href="#s7" onclick="closeSb()"><span class="si">🎯</span>7 · Tujuan Pengelolaan</a>
+      <a class="sb-a" href="#s8" onclick="closeSb()"><span class="si">🏗️</span>8 · Implementasi di Lapangan</a>
+      <a class="sb-a" href="#s9" onclick="closeSb()"><span class="si">💻</span>9 · Pemanfaatan ICT</a>
+    </div>
+    <div class="sb-sec">
+      <span class="sb-sec-lbl">Penutup</span>
+      <a class="sb-a" href="#rangkuman" onclick="closeSb()"><span class="si">📋</span>Rangkuman</a>
+      <a class="sb-a" href="#tes" onclick="closeSb()"><span class="si">✏️</span>Tes Formatif</a>
+      <a class="sb-a" href="#umpan" onclick="closeSb()"><span class="si">💬</span>Umpan Balik</a>
+      <a class="sb-a" href="#tindak" onclick="closeSb()"><span class="si">🚀</span>Tindak Lanjut</a>
+    </div>
+  </div>
+  <div class="sb-foot">Disusun oleh<br><strong>Martin Bernard, M.Pd</strong></div>
+</nav>
+
+<!-- ══════ MAIN ══════ -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="hero">
+    <div class="hero-in">
+      <div class="h-badge">📚 Bagian Penyajian</div>
+      <h1>BAB II<em>Ruang Lingkup dan Tujuan Pengelolaan Pendidikan</em></h1>
+      <p class="hero-sub">Mengkaji secara mendalam dimensi ruang lingkup, komponen-komponen utama, serta tujuan strategis pengelolaan pendidikan sebagai sistem yang utuh dan terintegrasi.</p>
+      <div class="hero-meta">
+        <div class="hm"><span class="dot"></span><span>Mata Kuliah: <strong>Pengelolaan Pendidikan</strong></span></div>
+        <div class="hm"><span class="dot"></span><span>Penyusun: <strong>Martin Bernard, M.Pd</strong></span></div>
+        <div class="hm"><span class="dot"></span><span>Waktu Baca: <strong>±55 menit</strong></span></div>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-track"><div class="prog-fill" id="pf"></div></div>
+        <div class="prog-meta"><span>Progress Membaca</span><span id="pp">0%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CAPAIAN -->
+    <div class="capaian section vis" id="capaian">
+      <div class="cap-hd"><span class="ico">🎯</span><span>Capaian Pembelajaran BAB II</span></div>
+      <ul>
+        <li>Mahasiswa mampu mendeskripsikan ruang lingkup pengelolaan pendidikan secara komprehensif</li>
+        <li>Mahasiswa mampu menjelaskan pengelolaan kurikulum, peserta didik, pendidik, sarana-prasarana, dan keuangan</li>
+        <li>Mahasiswa mampu menguraikan tujuan pengelolaan pendidikan pada berbagai level</li>
+        <li>Mahasiswa mampu menganalisis implementasi ruang lingkup pengelolaan di satuan pendidikan</li>
+        <li>Mahasiswa mampu mengevaluasi pemanfaatan ICT dalam mendukung setiap ruang lingkup pengelolaan</li>
+      </ul>
+    </div>
+
+    <!-- ═══ S1: RUANG LINGKUP ═══ -->
+    <div class="section" id="s1">
+      <div class="s-eye">Penyajian · 1</div>
+      <h2>Ruang Lingkup Pengelolaan Pendidikan</h2>
+
+      <p>Ruang lingkup pengelolaan pendidikan merupakan cakupan bidang-bidang yang menjadi objek pengelolaan dalam sistem pendidikan. Pemahaman tentang ruang lingkup ini sangat penting agar pengelola pendidikan dapat memiliki gambaran utuh tentang apa saja yang perlu dikelola secara sistematis dan terencana.</p>
+
+      <div class="def">
+        <div class="def-term">Ruang Lingkup Pengelolaan Pendidikan</div>
+        <div class="def-text">Keseluruhan bidang garapan yang menjadi tanggung jawab pengelola pendidikan, mencakup pengelolaan kurikulum, peserta didik, pendidik dan tenaga kependidikan, sarana dan prasarana, keuangan, serta hubungan sekolah dengan masyarakat, yang saling berkaitan dan terintegrasi satu sama lain.</div>
+        <div class="def-src">— Diadaptasi dari Mulyasa (2011) dan Kompri (2015)</div>
+      </div>
+
+      <h3>Komponen-Komponen Ruang Lingkup</h3>
+      <div class="cards">
+        <div class="card"><div class="card-ico">📖</div><div class="card-t">Kurikulum</div><div class="card-x">Perencanaan, pelaksanaan, dan evaluasi kurikulum serta program pembelajaran.</div></div>
+        <div class="card"><div class="card-ico">👨‍🎓</div><div class="card-t">Peserta Didik</div><div class="card-x">Manajemen penerimaan, pembinaan, dan pengembangan potensi peserta didik.</div></div>
+        <div class="card"><div class="card-ico">👩‍🏫</div><div class="card-t">Pendidik & Tenaga</div><div class="card-x">Rekrutmen, pengembangan, penilaian kinerja, dan kesejahteraan SDM pendidikan.</div></div>
+        <div class="card"><div class="card-ico">🏫</div><div class="card-t">Sarana & Prasarana</div><div class="card-x">Pengadaan, pemeliharaan, dan inventarisasi fasilitas pendukung pendidikan.</div></div>
+        <div class="card"><div class="card-ico">💰</div><div class="card-t">Keuangan</div><div class="card-x">Perencanaan anggaran, pengelolaan, dan pertanggungjawaban dana pendidikan.</div></div>
+        <div class="card"><div class="card-ico">🤝</div><div class="card-t">Humas</div><div class="card-x">Kemitraan antara sekolah dengan orang tua, komunitas, dan pemangku kepentingan.</div></div>
+      </div>
+
+      <h3>Landasan Regulasi</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Regulasi</th><th>Aspek yang Diatur</th><th>Relevansi</th></tr></thead>
+          <tbody>
+            <tr><td>UU No. 20/2003 (Sisdiknas)</td><td>Sistem pendidikan nasional secara menyeluruh</td><td>Fondasi hukum pengelolaan pendidikan</td></tr>
+            <tr><td>PP No. 17/2010</td><td>Pengelolaan dan penyelenggaraan pendidikan</td><td>Pedoman teknis pengelolaan satuan pendidikan</td></tr>
+            <tr><td>Permendikbud No. 6/2019</td><td>Pedoman organisasi sekolah dasar dan menengah</td><td>Struktur organisasi dan tata kelola sekolah</td></tr>
+            <tr><td>PP No. 19/2005 (SNP)</td><td>Standar Nasional Pendidikan (8 standar)</td><td>Acuan mutu setiap komponen pengelolaan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box info">
+        <span class="bi">ℹ️</span>
+        <div class="box-body">
+          <div class="box-t">Delapan Standar Nasional Pendidikan</div>
+          <div class="box-x">Standar Isi, Proses, Kompetensi Lulusan, Pendidik & Tenaga Kependidikan, Sarana-Prasarana, Pengelolaan, Pembiayaan, dan Penilaian Pendidikan — kesemuanya menjadi acuan ruang lingkup pengelolaan di setiap satuan pendidikan.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S2: KURIKULUM ═══ -->
+    <div class="section" id="s2">
+      <div class="s-eye">Penyajian · 2</div>
+      <div class="sec-icon-head"><span class="sih-ico">📖</span><div class="sih-body"><div class="sih-t">Pengelolaan Kurikulum</div><div class="sih-x">Perencanaan, pelaksanaan, evaluasi, dan pengembangan kurikulum di satuan pendidikan</div></div></div>
+
+      <p>Pengelolaan kurikulum adalah serangkaian kegiatan yang berkaitan dengan upaya perencanaan, pelaksanaan, dan penilaian kurikulum yang pada akhirnya mengarah pada suatu pencapaian kompetensi lulusan yang telah ditetapkan. Kurikulum merupakan jantung dari proses pendidikan yang menentukan arah dan kualitas pembelajaran.</p>
+
+      <div class="def">
+        <div class="def-term">Pengelolaan Kurikulum</div>
+        <div class="def-text">Suatu sistem pengelolaan kurikulum yang kooperatif, komprehensif, sistemik, dan sistematik dalam rangka mewujudkan ketercapaian tujuan kurikulum (Rusman, 2012).</div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab-btns">
+          <button class="tab-btn on" onclick="togTab(this,'k1')">📝 Perencanaan</button>
+          <button class="tab-btn" onclick="togTab(this,'k2')">🏃 Pelaksanaan</button>
+          <button class="tab-btn" onclick="togTab(this,'k3')">📊 Evaluasi</button>
+          <button class="tab-btn" onclick="togTab(this,'k4')">🔄 Pengembangan</button>
+        </div>
+        <div class="tab-pane on" id="k1">
+          <h3>Perencanaan Kurikulum</h3>
+          <p>Perencanaan kurikulum mencakup penetapan tujuan pembelajaran, pemilihan dan pengorganisasian konten, serta penentuan strategi dan metode penilaian yang akan digunakan.</p>
+          <div class="steps">
+            <div class="step"><div class="sn">1</div><div class="st"><div class="st-t">Analisis Kebutuhan</div><div class="st-x">Kajian konteks, karakteristik peserta didik, kebutuhan masyarakat, dan tuntutan perkembangan zaman (VUCA era).</div></div></div>
+            <div class="step"><div class="sn">2</div><div class="st"><div class="st-t">Perumusan Tujuan & Kompetensi</div><div class="st-x">Penetapan Capaian Pembelajaran (CP), Tujuan Pembelajaran (TP), dan Alur Tujuan Pembelajaran (ATP) sesuai Kurikulum Merdeka.</div></div></div>
+            <div class="step"><div class="sn">3</div><div class="st"><div class="st-t">Pengembangan Konten & Silabus</div><div class="st-x">Pemilihan dan pengorganisasian materi yang relevan, bermakna, dan kontekstual sesuai karakteristik satuan pendidikan.</div></div></div>
+            <div class="step"><div class="sn">4</div><div class="st"><div class="st-t">Penyusunan Modul Ajar / RPP</div><div class="st-x">Penyusunan rencana pembelajaran yang detail mencakup aktivitas, media, dan penilaian berbasis proyek maupun formatif.</div></div></div>
+          </div>
+        </div>
+        <div class="tab-pane" id="k2">
+          <h3>Pelaksanaan Kurikulum</h3>
+          <p>Pelaksanaan kurikulum adalah implementasi rencana pembelajaran oleh guru di kelas. Keberhasilannya sangat dipengaruhi oleh kompetensi guru, ketersediaan sumber belajar, dan kondisi lingkungan belajar.</p>
+          <div class="cards">
+            <div class="card"><div class="card-ico">👩‍🏫</div><div class="card-t">Pembelajaran Berdiferensiasi</div><div class="card-x">Menyesuaikan konten, proses, dan produk pembelajaran dengan kebutuhan individual peserta didik.</div></div>
+            <div class="card"><div class="card-ico">🤝</div><div class="card-t">Pembelajaran Kolaboratif</div><div class="card-x">Mendorong kerja sama, diskusi, dan proyek bersama antar peserta didik lintas disiplin ilmu.</div></div>
+            <div class="card"><div class="card-ico">🔬</div><div class="card-t">Pembelajaran Berbasis Inkuiri</div><div class="card-x">Mengembangkan kemampuan bertanya, menyelidiki, dan menemukan sendiri konsep pengetahuan.</div></div>
+          </div>
+        </div>
+        <div class="tab-pane" id="k3">
+          <h3>Evaluasi Kurikulum</h3>
+          <p>Evaluasi kurikulum bertujuan menilai ketercapaian tujuan, relevansi konten, efektivitas metode, dan kualitas keseluruhan implementasi kurikulum. Hasil evaluasi menjadi dasar perbaikan berkelanjutan.</p>
+          <div class="tw"><table>
+            <thead><tr><th>Jenis</th><th>Fokus</th><th>Instrumen</th><th>Frekuensi</th></tr></thead>
+            <tbody>
+              <tr><td>Formatif</td><td>Proses pembelajaran</td><td>Observasi, kuis, refleksi</td><td>Berkelanjutan</td></tr>
+              <tr><td>Sumatif</td><td>Hasil belajar akhir</td><td>Asesmen akhir semester</td><td>Tiap semester</td></tr>
+              <tr><td>Program</td><td>Kualitas program kurikulum</td><td>Survey, FGD, analisis data</td><td>Tahunan</td></tr>
+              <tr><td>Dampak</td><td>Kompetensi lulusan</td><td>Tracer study, portofolio</td><td>Pasca lulus</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="tab-pane" id="k4">
+          <h3>Pengembangan Kurikulum</h3>
+          <p>Pengembangan kurikulum merupakan proses perencanaan, implementasi, dan evaluasi kurikulum secara berkelanjutan untuk memastikan relevansi dan kualitasnya sesuai perkembangan zaman.</p>
+          <div class="box tip">
+            <span class="bi">💡</span>
+            <div class="box-body">
+              <div class="box-t">Kurikulum Merdeka (2022–sekarang)</div>
+              <div class="box-x">Kurikulum Merdeka memberikan fleksibilitas kepada satuan pendidikan dalam mengembangkan kurikulum operasional (KOSP), dengan fokus pada pengembangan kompetensi, karakter Profil Pelajar Pancasila, dan pembelajaran berbasis projek (P5).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S3: PESERTA DIDIK ═══ -->
+    <div class="section" id="s3">
+      <div class="s-eye">Penyajian · 3</div>
+      <div class="sec-icon-head"><span class="sih-ico">👨‍🎓</span><div class="sih-body"><div class="sih-t">Pengelolaan Peserta Didik</div><div class="sih-x">Manajemen siklus hidup peserta didik dari penerimaan hingga kelulusan</div></div></div>
+
+      <p>Pengelolaan peserta didik merupakan suatu penataan atau pengaturan segala aktivitas yang berkaitan dengan peserta didik mulai dari masuknya peserta didik sampai dengan keluarnya peserta didik tersebut dari suatu sekolah (Imron, 2011).</p>
+
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-h">🎯 Penerimaan Peserta Didik Baru (PPDB)</div>
+          <div class="tl-x">Proses seleksi dan penerimaan peserta didik baru melalui sistem berbasis zonasi, prestasi, dan afirmasi sesuai Permendikbud. Mencakup promosi sekolah, pendaftaran, seleksi, dan orientasi peserta didik baru (MPLS).</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-h">📚 Pengelompokan & Pengaturan Beban Belajar</div>
+          <div class="tl-x">Pembagian kelas yang mempertimbangkan keseimbangan jumlah, kemampuan, dan karakteristik peserta didik. Pengaturan beban belajar sesuai jenjang pendidikan dan jenis program (reguler/akselerasi/inklusi).</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-h">🌱 Pembinaan & Pengembangan Peserta Didik</div>
+          <div class="tl-x">Kegiatan ekstrakurikuler, organisasi siswa (OSIS), bimbingan karir, dan program pengembangan bakat-minat. Pendampingan siswa berkebutuhan khusus (ABK) melalui program inklusi dan pembelajaran remedial/pengayaan.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-h">⚖️ Penegakan Tata Tertib & Disiplin</div>
+          <div class="tl-x">Penerapan peraturan sekolah yang adil dan konsisten untuk membentuk karakter positif peserta didik. Pendekatan restoratif lebih diutamakan daripada pendekatan hukuman yang bersifat punitif.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-h">🎓 Kelulusan & Penelusuran Lulusan</div>
+          <div class="tl-x">Proses kelulusan yang terstandarisasi, pemberian ijazah, dan program penelusuran alumni (tracer study) untuk mengevaluasi relevansi pendidikan yang telah diberikan.</div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-n">100%</div><div class="stat-u">Target</div><div class="stat-l">APK (Angka Partisipasi Kasar) Pendidikan Dasar</div></div>
+        <div class="stat"><div class="stat-n">15:1</div><div class="stat-u">Rasio Ideal</div><div class="stat-l">Rasio guru:siswa untuk sekolah dasar</div></div>
+        <div class="stat"><div class="stat-n">20</div><div class="stat-u">Maks/Kelas</div><div class="stat-l">Siswa per kelas untuk program inklusi</div></div>
+        <div class="stat"><div class="stat-n">8</div><div class="stat-u">Standar</div><div class="stat-l">SNP yang menjadi acuan pengelolaan</div></div>
+      </div>
+
+      <div class="box tip">
+        <span class="bi">💡</span>
+        <div class="box-body">
+          <div class="box-t">Pendekatan Whole-Child Development</div>
+          <div class="box-x">Pengelolaan peserta didik yang efektif tidak hanya berfokus pada aspek akademis semata, tetapi juga memperhatikan perkembangan sosial-emosional, kesehatan mental, dan kesejahteraan (well-being) secara holistik, sesuai dengan konsep pendidikan seutuhnya.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S4: PENDIDIK ═══ -->
+    <div class="section" id="s4">
+      <div class="s-eye">Penyajian · 4</div>
+      <div class="sec-icon-head"><span class="sih-ico">👩‍🏫</span><div class="sih-body"><div class="sih-t">Pengelolaan Pendidik dan Tenaga Kependidikan</div><div class="sih-x">Siklus manajemen SDM pendidikan dari rekrutmen hingga purna tugas</div></div></div>
+
+      <p>Pendidik adalah tenaga profesional yang bertugas merencanakan dan melaksanakan proses pembelajaran, menilai hasil pembelajaran, melakukan pembimbingan dan pelatihan. Tenaga kependidikan adalah anggota masyarakat yang mengabdikan diri dan diangkat untuk menunjang penyelenggaraan pendidikan (UU Sisdiknas, Pasal 39).</p>
+
+      <div class="accordion">
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>🔍 Rekrutmen dan Seleksi</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Proses pengadaan tenaga pendidik dan kependidikan yang kompeten melalui: analisis kebutuhan jabatan, penyusunan deskripsi pekerjaan, pengumuman lowongan, seleksi administrasi, ujian kompetensi (akademik dan pedagogik), wawancara, serta orientasi dan onboarding. Bagi ASN mengikuti seleksi CPNS/PPPK; bagi honorer sesuai kebijakan satuan pendidikan.</div>
+        </div>
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>📚 Pengembangan Profesional Berkelanjutan</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">
+            <ul>
+              <li><strong>Diklat & Workshop:</strong> Pelatihan reguler sesuai kebutuhan kompetensi (pedagogik, profesional, kepribadian, sosial)</li>
+              <li><strong>Program Guru Penggerak:</strong> Program kepemimpinan instruksional 6 bulan yang dikembangkan Kemdikbudristek</li>
+              <li><strong>Komunitas Belajar (Kombel):</strong> Wadah berbagi praktik baik antar guru dalam satu sekolah atau antar sekolah</li>
+              <li><strong>PMM (Platform Merdeka Mengajar):</strong> Platform digital pengembangan diri guru secara mandiri</li>
+              <li><strong>Studi Lanjut S2/S3:</strong> Beasiswa dan izin belajar untuk peningkatan kualifikasi akademik</li>
+            </ul>
+          </div>
+        </div>
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>⭐ Penilaian Kinerja Guru (PKG)</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">PKG dilakukan secara formatif (dalam proses) dan sumatif (akhir tahun) menggunakan instrumen yang terstandarisasi. Komponen penilaian mencakup kompetensi pedagogik, kepribadian, profesional, dan sosial. Hasil PKG menjadi dasar penentuan angka kredit, promosi jabatan, dan program pengembangan yang dibutuhkan.</div>
+        </div>
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>💼 Kesejahteraan dan Penghargaan</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Meliputi: gaji dan tunjangan profesi (sertifikasi), tunjangan fungsional dan daerah terpencil, jaminan sosial (BPJS Kesehatan dan Ketenagakerjaan), penghargaan inovasi dan dedikasi, serta keseimbangan kerja-kehidupan (work-life balance). Kesejahteraan yang terjamin berdampak langsung pada motivasi dan retensi guru berkualitas.</div>
+        </div>
+      </div>
+
+      <div class="tw">
+        <table>
+          <thead><tr><th>Kompetensi</th><th>Deskripsi</th><th>Indikator Kunci</th></tr></thead>
+          <tbody>
+            <tr><td>Pedagogik</td><td>Kemampuan mengelola pembelajaran</td><td>Perencanaan, pelaksanaan, dan evaluasi pembelajaran yang efektif</td></tr>
+            <tr><td>Kepribadian</td><td>Karakter dan integritas guru</td><td>Keteladanan, stabilitas emosi, etos kerja tinggi</td></tr>
+            <tr><td>Profesional</td><td>Penguasaan materi bidang studi</td><td>Wawasan luas, pemutakhiran pengetahuan, riset terapan</td></tr>
+            <tr><td>Sosial</td><td>Kemampuan berkomunikasi & berkolaborasi</td><td>Hubungan harmonis dengan siswa, orang tua, dan rekan sejawat</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ S5: SARPRAS ═══ -->
+    <div class="section" id="s5">
+      <div class="s-eye">Penyajian · 5</div>
+      <div class="sec-icon-head"><span class="sih-ico">🏫</span><div class="sih-body"><div class="sih-t">Pengelolaan Sarana dan Prasarana Pendidikan</div><div class="sih-x">Pengadaan, pemanfaatan, pemeliharaan, dan penghapusan aset pendidikan</div></div></div>
+
+      <p>Sarana pendidikan adalah segala sesuatu yang dipakai sebagai alat dalam mencapai maksud dan tujuan pendidikan (meja, kursi, media pembelajaran, komputer). Prasarana adalah segala sesuatu yang merupakan penunjang utama terselenggaranya proses pendidikan (gedung, halaman, laboratorium, perpustakaan).</p>
+
+      <div class="accordion">
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>📋 Perencanaan & Pengadaan</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Dimulai dari analisis kebutuhan berdasarkan kondisi eksisting vs standar SNP, dilanjutkan penyusunan rencana pengadaan dalam RKAS. Pengadaan dilakukan melalui mekanisme: pembelian langsung, e-purchasing (e-katalog LKPP), pengadaan lelang, hibah, atau pinjam pakai. Semua proses harus memenuhi prinsip transparansi, efisiensi, dan akuntabilitas.</div>
+        </div>
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>🗂️ Inventarisasi & Pencatatan</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Pencatatan sistematis seluruh aset pendidikan dalam Buku Induk Barang dan Kartu Barang. Setiap barang diberi kode/nomor inventaris yang unik. Data inventaris diinput dalam DAPODIK dan Simda BMD (Sistem Manajemen Data Barang Milik Daerah) bagi sekolah negeri. Dilakukan pengecekan fisik minimal setahun sekali (stock opname).</div>
+        </div>
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>🔧 Pemeliharaan & Perawatan</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Program pemeliharaan mencakup: pemeliharaan pencegahan (preventive maintenance) — inspeksi rutin dan perawatan berkala; pemeliharaan perbaikan (corrective maintenance) — penanganan kerusakan yang sudah terjadi; serta pemeliharaan prediktif — berbasis data kondisi aset untuk mencegah kerusakan sebelum terjadi.</div>
+        </div>
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>🗑️ Penghapusan Barang</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Penghapusan dilakukan terhadap barang yang sudah tidak dapat digunakan, nilai ekonomisnya nihil, atau biaya pemeliharaannya melebihi manfaat. Mekanisme: usulan ke dinas pendidikan, verifikasi tim teknis, penetapan keputusan penghapusan, dan proses lelang/pemusnahan sesuai regulasi yang berlaku.</div>
+        </div>
+      </div>
+
+      <div class="box warn">
+        <span class="bi">⚠️</span>
+        <div class="box-body">
+          <div class="box-t">Standar Minimum Sarana-Prasarana (Permendikbud No. 24/2007)</div>
+          <div class="box-x">Setiap sekolah wajib memiliki: ruang kelas, ruang perpustakaan, laboratorium IPA (SMP/SMA), ruang pimpinan, ruang guru, ruang UKS, toilet, gudang, dan ruang sirkulasi. Ketidaksesuaian standar berpengaruh pada nilai akreditasi dan kualitas proses pembelajaran.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S6: KEUANGAN ═══ -->
+    <div class="section" id="s6">
+      <div class="s-eye">Penyajian · 6</div>
+      <div class="sec-icon-head"><span class="sih-ico">💰</span><div class="sih-body"><div class="sih-t">Pengelolaan Keuangan Pendidikan</div><div class="sih-x">Perencanaan, pelaksanaan, pengawasan, dan pelaporan keuangan satuan pendidikan</div></div></div>
+
+      <p>Pengelolaan keuangan pendidikan adalah rangkaian kegiatan yang meliputi perencanaan program kerja sekolah, perkiraan biaya, penetapan anggaran biaya, pencarian dana, pendistribusian, dan pertanggungjawaban kepada pihak-pihak yang berkepentingan (Supriadi, 2010).</p>
+
+      <h3>Sumber Dana Pendidikan</h3>
+      <div class="cards">
+        <div class="card"><div class="card-ico">🏛️</div><div class="card-t">Dana Pemerintah Pusat</div><div class="card-x">BOS Reguler, BOS Kinerja, BOS Afirmasi, DAK Fisik pendidikan, Beasiswa KIP.</div></div>
+        <div class="card"><div class="card-ico">🗺️</div><div class="card-t">Dana Pemerintah Daerah</div><div class="card-x">BOP (Bantuan Operasional Pendidikan) daerah, APBD pendidikan, hibah daerah.</div></div>
+        <div class="card"><div class="card-ico">👨‍👩‍👧</div><div class="card-t">Dana Masyarakat</div><div class="card-x">Sumbangan orang tua (SPP/SOP), donasi alumni, CSR perusahaan, dan hibah lembaga.</div></div>
+        <div class="card"><div class="card-ico">🌐</div><div class="card-t">Dana Internasional</div><div class="card-x">Hibah lembaga internasional (UNESCO, ADB, World Bank), program beasiswa asing.</div></div>
+      </div>
+
+      <h3>Siklus Pengelolaan Keuangan Sekolah</h3>
+      <div class="steps">
+        <div class="step"><div class="sn">1</div><div class="st"><div class="st-t">Perencanaan — RKAS</div><div class="st-x">Rencana Kegiatan dan Anggaran Sekolah disusun berdasarkan RKS, melibatkan kepala sekolah, guru, dan komite. Ditetapkan di awal tahun pelajaran.</div></div></div>
+        <div class="step"><div class="sn">2</div><div class="st"><div class="st-t">Pelaksanaan — Pembukuan</div><div class="st-x">Pencatatan seluruh transaksi keuangan dalam Buku Kas Umum (BKU), Buku Pembantu, dan Buku Pajak secara tertib dan akurat sesuai standar akuntansi.</div></div></div>
+        <div class="step"><div class="sn">3</div><div class="st"><div class="st-t">Pengawasan Internal</div><div class="st-x">Pengawasan oleh kepala sekolah dan komite sekolah secara berkala untuk memastikan kesesuaian penggunaan dana dengan RKAS yang telah ditetapkan.</div></div></div>
+        <div class="step"><div class="sn">4</div><div class="st"><div class="st-t">Pelaporan & Pertanggungjawaban</div><div class="st-x">Laporan keuangan triwulanan dan tahunan disampaikan ke dinas pendidikan, BPK/Inspektorat, dan diumumkan kepada publik melalui papan pengumuman dan portal sekolah.</div></div></div>
+      </div>
+
+      <div class="tw">
+        <table>
+          <thead><tr><th>Prinsip</th><th>Makna</th><th>Implementasi</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Transparansi</strong></td><td>Keterbukaan informasi keuangan</td><td>Publikasi RKAS & laporan BOS di papan info dan website</td></tr>
+            <tr><td><strong>Akuntabilitas</strong></td><td>Pertanggungjawaban penggunaan dana</td><td>Laporan lengkap ke Dinas, BPK, dan masyarakat</td></tr>
+            <tr><td><strong>Efektivitas</strong></td><td>Dana mencapai tujuan pendidikan</td><td>Evaluasi output dan outcome setiap program</td></tr>
+            <tr><td><strong>Efisiensi</strong></td><td>Optimalisasi penggunaan dana</td><td>Analisis cost-benefit sebelum pengadaan</td></tr>
+            <tr><td><strong>Keadilan</strong></td><td>Distribusi merata dan berkeadilan</td><td>Afirmasi untuk siswa dari keluarga kurang mampu</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box key">
+        <span class="bi">🔑</span>
+        <div class="box-body">
+          <div class="box-t">Dana BOS — Tonggak Pemerataan Pendidikan</div>
+          <div class="box-x">Program BOS (Bantuan Operasional Sekolah) yang dimulai sejak 2005 telah menjadi instrumen kebijakan paling signifikan dalam pemerataan akses pendidikan dasar di Indonesia. Pengelolaannya kini dilakukan melalui sistem digital BOS Kita yang terintegrasi dengan DAPODIK untuk memastikan transparansi dan akuntabilitas.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S7: TUJUAN ═══ -->
+    <div class="section" id="s7">
+      <div class="s-eye">Penyajian · 7</div>
+      <h2>Tujuan Pengelolaan Pendidikan</h2>
+
+      <p>Tujuan pengelolaan pendidikan merupakan kondisi yang ingin diwujudkan melalui serangkaian kegiatan pengelolaan yang terencana dan sistematis. Tujuan ini berjenjang dari level individual peserta didik hingga sistem pendidikan nasional.</p>
+
+      <div class="bq">
+        "The purpose of educational management is to ensure that the educational objectives of the institution are met efficiently, effectively, and with equity — serving all learners and the broader community."
+        <cite>— Bush, T. (2011). Theories of Educational Leadership and Management.</cite>
+      </div>
+
+      <div class="tabs">
+        <div class="tab-btns">
+          <button class="tab-btn on" onclick="togTab(this,'tj1')">🎯 Tujuan Umum</button>
+          <button class="tab-btn" onclick="togTab(this,'tj2')">🔬 Tujuan Khusus</button>
+          <button class="tab-btn" onclick="togTab(this,'tj3')">📊 Level Tujuan</button>
+        </div>
+        <div class="tab-pane on" id="tj1">
+          <div class="cards">
+            <div class="card"><div class="card-ico">📈</div><div class="card-t">Meningkatkan Mutu Pendidikan</div><div class="card-x">Menjamin proses dan hasil pembelajaran memenuhi standar kualitas yang terukur dan berkelanjutan.</div></div>
+            <div class="card"><div class="card-ico">⚡</div><div class="card-t">Efisiensi Sumber Daya</div><div class="card-x">Mengoptimalkan penggunaan seluruh sumber daya yang tersedia untuk pencapaian tujuan pendidikan.</div></div>
+            <div class="card"><div class="card-ico">⚖️</div><div class="card-t">Pemerataan Akses</div><div class="card-x">Menjamin setiap warga negara memperoleh akses pendidikan yang berkeadilan tanpa diskriminasi.</div></div>
+            <div class="card"><div class="card-ico">🛡️</div><div class="card-t">Akuntabilitas Publik</div><div class="card-x">Mewujudkan tata kelola pendidikan yang transparan dan dapat dipertanggungjawabkan kepada publik.</div></div>
+            <div class="card"><div class="card-ico">🌱</div><div class="card-t">Relevansi Pendidikan</div><div class="card-x">Memastikan pendidikan relevan dengan kebutuhan masyarakat, industri, dan perkembangan global.</div></div>
+            <div class="card"><div class="card-ico">🔄</div><div class="card-t">Keberlanjutan (Sustainability)</div><div class="card-x">Menciptakan sistem pendidikan yang adaptif, inovatif, dan berkelanjutan dalam jangka panjang.</div></div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tj2">
+          <div class="accordion">
+            <div class="acc">
+              <div class="acc-h" onclick="togAcc(this)"><span>📖 Tujuan Pengelolaan Kurikulum</span><span class="acc-arr">▼</span></div>
+              <div class="acc-b">Memastikan kurikulum yang dikembangkan relevan dengan kebutuhan peserta didik dan masyarakat, diimplementasikan secara konsisten oleh guru, serta dievaluasi untuk perbaikan berkelanjutan guna meningkatkan kualitas pembelajaran.</div>
+            </div>
+            <div class="acc">
+              <div class="acc-h" onclick="togAcc(this)"><span>👨‍🎓 Tujuan Pengelolaan Peserta Didik</span><span class="acc-arr">▼</span></div>
+              <div class="acc-b">Mengembangkan potensi peserta didik secara optimal (kognitif, afektif, psikomotor), membentuk karakter yang baik, mempersiapkan mereka untuk kehidupan bermasyarakat, dan memastikan setiap peserta didik memperoleh layanan pendidikan yang setara.</div>
+            </div>
+            <div class="acc">
+              <div class="acc-h" onclick="togAcc(this)"><span>👩‍🏫 Tujuan Pengelolaan SDM</span><span class="acc-arr">▼</span></div>
+              <div class="acc-b">Mendapatkan dan mempertahankan tenaga pendidik dan kependidikan yang kompeten dan berkomitmen, mengembangkan profesionalisme secara berkelanjutan, dan menciptakan iklim kerja yang kondusif bagi pertumbuhan profesional dan personal.</div>
+            </div>
+            <div class="acc">
+              <div class="acc-h" onclick="togAcc(this)"><span>🏫 Tujuan Pengelolaan Sarana-Prasarana</span><span class="acc-arr">▼</span></div>
+              <div class="acc-b">Menyediakan fasilitas belajar yang memadai, aman, nyaman, dan sesuai standar nasional pendidikan; mengelola aset secara efisien; serta menciptakan lingkungan fisik yang kondusif bagi proses pembelajaran berkualitas.</div>
+            </div>
+            <div class="acc">
+              <div class="acc-h" onclick="togAcc(this)"><span>💰 Tujuan Pengelolaan Keuangan</span><span class="acc-arr">▼</span></div>
+              <div class="acc-b">Menjamin ketersediaan dana yang cukup untuk seluruh program pendidikan, mengelola keuangan secara transparan dan akuntabel, mengoptimalkan efisiensi penggunaan anggaran, dan melaporkan pertanggungjawaban secara tepat waktu kepada seluruh pemangku kepentingan.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tj3">
+          <div class="tw"><table>
+            <thead><tr><th>Level</th><th>Tujuan</th><th>Indikator Keberhasilan</th></tr></thead>
+            <tbody>
+              <tr><td>Mikro (Individu)</td><td>Perkembangan optimal setiap peserta didik</td><td>Nilai, kompetensi, karakter, dan soft skill</td></tr>
+              <tr><td>Meso (Sekolah)</td><td>Peningkatan mutu satuan pendidikan</td><td>Akreditasi, ranking, kepuasan stakeholder</td></tr>
+              <tr><td>Makro (Sistem)</td><td>Pendidikan nasional yang berkualitas & merata</td><td>IPM, APK/APM, PISA, TIMSS</td></tr>
+              <tr><td>Global</td><td>Daya saing SDM di kancah internasional</td><td>GCI, PISA ranking, ekspor tenaga terampil</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S8: IMPLEMENTASI ═══ -->
+    <div class="section" id="s8">
+      <div class="s-eye">Penyajian · 8</div>
+      <h2>Implementasi Ruang Lingkup Pengelolaan Pendidikan di Lapangan</h2>
+
+      <p>Implementasi pengelolaan pendidikan di lapangan merupakan penerjemahan konsep dan kebijakan ke dalam praktik nyata di satuan pendidikan. Keberhasilan implementasi sangat bergantung pada kualitas kepemimpinan, komitmen seluruh warga sekolah, dan dukungan sistem yang memadai.</p>
+
+      <h3>Faktor-Faktor Kritis Keberhasilan</h3>
+      <div class="cmp">
+        <div class="cmp-c g">
+          <h4>✅ Pendukung Implementasi</h4>
+          <ul>
+            <li>Kepemimpinan transformasional kepala sekolah</li>
+            <li>Budaya sekolah yang positif dan inovatif</li>
+            <li>SDM kompeten dan berkomitmen tinggi</li>
+            <li>Sistem monitoring & evaluasi yang berfungsi</li>
+            <li>Dukungan komite sekolah dan orang tua</li>
+            <li>Sumber daya keuangan yang memadai</li>
+            <li>Infrastruktur digital yang memadai</li>
+          </ul>
+        </div>
+        <div class="cmp-c r">
+          <h4>❌ Penghambat Implementasi</h4>
+          <ul>
+            <li>Keterbatasan anggaran operasional</li>
+            <li>Resistensi terhadap perubahan (change resistance)</li>
+            <li>Birokrasi berlebihan dan tidak adaptif</li>
+            <li>Gap kompetensi manajerial kepala sekolah</li>
+            <li>Kesenjangan kebijakan pusat-daerah</li>
+            <li>Infrastruktur fisik dan digital yang kurang</li>
+            <li>Rendahnya keterlibatan masyarakat</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Studi Kasus: Implementasi di Sekolah Berkinerja Tinggi</h3>
+      <div class="accordion">
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>🏆 Karakteristik Sekolah Unggul dalam Pengelolaan</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Penelitian internasional (McKinsey Report, 2010) mengidentifikasi bahwa sekolah-sekolah dengan performa terbaik di dunia memiliki kesamaan: (1) Rekrutmen guru dari kalangan terbaik; (2) Pelatihan dan pengembangan guru yang intensif; (3) Intervensi segera bagi siswa yang tertinggal; (4) Kepemimpinan kepala sekolah yang kuat pada aspek instruksional.</div>
+        </div>
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>🇮🇩 Konteks Indonesia: Program Sekolah Penggerak</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Program Sekolah Penggerak (PSP) yang diluncurkan Kemdikbudristek sejak 2021 mengintegrasikan seluruh ruang lingkup pengelolaan: pembenahan kurikulum (Kurikulum Merdeka), pengembangan SDM (Guru Penggerak), penguatan pembelajaran (PMM), peningkatan digitalisasi, dan pemberdayaan lingkungan sekolah secara holistik.</div>
+        </div>
+        <div class="acc">
+          <div class="acc-h" onclick="togAcc(this)"><span>💡 Praktik Terbaik: Komunitas Belajar Profesional</span><span class="acc-arr">▼</span></div>
+          <div class="acc-b">Professional Learning Community (PLC) atau Komunitas Belajar Profesional adalah model kolaborasi guru yang terbukti meningkatkan kualitas pembelajaran. Guru secara rutin bertemu untuk: menganalisis data hasil belajar siswa, merencanakan perbaikan pembelajaran bersama, berbagi strategi mengajar, dan melakukan observasi kelas teman sejawat (peer observation).</div>
+        </div>
+      </div>
+
+      <div class="box good">
+        <span class="bi">✅</span>
+        <div class="box-body">
+          <div class="box-t">Sinergi Antar Ruang Lingkup</div>
+          <div class="box-x">Implementasi yang efektif membutuhkan sinergi antar seluruh ruang lingkup pengelolaan. Misalnya: kurikulum yang bagus memerlukan guru yang kompeten (SDM), fasilitas yang memadai (sarpras), anggaran yang cukup (keuangan), dan siswa yang termotivasi (peserta didik). Kelemahan pada satu komponen akan mempengaruhi komponen lainnya.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S9: ICT ═══ -->
+    <div class="section" id="s9">
+      <div class="s-eye">Penyajian · 9</div>
+      <h2>Pemanfaatan ICT dalam Ruang Lingkup Pengelolaan Pendidikan</h2>
+
+      <p>ICT (Information and Communication Technology) telah merevolusi cara pengelolaan pendidikan dilakukan. Setiap ruang lingkup pengelolaan kini memiliki ekosistem digital yang mendukung efektivitas, efisiensi, transparansi, dan akuntabilitas pengelolaan.</p>
+
+      <div class="tabs">
+        <div class="tab-btns">
+          <button class="tab-btn on" onclick="togTab(this,'ti1')">📖 Kurikulum</button>
+          <button class="tab-btn" onclick="togTab(this,'ti2')">👨‍🎓 Peserta Didik</button>
+          <button class="tab-btn" onclick="togTab(this,'ti3')">👩‍🏫 SDM</button>
+          <button class="tab-btn" onclick="togTab(this,'ti4')">🏫 Sarpras</button>
+          <button class="tab-btn" onclick="togTab(this,'ti5')">💰 Keuangan</button>
+        </div>
+
+        <div class="tab-pane on" id="ti1">
+          <h3>ICT dalam Pengelolaan Kurikulum</h3>
+          <div class="pf-grid">
+            <div class="pf-c"><div class="pf-ico">🗂️</div><div class="pf-n">Platform Merdeka Mengajar</div><div class="pf-x">Portal resmi Kemdikbud untuk modul ajar, pelatihan mandiri, dan asesmen kurikulum Merdeka.</div></div>
+            <div class="pf-c"><div class="pf-ico">📚</div><div class="pf-n">Google Classroom</div><div class="pf-x">LMS gratis untuk distribusi tugas, materi, dan penilaian berbasis kurikulum digital.</div></div>
+            <div class="pf-c"><div class="pf-ico">📊</div><div class="pf-n">Rapor Digital</div><div class="pf-x">Sistem pelaporan hasil belajar siswa sesuai format Kurikulum Merdeka secara digital.</div></div>
+            <div class="pf-c"><div class="pf-ico">🎬</div><div class="pf-n">Rumah Belajar</div><div class="pf-x">Portal konten belajar multimedia resmi Kemdikbud untuk semua jenjang dan mata pelajaran.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="ti2">
+          <h3>ICT dalam Pengelolaan Peserta Didik</h3>
+          <div class="pf-grid">
+            <div class="pf-c"><div class="pf-ico">🏫</div><div class="pf-n">PPDB Online</div><div class="pf-x">Sistem penerimaan peserta didik baru berbasis web, transparan, dan anti-kecurangan.</div></div>
+            <div class="pf-c"><div class="pf-ico">📋</div><div class="pf-n">Absensi Digital</div><div class="pf-x">Sistem presensi berbasis QR code, fingerprint, atau NFC untuk memantau kehadiran siswa real-time.</div></div>
+            <div class="pf-c"><div class="pf-ico">🔔</div><div class="pf-n">Aplikasi Wali</div><div class="pf-x">Aplikasi komunikasi antara sekolah dan orang tua: nilai, kehadiran, pengumuman, dan konsultasi.</div></div>
+            <div class="pf-c"><div class="pf-ico">🎗️</div><div class="pf-n">Sistem BK Digital</div><div class="pf-x">Platform bimbingan konseling berbasis data untuk identifikasi dan intervensi dini masalah siswa.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="ti3">
+          <h3>ICT dalam Pengelolaan Pendidik & Tenaga Kependidikan</h3>
+          <div class="pf-grid">
+            <div class="pf-c"><div class="pf-ico">📝</div><div class="pf-n">SIMPKB</div><div class="pf-x">Sistem manajemen PKB, PKG, angka kredit, dan sertifikasi guru secara terintegrasi.</div></div>
+            <div class="pf-c"><div class="pf-ico">🎓</div><div class="pf-n">PMM (Merdeka Mengajar)</div><div class="pf-x">Platform pengembangan diri guru: video pembelajaran, pelatihan, dan komunitas belajar.</div></div>
+            <div class="pf-c"><div class="pf-ico">💼</div><div class="pf-n">SSCASN / SSCPNS</div><div class="pf-x">Sistem seleksi CPNS/PPPK guru secara nasional berbasis Computer Assisted Test (CAT).</div></div>
+            <div class="pf-c"><div class="pf-ico">📊</div><div class="pf-n">Dashboard Kinerja</div><div class="pf-x">Dashboard manajerial kepala sekolah untuk memantau kinerja dan perkembangan profesional guru.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="ti4">
+          <h3>ICT dalam Pengelolaan Sarana & Prasarana</h3>
+          <div class="pf-grid">
+            <div class="pf-c"><div class="pf-ico">🗃️</div><div class="pf-n">Simda BMD</div><div class="pf-x">Sistem manajemen aset/barang milik daerah di sekolah negeri secara digital.</div></div>
+            <div class="pf-c"><div class="pf-ico">📸</div><div class="pf-n">Verval Sapras DAPODIK</div><div class="pf-x">Verifikasi kondisi sarana-prasarana via foto dan data terstruktur dalam DAPODIK.</div></div>
+            <div class="pf-c"><div class="pf-ico">🔲</div><div class="pf-n">QR Code Inventaris</div><div class="pf-x">Penandaan aset dengan QR code untuk pencatatan cepat kondisi dan lokasi barang.</div></div>
+            <div class="pf-c"><div class="pf-ico">🏗️</div><div class="pf-n">E-Procurement (LKPP)</div><div class="pf-x">Pengadaan barang/jasa sekolah secara online melalui e-katalog LKPP yang transparan.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="ti5">
+          <h3>ICT dalam Pengelolaan Keuangan Pendidikan</h3>
+          <div class="pf-grid">
+            <div class="pf-c"><div class="pf-ico">💳</div><div class="pf-n">BOS Kita</div><div class="pf-x">Platform resmi pengelolaan, pelaporan, dan pertanggungjawaban dana BOS secara digital.</div></div>
+            <div class="pf-c"><div class="pf-ico">📊</div><div class="pf-n">ARKAS</div><div class="pf-x">Aplikasi Rencana Kegiatan dan Anggaran Sekolah — pengganti RKAS manual berbasis aplikasi.</div></div>
+            <div class="pf-c"><div class="pf-ico">🏦</div><div class="pf-n">KMS (Kartu Multiguna Siswa)</div><div class="pf-x">Sistem pembayaran sekolah non-tunai melalui kartu untuk transparansi dan kemudahan.</div></div>
+            <div class="pf-c"><div class="pf-ico">📱</div><div class="pf-n">SIPD (BPKAD)</div><div class="pf-x">Sistem Informasi Pemerintahan Daerah untuk pengelolaan keuangan sekolah negeri terintegrasi.</div></div>
+          </div>
+
+          <div class="box info">
+            <span class="bi">ℹ️</span>
+            <div class="box-body">
+              <div class="box-t">ARKAS — Revolusi Pengelolaan Keuangan Sekolah</div>
+              <div class="box-x">ARKAS (Aplikasi Rencana Kegiatan dan Anggaran Sekolah) yang diluncurkan Kemdikbud mulai 2021 mewajibkan seluruh sekolah penerima BOS untuk merencanakan, melaksanakan, dan melaporkan keuangan melalui satu platform terintegrasi. Ini meningkatkan transparansi dan meminimalisasi potensi penyimpangan pengelolaan dana BOS.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box warn" style="margin-top:20px">
+        <span class="bi">⚠️</span>
+        <div class="box-body">
+          <div class="box-t">Tantangan Digitalisasi Pengelolaan Pendidikan di Indonesia</div>
+          <div class="box-x">Meski perkembangan ICT pengelolaan pesat, masih terdapat tantangan nyata: (1) Kesenjangan digital antar daerah maju dan terpencil; (2) Keamanan data siswa dan privasi digital; (3) Ketergantungan platform pada konektivitas internet; (4) Literasi digital guru dan staf yang bervariasi; (5) Beban administrasi digital yang justru memberatkan guru.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ PENUTUP ══════════════ -->
+    <div class="ptup-div"><span>✦ Bagian Penutup ✦</span></div>
+
+    <!-- RANGKUMAN -->
+    <div class="section" id="rangkuman">
+      <div class="s-eye">Penutup · 1</div>
+      <h2>Rangkuman</h2>
+      <div class="rangk">
+        <h3>📋 Poin-Poin Esensial BAB II</h3>
+        <ul class="rng-list">
+          <li>Ruang lingkup pengelolaan pendidikan mencakup enam bidang utama yang saling terintegrasi: kurikulum, peserta didik, pendidik dan tenaga kependidikan, sarana-prasarana, keuangan, dan hubungan masyarakat — semuanya mengacu pada 8 Standar Nasional Pendidikan.</li>
+          <li>Pengelolaan kurikulum meliputi siklus perencanaan–pelaksanaan–evaluasi–pengembangan yang berkelanjutan, kini dipandu oleh kebijakan Kurikulum Merdeka yang memberikan fleksibilitas lebih kepada satuan pendidikan.</li>
+          <li>Pengelolaan peserta didik mencakup seluruh siklus dari PPDB, pengelompokan, pembinaan, hingga kelulusan dan penelusuran alumni, dengan pendekatan holistik whole-child development.</li>
+          <li>Pengelolaan pendidik dan tenaga kependidikan berfokus pada peningkatan kompetensi empat dimensi (pedagogik, kepribadian, profesional, sosial) melalui siklus rekrutmen–pengembangan–penilaian kinerja–kesejahteraan.</li>
+          <li>Pengelolaan sarana-prasarana mencakup perencanaan, pengadaan, inventarisasi, pemeliharaan, dan penghapusan aset sesuai standar SNP, dengan prinsip efisiensi dan kepatuhan regulasi.</li>
+          <li>Pengelolaan keuangan pendidikan berlandaskan prinsip transparansi, akuntabilitas, efektivitas, efisiensi, dan keadilan — diimplementasikan melalui siklus RKAS-pembukuan-pengawasan-pelaporan.</li>
+          <li>Tujuan pengelolaan pendidikan berjenjang dari level mikro (individu), meso (sekolah), makro (sistem nasional), hingga global (daya saing internasional).</li>
+          <li>ICT telah menjadi enabler utama setiap ruang lingkup pengelolaan: dari ARKAS (keuangan), DAPODIK (data terpadu), PMM (SDM), PPDB Online (peserta didik), hingga Rapor Digital (kurikulum).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TES FORMATIF -->
+    <div class="section" id="tes">
+      <div class="s-eye">Penutup · 2</div>
+      <h2>Tes Formatif</h2>
+      <p style="margin-bottom:22px">Uji pemahaman Anda terhadap materi BAB II. Pilih satu jawaban yang paling tepat untuk setiap pertanyaan.</p>
+
+      <div class="quiz-wrap" id="qWrap">
+
+        <div class="qc" data-ans="b">
+          <div class="qn">Soal 1 dari 7</div>
+          <div class="qq">Regulasi yang mengatur Standar Nasional Pendidikan (SNP) sebagai acuan ruang lingkup pengelolaan pendidikan di Indonesia adalah...</div>
+          <div class="opts">
+            <button class="opt" onclick="jawab(this,'a','b',1)"><span class="olbl">A</span>UU No. 20 Tahun 2003 tentang Sisdiknas</button>
+            <button class="opt" onclick="jawab(this,'b','b',1)"><span class="olbl">B</span>PP No. 19 Tahun 2005 tentang Standar Nasional Pendidikan</button>
+            <button class="opt" onclick="jawab(this,'c','b',1)"><span class="olbl">C</span>Permendikbud No. 6 Tahun 2019 tentang Organisasi Sekolah</button>
+            <button class="opt" onclick="jawab(this,'d','b',1)"><span class="olbl">D</span>PP No. 17 Tahun 2010 tentang Penyelenggaraan Pendidikan</button>
+          </div>
+          <div class="qfb" id="fb1">✅ Benar! PP No. 19/2005 (direvisi PP No. 13/2015 dan PP No. 57/2021) mengatur 8 Standar Nasional Pendidikan yang menjadi acuan utama pengelolaan setiap satuan pendidikan.</div>
+        </div>
+
+        <div class="qc" data-ans="c">
+          <div class="qn">Soal 2 dari 7</div>
+          <div class="qq">Dalam Kurikulum Merdeka, dokumen perencanaan kurikulum tingkat satuan pendidikan yang disusun oleh sekolah sendiri disebut...</div>
+          <div class="opts">
+            <button class="opt" onclick="jawab(this,'a','c',2)"><span class="olbl">A</span>RPP (Rencana Pelaksanaan Pembelajaran)</button>
+            <button class="opt" onclick="jawab(this,'b','c',2)"><span class="olbl">B</span>KTSP (Kurikulum Tingkat Satuan Pendidikan)</button>
+            <button class="opt" onclick="jawab(this,'c','c',2)"><span class="olbl">C</span>KOSP (Kurikulum Operasional Satuan Pendidikan)</button>
+            <button class="opt" onclick="jawab(this,'d','c',2)"><span class="olbl">D</span>Silabus Mata Pelajaran</button>
+          </div>
+          <div class="qfb" id="fb2">✅ Tepat! Dalam Kurikulum Merdeka, KOSP (Kurikulum Operasional Satuan Pendidikan) menggantikan KTSP. KOSP adalah dokumen yang disusun dan dikembangkan oleh satuan pendidikan sendiri sesuai konteks dan karakteristik peserta didiknya.</div>
+        </div>
+
+        <div class="qc" data-ans="d">
+          <div class="qn">Soal 3 dari 7</div>
+          <div class="qq">Prinsip pengelolaan keuangan pendidikan yang mengutamakan distribusi sumber daya secara proporsional dan tidak diskriminatif bagi seluruh peserta didik disebut...</div>
+          <div class="opts">
+            <button class="opt" onclick="jawab(this,'a','d',3)"><span class="olbl">A</span>Akuntabilitas</button>
+            <button class="opt" onclick="jawab(this,'b','d',3)"><span class="olbl">B</span>Transparansi</button>
+            <button class="opt" onclick="jawab(this,'c','d',3)"><span class="olbl">C</span>Efisiensi</button>
+            <button class="opt" onclick="jawab(this,'d','d',3)"><span class="olbl">D</span>Keadilan</button>
+          </div>
+          <div class="qfb" id="fb3">✅ Benar! Prinsip keadilan dalam pengelolaan keuangan pendidikan menekankan distribusi sumber daya yang proporsional dan berkeadilan, termasuk program afirmasi bagi peserta didik dari keluarga kurang mampu.</div>
+        </div>
+
+        <div class="qc" data-ans="a">
+          <div class="qn">Soal 4 dari 7</div>
+          <div class="qq">Empat kompetensi guru yang wajib dinilai dalam Penilaian Kinerja Guru (PKG) adalah...</div>
+          <div class="opts">
+            <button class="opt" onclick="jawab(this,'a','a',4)"><span class="olbl">A</span>Pedagogik, Kepribadian, Profesional, dan Sosial</button>
+            <button class="opt" onclick="jawab(this,'b','a',4)"><span class="olbl">B</span>Akademik, Administratif, Manajerial, dan Teknis</button>
+            <button class="opt" onclick="jawab(this,'c','a',4)"><span class="olbl">C</span>Kognitif, Afektif, Psikomotor, dan Spiritual</button>
+            <button class="opt" onclick="jawab(this,'d','a',4)"><span class="olbl">D</span>Instruksional, Kepemimpinan, Kolaborasi, dan Komunikasi</button>
+          </div>
+          <div class="qfb" id="fb4">✅ Tepat! Empat kompetensi guru yang tertuang dalam Permendiknas No. 16/2007 dan menjadi basis PKG adalah: (1) Kompetensi Pedagogik, (2) Kompetensi Kepribadian, (3) Kompetensi Profesional, dan (4) Kompetensi Sosial.</div>
+        </div>
+
+        <div class="qc" data-ans="b">
+          <div class="qn">Soal 5 dari 7</div>
+          <div class="qq">Aplikasi resmi Kemdikbud yang digunakan untuk perencanaan, pelaksanaan, dan pelaporan keuangan BOS di sekolah adalah...</div>
+          <div class="opts">
+            <button class="opt" onclick="jawab(this,'a','b',5)"><span class="olbl">A</span>DAPODIK</button>
+            <button class="opt" onclick="jawab(this,'b','b',5)"><span class="olbl">B</span>ARKAS (BOS Kita)</button>
+            <button class="opt" onclick="jawab(this,'c','b',5)"><span class="olbl">C</span>SIMPKB</button>
+            <button class="opt" onclick="jawab(this,'d','b',5)"><span class="olbl">D</span>PMM (Platform Merdeka Mengajar)</button>
+          </div>
+          <div class="qfb" id="fb5">✅ Benar! ARKAS (Aplikasi Rencana Kegiatan dan Anggaran Sekolah) yang terintegrasi dalam platform BOS Kita adalah sistem wajib yang digunakan sekolah untuk mengelola dan melaporkan penggunaan dana BOS secara transparan.</div>
+        </div>
+
+        <div class="qc" data-ans="c">
+          <div class="qn">Soal 6 dari 7</div>
+          <div class="qq">Pendekatan pengelolaan sarana-prasarana yang bersifat preventif, dilakukan secara rutin sebelum kerusakan terjadi, disebut...</div>
+          <div class="opts">
+            <button class="opt" onclick="jawab(this,'a','c',6)"><span class="olbl">A</span>Corrective Maintenance</button>
+            <button class="opt" onclick="jawab(this,'b','c',6)"><span class="olbl">B</span>Emergency Maintenance</button>
+            <button class="opt" onclick="jawab(this,'c','c',6)"><span class="olbl">C</span>Preventive Maintenance</button>
+            <button class="opt" onclick="jawab(this,'d','c',6)"><span class="olbl">D</span>Breakdown Maintenance</button>
+          </div>
+          <div class="qfb" id="fb6">✅ Tepat! Preventive Maintenance (pemeliharaan pencegahan) adalah pendekatan proaktif yang dilakukan secara terencana dan berkala untuk mencegah kerusakan sebelum terjadi, lebih efisien dari sisi biaya dibanding corrective maintenance.</div>
+        </div>
+
+        <div class="qc" data-ans="d">
+          <div class="qn">Soal 7 dari 7</div>
+          <div class="qq">Tujuan pengelolaan pendidikan pada level "meso" (tingkat satuan pendidikan) yang paling tepat adalah...</div>
+          <div class="opts">
+            <button class="opt" onclick="jawab(this,'a','d',7)"><span class="olbl">A</span>Meningkatkan daya saing SDM Indonesia di kancah global</button>
+            <button class="opt" onclick="jawab(this,'b','d',7)"><span class="olbl">B</span>Meningkatkan Indeks Pembangunan Manusia (IPM) nasional</button>
+            <button class="opt" onclick="jawab(this,'c','d',7)"><span class="olbl">C</span>Mengembangkan potensi optimal setiap peserta didik</button>
+            <button class="opt" onclick="jawab(this,'d','d',7)"><span class="olbl">D</span>Meningkatkan mutu satuan pendidikan dan kepuasan pemangku kepentingan</button>
+          </div>
+          <div class="qfb" id="fb7">✅ Benar! Level meso (satuan pendidikan) berfokus pada peningkatan mutu sekolah secara keseluruhan yang tercermin melalui akreditasi, prestasi, dan kepuasan stakeholder. Level mikro = individu, makro = sistem nasional, global = daya saing internasional.</div>
+        </div>
+
+        <div class="q-act">
+          <button class="btn-p" onclick="cekSkor()">Lihat Nilai Akhir →</button>
+        </div>
+
+        <div class="sbox" id="sBox">
+          <div class="sbox-lbl">Nilai Tes Formatif BAB II</div>
+          <span class="sbox-num" id="sNum">—</span>
+          <div class="sbox-msg" id="sMsg"></div>
+          <button class="sbox-retry" onclick="resetQ()">🔄 Coba Lagi</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- UMPAN BALIK -->
+    <div class="section" id="umpan">
+      <div class="s-eye">Penutup · 3</div>
+      <h2>Umpan Balik</h2>
+      <p>Berikan penilaian dan masukan Anda terhadap materi BAB II ini. Umpan balik Anda sangat membantu pengembangan bahan ajar yang lebih baik.</p>
+
+      <div class="fb-form" id="fbForm">
+        <div class="fb-grid">
+          <div><label class="fb-lbl">Nama Mahasiswa</label><input class="fb-in" type="text" placeholder="Nama lengkap..."></div>
+          <div><label class="fb-lbl">NIM</label><input class="fb-in" type="text" placeholder="Nomor Induk Mahasiswa..."></div>
+        </div>
+        <div class="fb-grid">
+          <div><label class="fb-lbl">Program Studi</label><input class="fb-in" type="text" placeholder="Prodi Anda..."></div>
+          <div><label class="fb-lbl">Kelas / Semester</label><input class="fb-in" type="text" placeholder="Contoh: B / Semester 3"></div>
+        </div>
+
+        <div class="fb-row">
+          <label class="fb-lbl">⭐ Kejelasan Materi</label>
+          <div class="stars" id="st1">
+            <span class="star" onclick="setStar('st1',1)">★</span><span class="star" onclick="setStar('st1',2)">★</span>
+            <span class="star" onclick="setStar('st1',3)">★</span><span class="star" onclick="setStar('st1',4)">★</span>
+            <span class="star" onclick="setStar('st1',5)">★</span>
+          </div>
+        </div>
+        <div class="fb-row">
+          <label class="fb-lbl">⭐ Kelengkapan & Kedalaman</label>
+          <div class="stars" id="st2">
+            <span class="star" onclick="setStar('st2',1)">★</span><span class="star" onclick="setStar('st2',2)">★</span>
+            <span class="star" onclick="setStar('st2',3)">★</span><span class="star" onclick="setStar('st2',4)">★</span>
+            <span class="star" onclick="setStar('st2',5)">★</span>
+          </div>
+        </div>
+        <div class="fb-row">
+          <label class="fb-lbl">⭐ Kemenarikan Tampilan</label>
+          <div class="stars" id="st3">
+            <span class="star" onclick="setStar('st3',1)">★</span><span class="star" onclick="setStar('st3',2)">★</span>
+            <span class="star" onclick="setStar('st3',3)">★</span><span class="star" onclick="setStar('st3',4)">★</span>
+            <span class="star" onclick="setStar('st3',5)">★</span>
+          </div>
+        </div>
+
+        <div class="fb-row">
+          <label class="fb-lbl">Tingkat Kesulitan Materi BAB II</label>
+          <select class="fb-sel">
+            <option value="">— Pilih —</option>
+            <option>Sangat Mudah</option><option>Mudah</option>
+            <option>Sedang</option><option>Sulit</option><option>Sangat Sulit</option>
+          </select>
+        </div>
+
+        <div class="fb-row">
+          <label class="fb-lbl">Sub-topik yang Paling Menarik</label>
+          <select class="fb-sel">
+            <option value="">— Pilih —</option>
+            <option>Ruang Lingkup Pengelolaan</option>
+            <option>Pengelolaan Kurikulum</option>
+            <option>Pengelolaan Peserta Didik</option>
+            <option>Pengelolaan Pendidik & Tenaga Kependidikan</option>
+            <option>Pengelolaan Sarana & Prasarana</option>
+            <option>Pengelolaan Keuangan Pendidikan</option>
+            <option>Tujuan Pengelolaan Pendidikan</option>
+            <option>Implementasi di Lapangan</option>
+            <option>Pemanfaatan ICT</option>
+          </select>
+        </div>
+
+        <div class="fb-row">
+          <label class="fb-lbl">Materi yang Perlu Ditambahkan / Diperdalam</label>
+          <div class="chkgroup">
+            <label class="chk-lbl"><input type="checkbox"> Studi Kasus Nyata</label>
+            <label class="chk-lbl"><input type="checkbox"> Regulasi Terbaru</label>
+            <label class="chk-lbl"><input type="checkbox"> Contoh Praktis</label>
+            <label class="chk-lbl"><input type="checkbox"> Video Pembelajaran</label>
+            <label class="chk-lbl"><input type="checkbox"> Latihan Soal Lebih Banyak</label>
+            <label class="chk-lbl"><input type="checkbox"> Perbandingan Antar Negara</label>
+          </div>
+        </div>
+
+        <div class="fb-row">
+          <label class="fb-lbl">Komentar, Saran & Pertanyaan</label>
+          <textarea class="fb-ta" placeholder="Tuliskan komentar, saran, atau pertanyaan Anda tentang materi BAB II..."></textarea>
+        </div>
+
+        <button class="fb-btn" onclick="kirimFb()">Kirim Umpan Balik ✉</button>
+      </div>
+
+      <div class="fb-ok" id="fbOk">
+        <div class="oico">🎉</div>
+        <h3>Terima Kasih!</h3>
+        <p>Umpan balik Anda telah berhasil dikirim.<br>Masukan Anda sangat berarti bagi pengembangan bahan ajar ini.</p>
+      </div>
+    </div>
+
+    <!-- TINDAK LANJUT -->
+    <div class="section" id="tindak">
+      <div class="s-eye">Penutup · 4</div>
+      <h2>Tindak Lanjut</h2>
+      <p>Sesuaikan tindak lanjut Anda berdasarkan hasil tes formatif untuk memastikan pemahaman optimal sebelum melanjutkan ke BAB III.</p>
+
+      <div class="tl-grid">
+        <div class="tlc r">
+          <h4>⚠️ Nilai &lt; 70 — Remedial</h4>
+          <ul>
+            <li>Baca ulang setiap sub-topik secara saksama</li>
+            <li>Buat tabel ringkasan ruang lingkup dan karakteristiknya</li>
+            <li>Kerjakan soal dari buku referensi (Mulyasa, Kompri)</li>
+            <li>Diskusikan konsep yang sulit dengan teman kelompok</li>
+            <li>Konsultasikan pada dosen di jam konsultasi</li>
+            <li>Nonton video pengelolaan sekolah di YouTube Kemdikbud</li>
+          </ul>
+        </div>
+        <div class="tlc g">
+          <h4>✅ Nilai ≥ 70 — Pengayaan</h4>
+          <ul>
+            <li>Lanjutkan ke BAB III: Perencanaan Pendidikan</li>
+            <li>Akses platform ARKAS dan PMM untuk eksplorasi mandiri</li>
+            <li>Observasi langsung di sekolah tentang pengelolaan BOS</li>
+            <li>Baca Permendikbud terkait pengelolaan sekolah terbaru</li>
+            <li>Buat analisis SWOT pengelolaan di sekolah yang dikunjungi</li>
+            <li>Susun mini-paper tentang praktik terbaik pengelolaan</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="box info" style="margin-top:20px">
+        <span class="bi">📚</span>
+        <div class="box-body">
+          <div class="box-t">Referensi Utama BAB II</div>
+          <ul class="ref-list">
+            <li>Imron, A. (2011). <em>Manajemen Peserta Didik Berbasis Sekolah</em>. Bumi Aksara.</li>
+            <li>Kompri. (2015). <em>Manajemen Pendidikan: Komponen-Komponen Elementer Kemajuan Sekolah</em>. Ar-Ruzz Media.</li>
+            <li>Mulyasa, E. (2011). <em>Manajemen Berbasis Sekolah</em>. PT Remaja Rosdakarya.</li>
+            <li>Rusman. (2012). <em>Manajemen Kurikulum</em>. Rajawali Pers.</li>
+            <li>Supriadi, D. (2010). <em>Satuan Biaya Pendidikan Dasar dan Menengah</em>. PT Remaja Rosdakarya.</li>
+            <li>Peraturan Pemerintah No. 57 Tahun 2021 tentang Standar Nasional Pendidikan.</li>
+            <li>Permendikbud Ristek No. 7 Tahun 2022 tentang Standar Isi pada Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sign-off">
+        <div class="t">🏆</div>
+        <h3>Selamat — BAB II Selesai</h3>
+        <p>Anda telah menyelesaikan BAB II: Ruang Lingkup dan Tujuan Pengelolaan Pendidikan<br>
+        <strong>Mata Kuliah Pengelolaan Pendidikan</strong><br>
+        <em style="color:var(--ink3)">Disusun oleh Martin Bernard, M.Pd</em></p>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* SIDEBAR */
+function togSb(){ document.getElementById('sb').classList.toggle('open') }
+function closeSb(){ if(window.innerWidth<=900) document.getElementById('sb').classList.remove('open') }
+document.addEventListener('click',function(e){
+  const sb=document.getElementById('sb');
+  if(window.innerWidth<=900 && sb.classList.contains('open') && !sb.contains(e.target) && !e.target.closest('#hbgBtn'))
+    sb.classList.remove('open');
+});
+
+/* SCROLL */
+window.addEventListener('scroll',function(){
+  const max=document.body.scrollHeight-window.innerHeight;
+  const p=Math.min(100,Math.round(window.scrollY/max*100));
+  document.getElementById('pf').style.width=p+'%';
+  document.getElementById('pp').textContent=p+'%';
+  document.getElementById('btt').classList.toggle('show',window.scrollY>500);
+  let cur='';
+  document.querySelectorAll('.section[id]').forEach(s=>{
+    if(window.scrollY>=s.offsetTop-130) cur=s.id;
+  });
+  document.querySelectorAll('.sb-a').forEach(l=>{
+    l.classList.toggle('on',l.getAttribute('href')==='#'+cur);
+  });
+});
+
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(e=>e.forEach(x=>{ if(x.isIntersecting) x.target.classList.add('vis') }),{threshold:0.07});
+document.querySelectorAll('.section').forEach(s=>obs.observe(s));
+
+/* ACCORDION */
+function togAcc(h){
+  const b=h.nextElementSibling, open=b.classList.contains('on');
+  h.closest('.accordion').querySelectorAll('.acc-b.on').forEach(x=>{ x.classList.remove('on'); x.previousElementSibling.classList.remove('on'); });
+  if(!open){ b.classList.add('on'); h.classList.add('on'); }
+}
+
+/* TABS */
+function togTab(btn,id){
+  btn.closest('.tabs').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  btn.closest('.tabs').querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
+
+/* QUIZ */
+const ans={};
+function jawab(btn,ch,cor,n){
+  const card=btn.closest('.qc');
+  if(card.dataset.done) return;
+  card.dataset.done='1';
+  ans[n]=(ch===cor);
+  card.querySelectorAll('.opt').forEach(b=>b.classList.add('disabled'));
+  const fb=document.getElementById('fb'+n);
+  if(ch===cor){
+    btn.classList.add('correct'); fb.classList.add('show','c');
+  } else {
+    btn.classList.add('wrong'); fb.classList.add('show','w');
+    fb.textContent='❌ Kurang tepat. '+fb.textContent.replace(/^[✅❌]\s*/,'');
+    card.querySelectorAll('.opt').forEach(b=>{ if(b.querySelector('.olbl').textContent===cor.toUpperCase()) b.classList.add('correct'); });
+  }
+}
+function cekSkor(){
+  const tot=7, ok=Object.values(ans).filter(v=>v).length;
+  const n=Math.round(ok/tot*100);
+  document.getElementById('sNum').textContent=n;
+  const msgs=['⚠️ Di bawah standar. Wajib mengulang materi BAB II sebelum lanjut.','📖 Perlu lebih banyak latihan. Pelajari ulang bagian yang masih lemah.','👍 Cukup baik! Pelajari kembali soal yang belum tepat.','🎉 Sangat baik! Anda menguasai sebagian besar materi BAB II.','🌟 Sempurna! Pemahaman Anda luar biasa. Lanjutkan ke BAB III!'];
+  const idx = n<50?0:n<60?1:n<70?2:n<90?3:4;
+  document.getElementById('sMsg').textContent=msgs[idx]+` (${ok}/${tot} benar)`;
+  const box=document.getElementById('sBox');
+  const pass=n>=70;
+  box.style.borderColor=pass?'var(--navy2)':'var(--rose)';
+  box.style.background=pass?'var(--navy-p)':'var(--rose-p)';
+  document.getElementById('sNum').style.color=pass?'var(--navy2)':'var(--rose)';
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQ(){
+  document.querySelectorAll('.qc').forEach(c=>{
+    delete c.dataset.done;
+    c.querySelectorAll('.opt').forEach(b=>b.classList.remove('correct','wrong','disabled'));
+    c.querySelectorAll('.qfb').forEach(f=>{ f.className='qfb'; f.textContent=f.textContent.replace(/^❌\s*Kurang tepat\.\s*/,'✅ '); });
+  });
+  for(const k in ans) delete ans[k];
+  document.getElementById('sBox').style.display='none';
+}
+
+/* STARS */
+function setStar(id,v){ document.getElementById(id).querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('on',i<v)); }
+
+/* FEEDBACK */
+function kirimFb(){ document.getElementById('fbForm').style.display='none'; document.getElementById('fbOk').style.display='block'; }
+</script>
+</body>
+</html>
