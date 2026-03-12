@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kover – Pengelolaan Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #0a1628;
+    --gold:    #c9a84c;
+    --gold2:   #e8c97a;
+    --cream:   #f5edd8;
+    --rust:    #8b3a2a;
+    --light:   #ddd0b3;
+  }
+
+  
+
+  /* ── BOOK WRAPPER ── */
+  .book-wrap {
+    display: flex;
+    gap: 0;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,.7));
+    animation: rise .9s ease both;
+  }
+  @keyframes rise {
+    from { opacity:0; transform: translateY(40px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── SPINE ── */
+  .spine {
+    width: 60px;
+    background: linear-gradient(180deg, #0d1f3c 0%, #071020 100%);
+    border-radius: 4px 0 0 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .spine::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 18px,
+      rgba(201,168,76,.07) 18px, rgba(201,168,76,.07) 19px
+    );
+  }
+  .spine-line {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(180deg, transparent, var(--gold), transparent);
+    border-radius: 2px;
+    position: absolute;
+    left: 10px;
+    top: 0; bottom: 0;
+  }
+  .spine-line2 { left: auto; right: 10px; }
+  .spine-title {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+  .spine-author {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9px;
+    color: var(--light);
+    letter-spacing: 2px;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── FRONT COVER ── */
+  .cover {
+    width: 100%;
+    min-height: 740px;
+    background: var(--navy);
+    border-radius: 0 6px 6px 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* geometric bg */
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% -10%, rgba(201,168,76,.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 90% 90%, rgba(139,58,42,.25) 0%, transparent 60%);
+    z-index: 0;
+  }
+
+  /* diagonal stripe */
+  .stripe {
+    position: absolute;
+    width: 160%;
+    height: 340px;
+    background: linear-gradient(135deg,
+      rgba(201,168,76,.04) 0%,
+      rgba(201,168,76,.10) 40%,
+      rgba(201,168,76,.04) 100%
+    );
+    top: 200px;
+    left: -30%;
+    transform: rotate(-12deg);
+    z-index: 0;
+  }
+
+  /* ── TOP BAND ── */
+  .top-band {
+    height: 8px;
+    background: linear-gradient(90deg, var(--rust), var(--gold), var(--gold2), var(--gold), var(--rust));
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── HEADER ZONE ── */
+  .header-zone {
+    position: relative;
+    z-index: 2;
+    padding: 30px 38px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-emblem {
+    width: 52px; height: 52px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .logo-emblem::before {
+    content: '⚙';
+    font-size: 22px;
+    color: var(--gold);
+  }
+  .logo-emblem::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(201,168,76,.35);
+    border-radius: 50%;
+  }
+  .institution {
+    font-family: 'Cinzel', serif;
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    color: var(--light);
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .institution span {
+    display: block;
+    color: var(--gold);
+    font-size: 9.5px;
+    letter-spacing: 3px;
+  }
+
+  /* ── ORNAMENT ── */
+  .ornament-row {
+    position: relative;
+    z-index: 2;
+    padding: 22px 38px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .orn-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .orn-diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN TITLE ── */
+  .main-title-zone {
+    position: relative;
+    z-index: 2;
+    padding: 28px 38px 0;
+    text-align: center;
+  }
+  .subtitle-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold2);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .main-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 46px;
+    line-height: 1.1;
+    color: var(--cream);
+    text-shadow: 0 0 60px rgba(201,168,76,.15);
+    margin-bottom: 6px;
+  }
+  .main-title em {
+    display: block;
+    color: var(--gold);
+    font-style: normal;
+  }
+  .main-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--light);
+    letter-spacing: 1px;
+    margin-top: 10px;
+  }
+
+  /* ── VISUAL BLOCK ── */
+  .visual-block {
+    position: relative;
+    z-index: 2;
+    margin: 24px 38px 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold2) 50%, var(--gold) 70%, transparent 100%);
+  }
+
+  /* ── CHAPTER GRID ── */
+  .chapter-grid {
+    position: relative;
+    z-index: 2;
+    margin: 22px 38px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .ch {
+    background: rgba(201,168,76,.07);
+    border: 1px solid rgba(201,168,76,.18);
+    border-radius: 4px;
+    padding: 7px 8px;
+    display: flex;
+    gap: 7px;
+    align-items: flex-start;
+    transition: background .2s;
+  }
+  .ch:hover { background: rgba(201,168,76,.13); }
+  .ch-num {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: var(--gold);
+    flex-shrink: 0;
+    padding-top: 1px;
+    min-width: 24px;
+    letter-spacing: 1px;
+  }
+  .ch-title {
+    font-size: 15px;
+    color: var(--light);
+    line-height: 1.4;
+    letter-spacing: .3px;
+  }
+
+  /* UAS badge */
+  .uas-badge {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(139,58,42,.4), rgba(139,58,42,.2));
+    border: 1px solid rgba(201,168,76,.4);
+    border-radius: 5px;
+    padding: 9px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .uas-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .uas-text {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    color: var(--gold2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .uas-text span { display: block; font-size: 8px; color: var(--light); letter-spacing: 1px; font-family: 'Lato', sans-serif; text-transform: none; }
+
+  /* ── BOTTOM AUTHOR BAND ── */
+  .bottom-band {
+    margin-top: auto;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, rgba(201,168,76,.15), rgba(201,168,76,.06));
+    border-top: 1px solid rgba(201,168,76,.35);
+    padding: 18px 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .author-block {}
+  .author-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8.5px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .author-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.2;
+  }
+  .author-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--light);
+    letter-spacing: .5px;
+  }
+  .author-seal {
+    width: 56px; height: 56px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 7px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-align: center;
+    line-height: 1.6;
+    position: relative;
+  }
+  .author-seal::before {
+    content: '✦';
+    font-size: 16px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* corner deco */
+  .corner {
+    position: absolute;
+    z-index: 1;
+    width: 70px; height: 70px;
+    opacity: .4;
+  }
+  .corner-tl { top: 50px; left: 10px; border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+  .corner-tr { top: 50px; right: 10px; border-top: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+  .corner-bl { bottom: 90px; left: 10px; border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+  .corner-br { bottom: 90px; right: 10px; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+
+  /* bottom gold line */
+  .bottom-accent {
+    height: 5px;
+    background: linear-gradient(90deg, var(--rust), var(--gold), var(--gold2), var(--gold), var(--rust));
+    position: relative;
+    z-index: 3;
+    border-radius: 0 0 6px 0;
+  }
+
+  /* print button */
+  .print-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 12px 22px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 3px;
+    box-shadow: 0 4px 20px rgba(201,168,76,.4);
+    z-index: 999;
+  }
+  .print-btn:hover { background: var(--gold2); }
+  @media print {
+    body { background: white; padding: 0; }
+    .print-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="book-wrap">
+
+  <!-- SPINE -->
+  <div class="spine">
+    <div class="spine-line"></div>
+    <div class="spine-line spine-line2"></div>
+    <div class="spine-title">Pengelolaan Pendidikan</div>
+    <div class="spine-author">Martin Bernard, M.Pd</div>
+  </div>
+
+  <!-- FRONT COVER -->
+  <div class="cover">
+    <div class="stripe"></div>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <div class="top-band"></div>
+
+    <!-- Header -->
+    <div class="header-zone">
+      <div class="logo-emblem"></div>
+      <div class="institution">
+        Buku Ajar
+        <span>Mata Kuliah Pengelolaan Pendidikan</span>
+      </div>
+    </div>
+
+    <!-- Ornament -->
+    <div class="ornament-row">
+      <div class="orn-line"></div>
+      <div class="orn-diamond"></div>
+      <div class="orn-diamond"></div>
+      <div class="orn-diamond"></div>
+      <div class="orn-line"></div>
+    </div>
+
+    <!-- Main Title -->
+    <div class="main-title-zone">
+      <div class="subtitle-label">Buku Ajar Lengkap</div>
+      <div class="main-title">
+        Pengelolaan
+        <em>Pendidikan</em>
+      </div>
+      <div class="main-subtitle">Teori, Kebijakan, dan Praktik</div>
+    </div>
+
+    <div class="visual-block"></div>
+
+    <!-- Chapter Grid -->
+    <div class="chapter-grid">
+      <div class="ch"><span class="ch-num">I</span><span class="ch-title">Konsep Dasar Pengelolaan Pendidikan</span></div>
+      <div class="ch"><span class="ch-num">II</span><span class="ch-title">Ruang Lingkup &amp; Tujuan</span></div>
+      <div class="ch"><span class="ch-num">III</span><span class="ch-title">Perencanaan Pendidikan</span></div>
+      <div class="ch"><span class="ch-num">IV</span><span class="ch-title">Kebijakan &amp; Sistem Perencanaan</span></div>
+      <div class="ch"><span class="ch-num">V</span><span class="ch-title">Struktur &amp; Organisasi</span></div>
+      <div class="ch"><span class="ch-num">VI</span><span class="ch-title">Kepemimpinan &amp; Pengambilan Keputusan</span></div>
+      <div class="ch"><span class="ch-num">VII</span><span class="ch-title">Pengelolaan Kurikulum</span></div>
+      <div class="ch"><span class="ch-num">VIII</span><span class="ch-title">Pengelolaan Peserta Didik</span></div>
+      <div class="ch"><span class="ch-num">IX</span><span class="ch-title">Pendidik &amp; Tenaga Kependidikan</span></div>
+      <div class="ch"><span class="ch-num">X</span><span class="ch-title">Sarana &amp; Prasarana Pendidikan</span></div>
+      <div class="ch"><span class="ch-num">XI</span><span class="ch-title">Pengelolaan Keuangan</span></div>
+      <div class="ch"><span class="ch-num">XII</span><span class="ch-title">Supervisi Pendidikan</span></div>
+      <div class="ch"><span class="ch-num">XIII</span><span class="ch-title">Evaluasi Program Pendidikan</span></div>
+      <div class="ch"><span class="ch-num">XIV</span><span class="ch-title">Studi Kasus Pengelolaan</span></div>
+      <div class="ch"><span class="ch-num">XV</span><span class="ch-title">Rancangan Pengelolaan Pendidikan</span></div>
+      <!-- UAS -->
+      <div class="uas-badge">
+        <span class="uas-icon">🎓</span>
+        <div class="uas-text">
+          Ujian Akhir Semester (UAS)
+          <span style="font-size:13px">Bagian Akhir — Evaluasi Kompetensi Mahasiswa</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author Band -->
+    <div class="bottom-band">
+      <div class="author-block">
+        <div class="author-label">Disusun Oleh</div>
+        <div class="author-name">Martin Bernard</div>
+        <div class="author-degree">M.Pd</div>
+      </div>
+      <div class="author-seal">BUKU<br>AJAR<br>2025</div>
+    </div>
+
+    <div class="bottom-accent"></div>
+  </div>
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨 Cetak / Simpan</button>
+
+</body>
+</html>
