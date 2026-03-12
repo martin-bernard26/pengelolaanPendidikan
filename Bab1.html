@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAB I – Konsep Dasar Pengelolaan Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Source+Sans+3:wght@300;400;600;700&family=Cinzel:wght@400;600&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #f7f4ef;
+  --bg2:       #eee9e0;
+  --ink:       #1c1812;
+  --ink2:      #4a4438;
+  --teal:      #1a6b6b;
+  --teal2:     #2a9090;
+  --teal-pale: #d4eaea;
+  --amber:     #c07a1a;
+  --amber-pale:#fdf0d8;
+  --rust:      #8b3a2a;
+  --rust-pale: #fae8e4;
+  --sage:      #4a7c59;
+  --sage-pale: #dff0e5;
+  --border:    #cdc5b4;
+  --white:     #fffef9;
+  --shadow:    rgba(28,24,18,.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Source Sans 3',sans-serif;
+  font-size:16px;
+  line-height:1.75;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--teal);border-radius:3px}
+
+/* ── SIDEBAR NAV ── */
+.sidebar{
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:260px;
+  background:var(--ink);
+  color:#d4cfc7;
+  display:flex;
+  flex-direction:column;
+  z-index:100;
+  overflow-y:auto;
+  transition:transform .3s;
+}
+.sidebar-header{
+  padding:24px 20px 18px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.sidebar-label{
+  font-family:'Cinzel',serif;
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--teal2);
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.sidebar-title{
+  font-family:'Merriweather',serif;
+  font-size:14px;
+  color:#f0ebe0;
+  line-height:1.4;
+}
+.nav-section{padding:16px 0}
+.nav-section-title{
+  font-family:'Cinzel',serif;
+  font-size:8.5px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--teal2);
+  padding:0 20px 8px;
+}
+.nav-item{
+  display:block;
+  padding:8px 20px 8px 28px;
+  font-size:12.5px;
+  color:#b0a898;
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all .2s;
+  line-height:1.4;
+}
+.nav-item:hover,.nav-item.active{
+  color:#f0ebe0;
+  background:rgba(255,255,255,.05);
+  border-left-color:var(--teal2);
+}
+.nav-item .num{
+  font-family:'Cinzel',serif;
+  font-size:9px;
+  color:var(--teal2);
+  margin-right:6px;
+}
+.sidebar-footer{
+  margin-top:auto;
+  padding:16px 20px;
+  border-top:1px solid rgba(255,255,255,.08);
+  font-size:11px;
+  color:#6b635a;
+  line-height:1.5;
+}
+
+/* ── MAIN ── */
+.main{
+  margin-left:260px;
+  min-height:100vh;
+}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg, var(--ink) 0%, #2a3a30 60%, var(--teal) 100%);
+  padding:60px 60px 50px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(42,144,144,.2) 0%, transparent 60%),
+    repeating-linear-gradient(45deg, transparent 0, transparent 40px, rgba(255,255,255,.015) 40px, rgba(255,255,255,.015) 41px);
+}
+.hero-chip{
+  display:inline-block;
+  background:rgba(42,144,144,.3);
+  border:1px solid rgba(42,144,144,.5);
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--teal2);
+  padding:5px 14px;
+  border-radius:2px;
+  margin-bottom:18px;
+  position:relative;
+}
+.hero h1{
+  font-family:'Merriweather',serif;
+  font-size:36px;
+  font-weight:700;
+  color:#f0ebe0;
+  line-height:1.25;
+  position:relative;
+  margin-bottom:14px;
+}
+.hero h1 em{
+  display:block;
+  color:var(--teal2);
+  font-style:normal;
+  font-size:28px;
+}
+.hero-desc{
+  font-size:15px;
+  color:#9e9890;
+  max-width:520px;
+  position:relative;
+  line-height:1.7;
+}
+.hero-meta{
+  position:relative;
+  margin-top:28px;
+  display:flex;
+  gap:28px;
+  flex-wrap:wrap;
+}
+.meta-pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  color:#8a8278;
+}
+.meta-pill .icon{font-size:16px}
+.meta-pill strong{color:#d4cfc7;font-weight:600}
+
+/* progress bar */
+.progress-bar-wrap{
+  background:rgba(255,255,255,.08);
+  height:3px;
+  border-radius:2px;
+  margin-top:28px;
+  position:relative;
+}
+.progress-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--teal2),#4dd9ac);
+  border-radius:2px;
+  width:0%;
+  transition:width .5s ease;
+}
+.progress-label{
+  font-size:11px;
+  color:#6b635a;
+  margin-top:6px;
+  display:flex;
+  justify-content:space-between;
+}
+
+/* ── CONTENT AREA ── */
+.content{padding:0 60px 80px}
+
+/* ── SECTION ── */
+.section{
+  padding:50px 0 20px;
+  border-bottom:1px solid var(--border);
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.section.visible{opacity:1;transform:translateY(0)}
+
+.section-tag{
+  font-family:'Cinzel',serif;
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:10px;
+}
+.section h2{
+  font-family:'Merriweather',serif;
+  font-size:24px;
+  font-weight:700;
+  color:var(--ink);
+  line-height:1.3;
+  margin-bottom:20px;
+  padding-bottom:14px;
+  border-bottom:2px solid var(--teal-pale);
+  position:relative;
+}
+.section h2::after{
+  content:'';
+  position:absolute;
+  bottom:-2px;left:0;
+  width:60px;height:2px;
+  background:var(--teal);
+}
+.section h3{
+  font-family:'Merriweather',serif;
+  font-size:17px;
+  font-weight:700;
+  color:var(--teal);
+  margin:24px 0 10px;
+}
+.section p{
+  margin-bottom:14px;
+  color:var(--ink2);
+  font-size:15px;
+}
+
+/* ── INFOBOX ── */
+.infobox{
+  border-radius:6px;
+  padding:18px 22px;
+  margin:20px 0;
+  display:flex;
+  gap:14px;
+  border-left:4px solid;
+}
+.infobox-icon{font-size:22px;flex-shrink:0;padding-top:2px}
+.infobox-body{}
+.infobox-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.infobox-text{font-size:14px;line-height:1.65;color:var(--ink2)}
+.infobox.info{background:var(--teal-pale);border-color:var(--teal)}
+.infobox.info .infobox-title{color:var(--teal)}
+.infobox.warning{background:var(--amber-pale);border-color:var(--amber)}
+.infobox.warning .infobox-title{color:var(--amber)}
+.infobox.key{background:var(--rust-pale);border-color:var(--rust)}
+.infobox.key .infobox-title{color:var(--rust)}
+.infobox.tip{background:var(--sage-pale);border-color:var(--sage)}
+.infobox.tip .infobox-title{color:var(--sage)}
+
+/* ── CARD GRID ── */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:16px;
+  margin:22px 0;
+}
+.card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:20px 18px;
+  transition:box-shadow .2s,transform .2s;
+  cursor:default;
+}
+.card:hover{box-shadow:0 8px 28px var(--shadow);transform:translateY(-3px)}
+.card-icon{font-size:28px;margin-bottom:10px}
+.card-title{font-family:'Merriweather',serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.4}
+.card-text{font-size:12.5px;color:var(--ink2);line-height:1.6}
+
+/* ── ACCORDION ── */
+.accordion{margin:20px 0}
+.acc-item{
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:8px;
+  overflow:hidden;
+  background:var(--white);
+}
+.acc-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 18px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:14.5px;
+  color:var(--ink);
+  user-select:none;
+  transition:background .2s;
+}
+.acc-header:hover{background:var(--teal-pale)}
+.acc-header.open{background:var(--teal);color:#fff}
+.acc-arrow{
+  font-size:12px;
+  transition:transform .25s;
+  flex-shrink:0;
+  margin-left:10px;
+}
+.acc-header.open .acc-arrow{transform:rotate(180deg)}
+.acc-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+  padding:0 18px;
+  font-size:14px;
+  color:var(--ink2);
+  line-height:1.7;
+}
+.acc-body.open{max-height:600px;padding:14px 18px 18px}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;margin:20px 0}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  background:var(--white);
+  border-radius:6px;
+  overflow:hidden;
+}
+thead tr{background:var(--teal);color:#fff}
+th{padding:12px 16px;text-align:left;font-weight:600;font-size:13px}
+td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--ink2)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--teal-pale)}
+
+/* ── ICT TABS ── */
+.tabs{margin:22px 0}
+.tab-buttons{
+  display:flex;
+  gap:4px;
+  border-bottom:2px solid var(--border);
+  flex-wrap:wrap;
+}
+.tab-btn{
+  padding:9px 18px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink2);
+  border:none;
+  background:none;
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;
+  transition:all .2s;
+  font-family:'Source Sans 3',sans-serif;
+}
+.tab-btn:hover{color:var(--teal)}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal)}
+.tab-panels{}
+.tab-panel{display:none;padding:22px 0;animation:fadeIn .3s ease}
+.tab-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PENUTUP SECTION ── */
+.penutup-box{
+  background:linear-gradient(135deg, #1c1812 0%, #2a3a30 100%);
+  border-radius:10px;
+  padding:36px 40px;
+  margin:20px 0;
+  color:#d4cfc7;
+}
+.penutup-box h3{color:var(--teal2);font-family:'Merriweather',serif;margin-bottom:12px;font-size:18px}
+.penutup-box p{font-size:14px;color:#9e9890;line-height:1.7;margin-bottom:10px}
+
+/* ── RANGKUMAN BULLETS ── */
+.rangkuman-list{
+  list-style:none;
+  margin:16px 0;
+}
+.rangkuman-list li{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  font-size:14px;
+  color:#b0a898;
+  line-height:1.65;
+}
+.rangkuman-list li::before{
+  content:'◆';
+  color:var(--teal2);
+  font-size:10px;
+  flex-shrink:0;
+  margin-top:4px;
+}
+
+/* ── TES FORMATIF ── */
+.quiz-wrap{margin:20px 0}
+.quiz-item{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:22px 24px;
+  margin-bottom:16px;
+}
+.quiz-q{
+  font-weight:700;
+  font-size:15px;
+  color:var(--ink);
+  margin-bottom:14px;
+  line-height:1.5;
+}
+.quiz-q .num{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;height:26px;
+  background:var(--teal);
+  color:#fff;
+  border-radius:50%;
+  font-size:12px;
+  font-family:'Cinzel',serif;
+  margin-right:10px;
+  flex-shrink:0;
+}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt-btn{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:10px 14px;
+  border:1.5px solid var(--border);
+  border-radius:6px;
+  background:none;
+  cursor:pointer;
+  font-size:14px;
+  color:var(--ink2);
+  text-align:left;
+  font-family:'Source Sans 3',sans-serif;
+  transition:all .2s;
+  line-height:1.5;
+}
+.opt-btn:hover{border-color:var(--teal);background:var(--teal-pale)}
+.opt-btn.correct{border-color:var(--sage);background:var(--sage-pale);color:var(--sage)}
+.opt-btn.wrong{border-color:var(--rust);background:var(--rust-pale);color:var(--rust)}
+.opt-btn.disabled{cursor:not-allowed;pointer-events:none}
+.opt-label{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  font-weight:600;
+  flex-shrink:0;
+  padding-top:1px;
+}
+.feedback{
+  margin-top:12px;
+  padding:10px 14px;
+  border-radius:5px;
+  font-size:13px;
+  display:none;
+  line-height:1.5;
+}
+.feedback.show{display:block}
+.feedback.correct{background:var(--sage-pale);color:var(--sage);border:1px solid var(--sage)}
+.feedback.wrong{background:var(--rust-pale);color:var(--rust);border:1px solid var(--rust)}
+.quiz-score{
+  text-align:center;
+  padding:22px;
+  border:2px solid var(--teal);
+  border-radius:8px;
+  background:var(--teal-pale);
+  display:none;
+  font-size:18px;
+  font-family:'Merriweather',serif;
+  color:var(--teal);
+}
+.quiz-score .score-num{font-size:48px;font-weight:700;display:block;margin:8px 0}
+
+/* ── UMPAN BALIK ── */
+.feedback-form{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:28px 30px;
+  margin:20px 0;
+}
+.fb-row{margin-bottom:18px}
+.fb-label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:6px;
+  font-family:'Cinzel',serif;
+  letter-spacing:.5px;
+}
+.fb-input, .fb-textarea, .fb-select{
+  width:100%;
+  padding:10px 14px;
+  border:1.5px solid var(--border);
+  border-radius:5px;
+  font-size:14px;
+  font-family:'Source Sans 3',sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  transition:border-color .2s;
+  outline:none;
+}
+.fb-input:focus,.fb-textarea:focus,.fb-select:focus{border-color:var(--teal);background:var(--white)}
+.fb-textarea{resize:vertical;min-height:90px}
+.rating-stars{display:flex;gap:6px;margin-top:4px}
+.star{font-size:28px;cursor:pointer;color:#cdc5b4;transition:color .15s}
+.star:hover,.star.active{color:#f0a030}
+.fb-submit{
+  background:var(--teal);
+  color:#fff;
+  border:none;
+  padding:12px 30px;
+  border-radius:5px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:'Source Sans 3',sans-serif;
+  letter-spacing:.5px;
+  transition:background .2s;
+}
+.fb-submit:hover{background:var(--teal2)}
+.fb-success{
+  display:none;
+  text-align:center;
+  padding:22px;
+  font-size:16px;
+  color:var(--sage);
+  font-weight:600;
+}
+
+/* ── TINDAK LANJUT ── */
+.tl-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin:20px 0;
+}
+.tl-card{
+  border-radius:8px;
+  padding:22px;
+  border:1px solid;
+}
+.tl-card.bagi-yang-belum{background:var(--rust-pale);border-color:var(--rust)}
+.tl-card.bagi-yang-sudah{background:var(--sage-pale);border-color:var(--sage)}
+.tl-card h4{font-family:'Merriweather',serif;font-size:15px;margin-bottom:10px}
+.tl-card.bagi-yang-belum h4{color:var(--rust)}
+.tl-card.bagi-yang-sudah h4{color:var(--sage)}
+.tl-card ul{padding-left:18px;font-size:13.5px;color:var(--ink2);line-height:1.8}
+
+/* ── BACK TO TOP ── */
+.back-top{
+  position:fixed;
+  bottom:30px;right:30px;
+  background:var(--teal);
+  color:#fff;
+  width:44px;height:44px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  cursor:pointer;
+  border:none;
+  opacity:0;
+  transform:translateY(10px);
+  transition:all .3s;
+  z-index:200;
+}
+.back-top.visible{opacity:1;transform:translateY(0)}
+.back-top:hover{background:var(--teal2)}
+
+/* ── MOBILE ── */
+.menu-toggle{display:none;position:fixed;top:14px;left:14px;z-index:300;background:var(--teal);color:#fff;border:none;padding:9px 12px;border-radius:4px;font-size:18px;cursor:pointer}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-260px)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .hero{padding:70px 24px 40px}
+  .hero h1{font-size:26px}
+  .content{padding:0 24px 60px}
+  .menu-toggle{display:block}
+  .tl-grid{grid-template-columns:1fr}
+}
+
+/* CAPAIAN BOX */
+.capaian{
+  background:linear-gradient(135deg,var(--teal-pale),var(--bg2));
+  border:1px solid var(--teal);
+  border-radius:8px;
+  padding:22px 26px;
+  margin:24px 0;
+}
+.capaian-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:var(--teal);margin-bottom:12px;text-transform:uppercase}
+.capaian ul{padding-left:20px;font-size:14px;color:var(--ink2);line-height:1.8}
+
+/* def box */
+.def-box{
+  border-left:4px solid var(--teal);
+  background:var(--white);
+  padding:16px 20px;
+  margin:18px 0;
+  border-radius:0 6px 6px 0;
+  box-shadow:0 2px 10px var(--shadow);
+}
+.def-box .def-term{font-family:'Merriweather',serif;font-size:15px;color:var(--teal);font-weight:700;margin-bottom:6px}
+.def-box .def-text{font-size:14px;color:var(--ink2);line-height:1.7}
+
+/* quote */
+blockquote{
+  border-left:4px solid var(--amber);
+  margin:20px 0;
+  padding:14px 20px;
+  background:var(--amber-pale);
+  border-radius:0 6px 6px 0;
+  font-family:'Merriweather',serif;
+  font-style:italic;
+  font-size:14.5px;
+  color:var(--ink2);
+  line-height:1.7;
+}
+blockquote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--amber);font-family:'Source Sans 3',sans-serif;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- Mobile toggle -->
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-label">Pengelolaan Pendidikan</div>
+    <div class="sidebar-title">BAB I — Konsep Dasar Pengelolaan Pendidikan</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Penyajian</div>
+    <a class="nav-item active" href="#bagian-penyajian"><span class="num">§</span>Pembuka</a>
+    <a class="nav-item" href="#s1"><span class="num">1</span>Ruang Lingkup</a>
+    <a class="nav-item" href="#s2"><span class="num">2</span>Pengelolaan Kurikulum</a>
+    <a class="nav-item" href="#s3"><span class="num">3</span>Pengelolaan Peserta Didik</a>
+    <a class="nav-item" href="#s4"><span class="num">4</span>Pendidik & Tenaga Kependidikan</a>
+    <a class="nav-item" href="#s5"><span class="num">5</span>Sarana & Prasarana</a>
+    <a class="nav-item" href="#s6"><span class="num">6</span>Keuangan Pendidikan</a>
+    <a class="nav-item" href="#s7"><span class="num">7</span>Tujuan Pengelolaan</a>
+    <a class="nav-item" href="#s8"><span class="num">8</span>Implementasi di Lapangan</a>
+    <a class="nav-item" href="#s9"><span class="num">9</span>Pemanfaatan ICT</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Penutup</div>
+    <a class="nav-item" href="#rangkuman">📋 Rangkuman</a>
+    <a class="nav-item" href="#tes-formatif">✏️ Tes Formatif</a>
+    <a class="nav-item" href="#umpan-balik">💬 Umpan Balik</a>
+    <a class="nav-item" href="#tindak-lanjut">🚀 Tindak Lanjut</a>
+  </div>
+
+  <div class="sidebar-footer">
+    Disusun oleh<br>
+    <strong style="color:#d4cfc7">Martin Bernard, M.Pd</strong>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="bagian-penyajian">
+    <div class="hero-chip">BAGIAN PENYAJIAN</div>
+    <h1>
+      BAB I
+      <em>Konsep Dasar Pengelolaan Pendidikan</em>
+    </h1>
+    <p class="hero-desc">Memahami fondasi teoritis dan praktis pengelolaan pendidikan sebagai kerangka dalam mengelola sistem pendidikan secara efektif dan efisien.</p>
+    <div class="hero-meta">
+      <div class="meta-pill"><span class="icon">📚</span><span>Mata Kuliah: <strong>Pengelolaan Pendidikan</strong></span></div>
+      <div class="meta-pill"><span class="icon">👤</span><span>Penyusun: <strong>Martin Bernard, M.Pd</strong></span></div>
+      <div class="meta-pill"><span class="icon">⏱</span><span>Estimasi Baca: <strong>~45 menit</strong></span></div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="readProgress"></div>
+    </div>
+    <div class="progress-label">
+      <span>Progress Membaca</span>
+      <span id="progressPct">0%</span>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- Capaian -->
+    <div class="capaian section visible" style="margin-top:40px">
+      <div class="capaian-title">🎯 Capaian Pembelajaran</div>
+      <ul>
+        <li>Mahasiswa mampu menjelaskan konsep dasar pengelolaan pendidikan secara komprehensif</li>
+        <li>Mahasiswa mampu mengidentifikasi ruang lingkup pengelolaan pendidikan</li>
+        <li>Mahasiswa mampu mendeskripsikan tujuan pengelolaan pendidikan</li>
+        <li>Mahasiswa mampu menganalisis implementasi pengelolaan pendidikan di lapangan</li>
+        <li>Mahasiswa mampu memanfaatkan ICT dalam mendukung pengelolaan pendidikan</li>
+      </ul>
+    </div>
+
+    <!-- ─── SECTION 1 ─── -->
+    <div class="section" id="s1">
+      <div class="section-tag">Penyajian — 1</div>
+      <h2>Ruang Lingkup Pengelolaan Pendidikan</h2>
+
+      <p>Pengelolaan pendidikan merupakan suatu proses yang mencakup perencanaan, pengorganisasian, pengarahan, dan pengawasan terhadap seluruh sumber daya pendidikan guna mencapai tujuan pendidikan secara efektif dan efisien. Istilah ini sering dipadankan dengan <em>manajemen pendidikan</em> yang merujuk pada penerapan fungsi-fungsi manajemen dalam konteks lembaga pendidikan.</p>
+
+      <div class="def-box">
+        <div class="def-term">Pengelolaan Pendidikan</div>
+        <div class="def-text">Serangkaian kegiatan merencanakan, mengorganisasikan, memotivasi, mengendalikan, dan mengembangkan segala upaya di dalam mengatur dan mendayagunakan sumber daya manusia, sarana dan prasarana untuk mencapai tujuan pendidikan (Mulyasa, 2011).</div>
+      </div>
+
+      <blockquote>
+        "Education management is the theory and practice of the organization and administration of existing educational establishments and systems."
+        <cite>— Bush & Middlewood (2013)</cite>
+      </blockquote>
+
+      <h3>Komponen Utama Ruang Lingkup</h3>
+      <div class="card-grid">
+        <div class="card"><div class="card-icon">📖</div><div class="card-title">Kurikulum</div><div class="card-text">Pengelolaan isi, proses, dan evaluasi pembelajaran yang terencana dan sistematis.</div></div>
+        <div class="card"><div class="card-icon">👨‍🎓</div><div class="card-title">Peserta Didik</div><div class="card-text">Manajemen penerimaan, pembinaan, dan pengembangan potensi peserta didik.</div></div>
+        <div class="card"><div class="card-icon">👩‍🏫</div><div class="card-title">Pendidik & Tenaga</div><div class="card-text">Pengelolaan SDM kependidikan dari rekrutmen hingga pengembangan profesional.</div></div>
+        <div class="card"><div class="card-icon">🏫</div><div class="card-title">Sarana & Prasarana</div><div class="card-text">Perencanaan, pengadaan, pemeliharaan fasilitas pendukung pembelajaran.</div></div>
+        <div class="card"><div class="card-icon">💰</div><div class="card-title">Keuangan</div><div class="card-text">Perencanaan anggaran, pengelolaan dana, dan pertanggungjawaban keuangan.</div></div>
+        <div class="card"><div class="card-icon">🤝</div><div class="card-title">Hubungan Masyarakat</div><div class="card-text">Kemitraan sekolah dengan orang tua, komunitas, dan pemangku kepentingan.</div></div>
+      </div>
+
+      <div class="infobox info">
+        <span class="infobox-icon">ℹ️</span>
+        <div class="infobox-body">
+          <div class="infobox-title">Landasan Hukum</div>
+          <div class="infobox-text">Pengelolaan pendidikan di Indonesia didasarkan pada UU No. 20 Tahun 2003 tentang Sistem Pendidikan Nasional, PP No. 19 Tahun 2005 tentang Standar Nasional Pendidikan, serta Permendiknas yang berkaitan dengan pengelolaan satuan pendidikan.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 2 ─── -->
+    <div class="section" id="s2">
+      <div class="section-tag">Penyajian — 2</div>
+      <h2>Pengelolaan Kurikulum</h2>
+      <p>Pengelolaan kurikulum adalah serangkaian kegiatan yang berkaitan dengan perencanaan, pelaksanaan, dan penilaian kurikulum. Hal ini mencakup pengembangan silabus, penyusunan RPP, pemilihan bahan ajar, hingga evaluasi implementasi kurikulum di tingkat satuan pendidikan.</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>📝 Perencanaan Kurikulum</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">Meliputi analisis kebutuhan, penetapan tujuan pembelajaran, pengembangan materi dan silabus, serta koordinasi dengan kebijakan kurikulum nasional (Kurikulum Merdeka). Kepala sekolah dan guru berkolaborasi dalam menyesuaikan kurikulum dengan konteks lokal.</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>🏃 Pelaksanaan Kurikulum</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">Guru mengimplementasikan kurikulum melalui proses pembelajaran yang terstruktur, menggunakan berbagai strategi pedagogis, media pembelajaran, dan pendekatan diferensiasi untuk memenuhi kebutuhan beragam peserta didik.</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>📊 Evaluasi Kurikulum</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">Mencakup evaluasi formatif dan sumatif, penilaian capaian pembelajaran peserta didik, serta evaluasi kualitas implementasi kurikulum secara keseluruhan. Hasil evaluasi digunakan sebagai umpan balik untuk perbaikan kurikulum.</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>🔄 Pengembangan Kurikulum</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">Proses penyempurnaan kurikulum berdasarkan hasil evaluasi, perkembangan ilmu pengetahuan, perubahan kebutuhan masyarakat, serta kebijakan pemerintah. Melibatkan seluruh pemangku kepentingan pendidikan.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 3 ─── -->
+    <div class="section" id="s3">
+      <div class="section-tag">Penyajian — 3</div>
+      <h2>Pengelolaan Peserta Didik</h2>
+      <p>Pengelolaan peserta didik merupakan pengaturan terhadap kegiatan yang berkaitan dengan peserta didik, mulai dari proses penerimaan hingga kelulusan, guna mendukung tumbuh kembang peserta didik secara optimal sesuai dengan karakteristik dan kebutuhannya.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Aspek</th>
+              <th>Kegiatan</th>
+              <th>Tujuan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Penerimaan</td><td>PPDB, seleksi, orientasi</td><td>Mendapatkan peserta didik yang sesuai kapasitas</td></tr>
+            <tr><td>Pembinaan</td><td>Bimbingan, konseling, ekstrakurikuler</td><td>Mengembangkan potensi akademik dan non-akademik</td></tr>
+            <tr><td>Kedisiplinan</td><td>Tata tertib, pembinaan karakter</td><td>Membentuk perilaku positif dan bertanggung jawab</td></tr>
+            <tr><td>Kehadiran</td><td>Absensi, monitoring</td><td>Memastikan keterlibatan aktif dalam pembelajaran</td></tr>
+            <tr><td>Prestasi</td><td>Penilaian, penghargaan</td><td>Mendorong pencapaian optimal peserta didik</td></tr>
+            <tr><td>Alumni</td><td>Tracer study, jaringan alumni</td><td>Memantau keberhasilan lulusan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="infobox tip">
+        <span class="infobox-icon">💡</span>
+        <div class="infobox-body">
+          <div class="infobox-title">Pendekatan Student-Centered</div>
+          <div class="infobox-text">Pengelolaan peserta didik yang efektif mengedepankan pendekatan berpusat pada peserta didik, memperhatikan keberagaman gaya belajar, kebutuhan khusus (ABK), serta latar belakang sosial-budaya masing-masing individu.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 4 ─── -->
+    <div class="section" id="s4">
+      <div class="section-tag">Penyajian — 4</div>
+      <h2>Pengelolaan Pendidik dan Tenaga Kependidikan</h2>
+      <p>Sumber daya manusia merupakan aset paling kritis dalam pendidikan. Pengelolaan pendidik dan tenaga kependidikan mencakup seluruh siklus manajemen SDM dari rekrutmen hingga pensiun, dengan fokus pada peningkatan profesionalisme dan kesejahteraan.</p>
+
+      <div class="card-grid">
+        <div class="card"><div class="card-icon">🔍</div><div class="card-title">Rekrutmen & Seleksi</div><div class="card-text">Proses pengadaan tenaga pendidik yang kompeten sesuai kualifikasi dan kebutuhan satuan pendidikan.</div></div>
+        <div class="card"><div class="card-icon">📚</div><div class="card-title">Pengembangan Profesional</div><div class="card-text">Pelatihan, workshop, sertifikasi, dan program mentoring untuk meningkatkan kompetensi guru.</div></div>
+        <div class="card"><div class="card-icon">⭐</div><div class="card-title">Penilaian Kinerja</div><div class="card-text">Evaluasi berkala terhadap kinerja guru melalui supervisi, PKG, dan instrumen penilaian terstandar.</div></div>
+        <div class="card"><div class="card-icon">💼</div><div class="card-title">Kesejahteraan</div><div class="card-text">Pengelolaan kompensasi, tunjangan, dan penghargaan untuk meningkatkan motivasi dan retensi guru.</div></div>
+      </div>
+
+      <blockquote>
+        "Guru yang berkualitas adalah fondasi utama sistem pendidikan yang berkualitas."
+        <cite>— UNESCO (2016)</cite>
+      </blockquote>
+    </div>
+
+    <!-- ─── SECTION 5 ─── -->
+    <div class="section" id="s5">
+      <div class="section-tag">Penyajian — 5</div>
+      <h2>Pengelolaan Sarana dan Prasarana Pendidikan</h2>
+      <p>Sarana adalah segala sesuatu yang secara langsung digunakan dalam proses pembelajaran (meja, kursi, buku, komputer), sedangkan prasarana adalah fasilitas yang secara tidak langsung mendukung jalannya proses pendidikan (gedung, halaman, jalan).</p>
+
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>📋 Perencanaan Pengadaan</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">Analisis kebutuhan sarana-prasarana, penyusunan rencana pengadaan, penganggaran, serta koordinasi dengan dinas pendidikan. Pengadaan dilakukan sesuai prinsip efisiensi, transparansi, dan akuntabilitas.</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>🔧 Pemeliharaan & Perawatan</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">Program pemeliharaan rutin dan berkala untuk memastikan seluruh fasilitas dalam kondisi baik dan siap pakai. Melibatkan petugas kebersihan, teknisi, dan komitmen seluruh warga sekolah.</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>📦 Inventarisasi & Penghapusan</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">Pencatatan sistematis terhadap seluruh aset pendidikan (barang bergerak dan tidak bergerak), serta proses penghapusan barang yang sudah tidak dapat digunakan sesuai prosedur yang berlaku.</div>
+        </div>
+      </div>
+
+      <div class="infobox warning">
+        <span class="infobox-icon">⚠️</span>
+        <div class="infobox-body">
+          <div class="infobox-title">Perhatian</div>
+          <div class="infobox-text">Standar Nasional Pendidikan (SNP) menetapkan standar minimum sarana dan prasarana yang harus dipenuhi oleh setiap satuan pendidikan. Ketidaksesuaian dengan standar ini dapat berdampak pada akreditasi sekolah.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 6 ─── -->
+    <div class="section" id="s6">
+      <div class="section-tag">Penyajian — 6</div>
+      <h2>Pengelolaan Keuangan Pendidikan</h2>
+      <p>Keuangan pendidikan menyangkut perencanaan, penggunaan, dan pertanggungjawaban dana pendidikan secara transparan dan akuntabel. Sumber dana berasal dari pemerintah (BOS, DAK), orang tua (SPP), dan sumber lain yang sah.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Prinsip</th><th>Penjelasan</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Transparansi</td><td>Keterbukaan informasi keuangan kepada seluruh pemangku kepentingan</td></tr>
+            <tr><td>Akuntabilitas</td><td>Pertanggungjawaban penggunaan dana sesuai aturan yang berlaku</td></tr>
+            <tr><td>Efektivitas</td><td>Dana digunakan untuk mencapai tujuan pendidikan yang telah ditetapkan</td></tr>
+            <tr><td>Efisiensi</td><td>Optimalisasi penggunaan dana dengan hasil yang maksimal</td></tr>
+            <tr><td>Keadilan</td><td>Distribusi sumber daya yang adil dan merata bagi seluruh peserta didik</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="infobox key">
+        <span class="infobox-icon">🔑</span>
+        <div class="infobox-body">
+          <div class="infobox-title">Dana BOS (Bantuan Operasional Sekolah)</div>
+          <div class="infobox-text">BOS merupakan program pemerintah untuk penyediaan pendanaan biaya operasional nonpersonalia bagi satuan pendidikan. Penggunaannya diatur dalam Permendikbud dan harus dilaporkan secara berkala melalui sistem aplikasi BOS Kita.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 7 ─── -->
+    <div class="section" id="s7">
+      <div class="section-tag">Penyajian — 7</div>
+      <h2>Tujuan Pengelolaan Pendidikan</h2>
+      <p>Pengelolaan pendidikan memiliki tujuan yang terintegrasi pada berbagai level, dari tingkat individu peserta didik hingga sistem pendidikan nasional secara keseluruhan.</p>
+
+      <div class="card-grid">
+        <div class="card"><div class="card-icon">🎯</div><div class="card-title">Efektivitas Pembelajaran</div><div class="card-text">Memastikan proses pembelajaran berlangsung optimal sehingga tujuan kurikuler tercapai.</div></div>
+        <div class="card"><div class="card-icon">⚡</div><div class="card-title">Efisiensi Sumber Daya</div><div class="card-text">Mengoptimalkan penggunaan seluruh sumber daya pendidikan secara tepat guna.</div></div>
+        <div class="card"><div class="card-icon">🌱</div><div class="card-title">Pengembangan Potensi</div><div class="card-text">Memfasilitasi perkembangan optimal setiap peserta didik sesuai bakat dan minatnya.</div></div>
+        <div class="card"><div class="card-icon">📈</div><div class="card-title">Mutu Pendidikan</div><div class="card-text">Meningkatkan standar kualitas pendidikan yang berkesinambungan dan terukur.</div></div>
+        <div class="card"><div class="card-icon">⚖️</div><div class="card-title">Akuntabilitas</div><div class="card-text">Mewujudkan tata kelola pendidikan yang transparan, akuntabel, dan bertanggung jawab.</div></div>
+        <div class="card"><div class="card-icon">🤲</div><div class="card-title">Pemerataan Akses</div><div class="card-text">Menjamin akses pendidikan yang berkeadilan bagi seluruh lapisan masyarakat.</div></div>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 8 ─── -->
+    <div class="section" id="s8">
+      <div class="section-tag">Penyajian — 8</div>
+      <h2>Implementasi Ruang Lingkup Pengelolaan Pendidikan di Lapangan</h2>
+      <p>Implementasi pengelolaan pendidikan di lapangan seringkali menghadapi berbagai tantangan yang berkaitan dengan sumber daya, kapasitas manajerial, dan konteks sosial-budaya setempat.</p>
+
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>✅ Faktor Pendukung Keberhasilan</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">
+            <ul style="padding-left:18px;line-height:2;font-size:14px;color:var(--ink2)">
+              <li>Kepemimpinan kepala sekolah yang visioner dan transformatif</li>
+              <li>Kompetensi manajerial yang memadai pada level sekolah</li>
+              <li>Dukungan komite sekolah dan partisipasi masyarakat</li>
+              <li>Ketersediaan sumber daya yang mencukupi</li>
+              <li>Sistem monitoring dan evaluasi yang berjalan efektif</li>
+              <li>Budaya organisasi sekolah yang positif dan kolaboratif</li>
+            </ul>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>⚡ Tantangan di Lapangan</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">
+            <ul style="padding-left:18px;line-height:2;font-size:14px;color:var(--ink2)">
+              <li>Keterbatasan sumber daya keuangan dan fasilitas, terutama di daerah terpencil</li>
+              <li>Rendahnya kapasitas manajerial kepala sekolah</li>
+              <li>Birokrasi yang kompleks dan berbelit</li>
+              <li>Resistensi terhadap perubahan dan inovasi</li>
+              <li>Kesenjangan antara kebijakan nasional dan kebutuhan lokal</li>
+            </ul>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><span>🏆 Praktik Terbaik (Best Practices)</span><span class="acc-arrow">▼</span></div>
+          <div class="acc-body">Beberapa praktik terbaik yang telah berhasil diterapkan di berbagai sekolah: penerapan Manajemen Berbasis Sekolah (MBS), penggunaan sistem informasi manajemen sekolah, program pendampingan kepala sekolah muda, serta penguatan kemitraan sekolah-industri untuk mendukung relevansi pendidikan vokasi.</div>
+        </div>
+      </div>
+
+      <div class="infobox info">
+        <span class="infobox-icon">🏛️</span>
+        <div class="infobox-body">
+          <div class="infobox-title">Manajemen Berbasis Sekolah (MBS)</div>
+          <div class="infobox-text">MBS adalah model manajemen yang memberikan otonomi lebih besar kepada sekolah dan mendorong pengambilan keputusan partisipatif yang melibatkan langsung warga sekolah dan masyarakat untuk meningkatkan mutu pendidikan berdasarkan kebijakan pendidikan nasional.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SECTION 9 ─── -->
+    <div class="section" id="s9">
+      <div class="section-tag">Penyajian — 9</div>
+      <h2>Pemanfaatan ICT dalam Ruang Lingkup Pengelolaan Pendidikan</h2>
+      <p>Teknologi Informasi dan Komunikasi (ICT) telah mengubah lanskap pengelolaan pendidikan secara fundamental. ICT memungkinkan otomasi proses, pengambilan keputusan berbasis data, dan komunikasi yang lebih efektif antar pemangku kepentingan pendidikan.</p>
+
+      <div class="tabs">
+        <div class="tab-buttons">
+          <button class="tab-btn active" onclick="switchTab(this,'t1')">🖥️ SIM Sekolah</button>
+          <button class="tab-btn" onclick="switchTab(this,'t2')">📊 E-Raport</button>
+          <button class="tab-btn" onclick="switchTab(this,'t3')">☁️ Platform Digital</button>
+          <button class="tab-btn" onclick="switchTab(this,'t4')">🤖 AI & Big Data</button>
+        </div>
+        <div class="tab-panels">
+          <div class="tab-panel active" id="t1">
+            <p>Sistem Informasi Manajemen (SIM) Sekolah mengintegrasikan seluruh aspek pengelolaan sekolah dalam satu platform digital. Contoh di Indonesia: <strong>DAPODIK</strong> (Data Pokok Pendidikan), <strong>EMIS</strong> untuk madrasah, dan berbagai aplikasi SIM lokal yang dikembangkan sekolah.</p>
+            <div class="card-grid">
+              <div class="card"><div class="card-icon">📋</div><div class="card-title">DAPODIK</div><div class="card-text">Basis data utama satuan pendidikan yang memuat data guru, siswa, sarana-prasarana, dan kurikulum.</div></div>
+              <div class="card"><div class="card-icon">💳</div><div class="card-title">BOS Kita</div><div class="card-text">Platform pengelolaan dan pelaporan dana Bantuan Operasional Sekolah secara digital.</div></div>
+              <div class="card"><div class="card-icon">📝</div><div class="card-title">SIMPKB</div><div class="card-text">Sistem pengelolaan pengembangan keprofesian berkelanjutan guru dan tenaga kependidikan.</div></div>
+            </div>
+          </div>
+          <div class="tab-panel" id="t2">
+            <p>E-Raport menggantikan sistem pelaporan manual dengan platform digital yang terintegrasi. Keuntungan: efisiensi waktu, minimalisasi kesalahan, kemudahan akses orang tua, dan integrasi dengan DAPODIK.</p>
+            <div class="infobox tip">
+              <span class="infobox-icon">💡</span>
+              <div class="infobox-body">
+                <div class="infobox-title">Keunggulan E-Raport</div>
+                <div class="infobox-text">E-Raport memungkinkan orang tua memantau perkembangan akademik anak secara real-time melalui aplikasi mobile, sekaligus mengurangi beban administrasi guru hingga 40% dibandingkan sistem manual.</div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-panel" id="t3">
+            <p>Platform digital learning management system (LMS) seperti Google Classroom, Moodle, dan Microsoft Teams mendukung proses pembelajaran hybrid dan pengelolaan kurikulum digital.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Platform</th><th>Fungsi Utama</th><th>Keunggulan</th></tr></thead>
+                <tbody>
+                  <tr><td>Google Workspace for Education</td><td>Kolaborasi & produktivitas</td><td>Gratis, terintegrasi, mudah digunakan</td></tr>
+                  <tr><td>Microsoft 365 Education</td><td>Pengelolaan kelas & konten</td><td>Lengkap, aman, mendukung Teams</td></tr>
+                  <tr><td>Moodle</td><td>LMS open source</td><td>Fleksibel, dapat dikustomisasi</td></tr>
+                  <tr><td>Rapor Digital (Kemdikbud)</td><td>Asesmen & pelaporan</td><td>Resmi, sesuai kurikulum nasional</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-panel" id="t4">
+            <p>Kecerdasan Buatan (AI) dan analitik data besar (Big Data) mulai diterapkan dalam pengelolaan pendidikan untuk pengambilan keputusan berbasis bukti dan personalisasi pembelajaran.</p>
+            <div class="card-grid">
+              <div class="card"><div class="card-icon">🔮</div><div class="card-title">Analitik Prediktif</div><div class="card-text">Mengidentifikasi peserta didik berisiko putus sekolah sejak dini untuk intervensi tepat waktu.</div></div>
+              <div class="card"><div class="card-icon">🎯</div><div class="card-title">Personalisasi Belajar</div><div class="card-text">Menyesuaikan konten dan kecepatan belajar dengan kebutuhan individual peserta didik.</div></div>
+              <div class="card"><div class="card-icon">📊</div><div class="card-title">Dashboard Manajerial</div><div class="card-text">Visualisasi data kinerja sekolah secara real-time untuk pengambilan keputusan berbasis data.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PENUTUP ══════════ -->
+    <div style="margin-top:60px;padding-top:20px;border-top:3px solid var(--teal)">
+      <div class="section-tag" style="font-size:12px;margin-bottom:20px">✦ BAGIAN PENUTUP ✦</div>
+
+      <!-- RANGKUMAN -->
+      <div class="section" id="rangkuman">
+        <div class="section-tag">Penutup — 1</div>
+        <h2>Rangkuman</h2>
+        <div class="penutup-box">
+          <h3>📋 Poin-Poin Kunci BAB I</h3>
+          <ul class="rangkuman-list">
+            <li>Pengelolaan pendidikan adalah proses POAC (Planning, Organizing, Actuating, Controlling) yang diterapkan dalam konteks pendidikan untuk mencapai tujuan pendidikan secara efektif dan efisien.</li>
+            <li>Ruang lingkup pengelolaan pendidikan mencakup enam bidang utama: kurikulum, peserta didik, pendidik &amp; tenaga kependidikan, sarana-prasarana, keuangan, dan hubungan masyarakat.</li>
+            <li>Pengelolaan kurikulum melibatkan perencanaan, pelaksanaan, evaluasi, dan pengembangan kurikulum secara berkesinambungan sesuai kebijakan nasional.</li>
+            <li>Peserta didik dikelola mulai dari penerimaan, pembinaan, hingga kelulusan dengan pendekatan yang berpusat pada kebutuhan individu.</li>
+            <li>SDM pendidikan dikelola melalui siklus manajemen yang mencakup rekrutmen, pengembangan profesional, penilaian kinerja, dan kesejahteraan.</li>
+            <li>Tujuan pengelolaan pendidikan mencakup efektivitas pembelajaran, efisiensi sumber daya, peningkatan mutu, akuntabilitas, dan pemerataan akses.</li>
+            <li>ICT memiliki peran strategis dalam mendukung pengelolaan pendidikan modern melalui sistem informasi, platform digital, dan analitik berbasis data.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- TES FORMATIF -->
+      <div class="section" id="tes-formatif">
+        <div class="section-tag">Penutup — 2</div>
+        <h2>Tes Formatif</h2>
+        <p style="margin-bottom:20px">Uji pemahaman Anda terhadap materi BAB I. Pilih jawaban yang paling tepat untuk setiap soal berikut.</p>
+
+        <div class="quiz-wrap" id="quizContainer">
+
+          <div class="quiz-item" data-correct="b">
+            <div class="quiz-q"><span class="num">1</span> Pengelolaan pendidikan sebagai suatu proses mencakup fungsi-fungsi manajemen, yaitu...</div>
+            <div class="options">
+              <button class="opt-btn" onclick="answerQuiz(this,'a','b')"><span class="opt-label">A</span> Pengawasan, Evaluasi, Pengembangan, Pelaporan</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'b','b')"><span class="opt-label">B</span> Perencanaan, Pengorganisasian, Pengarahan, dan Pengawasan</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'c','b')"><span class="opt-label">C</span> Pengembangan, Pelaksanaan, Monitoring, Evaluasi</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'d','b')"><span class="opt-label">D</span> Rekrutmen, Pelatihan, Penempatan, Pemeliharaan</button>
+            </div>
+            <div class="feedback" id="fb_1">✅ Jawaban benar! Fungsi manajemen (POAC): Planning, Organizing, Actuating, Controlling.</div>
+          </div>
+
+          <div class="quiz-item" data-correct="c">
+            <div class="quiz-q"><span class="num">2</span> Manakah yang TIDAK termasuk dalam ruang lingkup pengelolaan pendidikan?</div>
+            <div class="options">
+              <button class="opt-btn" onclick="answerQuiz(this,'a','c')"><span class="opt-label">A</span> Pengelolaan kurikulum</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'b','c')"><span class="opt-label">B</span> Pengelolaan keuangan pendidikan</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'c','c')"><span class="opt-label">C</span> Pengelolaan produksi barang industri</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'d','c')"><span class="opt-label">D</span> Pengelolaan peserta didik</button>
+            </div>
+            <div class="feedback" id="fb_2">✅ Benar! Pengelolaan produksi barang industri bukan bagian dari ruang lingkup pengelolaan pendidikan.</div>
+          </div>
+
+          <div class="quiz-item" data-correct="a">
+            <div class="quiz-q"><span class="num">3</span> Prinsip yang menekankan keterbukaan informasi keuangan kepada seluruh pemangku kepentingan disebut...</div>
+            <div class="options">
+              <button class="opt-btn" onclick="answerQuiz(this,'a','a')"><span class="opt-label">A</span> Transparansi</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'b','a')"><span class="opt-label">B</span> Efektivitas</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'c','a')"><span class="opt-label">C</span> Efisiensi</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'d','a')"><span class="opt-label">D</span> Akuntabilitas</button>
+            </div>
+            <div class="feedback" id="fb_3">✅ Tepat! Transparansi berarti keterbukaan informasi kepada seluruh pemangku kepentingan.</div>
+          </div>
+
+          <div class="quiz-item" data-correct="d">
+            <div class="quiz-q"><span class="num">4</span> DAPODIK dalam sistem pengelolaan pendidikan di Indonesia berfungsi sebagai...</div>
+            <div class="options">
+              <button class="opt-btn" onclick="answerQuiz(this,'a','d')"><span class="opt-label">A</span> Platform ujian nasional berbasis komputer</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'b','d')"><span class="opt-label">B</span> Sistem pembayaran gaji guru</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'c','d')"><span class="opt-label">C</span> Aplikasi pembelajaran online untuk siswa</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'d','d')"><span class="opt-label">D</span> Basis data utama satuan pendidikan yang memuat data guru, siswa, dan sarana-prasarana</button>
+            </div>
+            <div class="feedback" id="fb_4">✅ Benar! DAPODIK adalah Data Pokok Pendidikan, basis data utama untuk seluruh satuan pendidikan.</div>
+          </div>
+
+          <div class="quiz-item" data-correct="b">
+            <div class="quiz-q"><span class="num">5</span> Model manajemen yang memberikan otonomi lebih besar kepada sekolah dalam pengambilan keputusan secara partisipatif disebut...</div>
+            <div class="options">
+              <button class="opt-btn" onclick="answerQuiz(this,'a','b')"><span class="opt-label">A</span> Manajemen Terpusat (Centralized Management)</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'b','b')"><span class="opt-label">B</span> Manajemen Berbasis Sekolah (MBS)</button>
+              <button class="opt-btn" onclick="answerQuiz(this,'c','b')"><span class="opt-label">C</span> Total Quality Management (TQM)</span></button>
+              <button class="opt-btn" onclick="answerQuiz(this,'d','b')"><span class="opt-label">D</span> Manajemen Strategis Pendidikan</button>
+            </div>
+            <div class="feedback" id="fb_5">✅ Tepat! MBS (Manajemen Berbasis Sekolah) memberikan otonomi kepada sekolah untuk mengelola dirinya sendiri.</div>
+          </div>
+
+          <div style="text-align:center;margin-top:24px">
+            <button onclick="showScore()" style="background:var(--teal);color:#fff;border:none;padding:13px 36px;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Source Sans 3',sans-serif;letter-spacing:.5px">Lihat Nilai Saya →</button>
+          </div>
+
+          <div class="quiz-score" id="quizScore">
+            Nilai Anda
+            <span class="score-num" id="scoreNum">—</span>
+            <span style="font-family:'Source Sans 3',sans-serif;font-size:14px;color:var(--ink2)" id="scoreMsg"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- UMPAN BALIK -->
+      <div class="section" id="umpan-balik">
+        <div class="section-tag">Penutup — 3</div>
+        <h2>Umpan Balik</h2>
+        <p>Berikan penilaian dan masukan Anda terhadap materi BAB I ini. Umpan balik Anda sangat berharga untuk perbaikan bahan ajar.</p>
+
+        <div class="feedback-form" id="fbForm">
+          <div class="fb-row">
+            <label class="fb-label">Nama Mahasiswa</label>
+            <input class="fb-input" type="text" placeholder="Masukkan nama lengkap Anda">
+          </div>
+          <div class="fb-row">
+            <label class="fb-label">NIM</label>
+            <input class="fb-input" type="text" placeholder="Nomor Induk Mahasiswa">
+          </div>
+          <div class="fb-row">
+            <label class="fb-label">Penilaian Kejelasan Materi</label>
+            <div class="rating-stars" id="stars1">
+              <span class="star" onclick="setRating('stars1',1)">★</span>
+              <span class="star" onclick="setRating('stars1',2)">★</span>
+              <span class="star" onclick="setRating('stars1',3)">★</span>
+              <span class="star" onclick="setRating('stars1',4)">★</span>
+              <span class="star" onclick="setRating('stars1',5)">★</span>
+            </div>
+          </div>
+          <div class="fb-row">
+            <label class="fb-label">Tingkat Kesulitan Materi</label>
+            <select class="fb-select">
+              <option value="">— Pilih —</option>
+              <option>Sangat Mudah</option>
+              <option>Mudah</option>
+              <option>Sedang</option>
+              <option>Sulit</option>
+              <option>Sangat Sulit</option>
+            </select>
+          </div>
+          <div class="fb-row">
+            <label class="fb-label">Bagian yang Paling Sulit Dipahami</label>
+            <select class="fb-select">
+              <option value="">— Pilih —</option>
+              <option>Ruang Lingkup Pengelolaan</option>
+              <option>Pengelolaan Kurikulum</option>
+              <option>Pengelolaan Peserta Didik</option>
+              <option>Pengelolaan SDM Kependidikan</option>
+              <option>Pengelolaan Sarana & Prasarana</option>
+              <option>Pengelolaan Keuangan</option>
+              <option>Tujuan Pengelolaan</option>
+              <option>Implementasi di Lapangan</option>
+              <option>Pemanfaatan ICT</option>
+            </select>
+          </div>
+          <div class="fb-row">
+            <label class="fb-label">Komentar & Saran</label>
+            <textarea class="fb-textarea" placeholder="Tuliskan komentar, saran, atau pertanyaan Anda tentang materi BAB I..."></textarea>
+          </div>
+          <button class="fb-submit" onclick="submitFeedback()">Kirim Umpan Balik ✉</button>
+        </div>
+        <div class="fb-success" id="fbSuccess">
+          🎉 Terima kasih! Umpan balik Anda telah berhasil dikirim.<br>
+          <span style="font-size:14px;color:var(--ink2)">Masukan Anda sangat membantu pengembangan bahan ajar ini.</span>
+        </div>
+      </div>
+
+      <!-- TINDAK LANJUT -->
+      <div class="section" id="tindak-lanjut">
+        <div class="section-tag">Penutup — 4</div>
+        <h2>Tindak Lanjut</h2>
+        <p>Berdasarkan hasil tes formatif Anda, silakan lakukan tindak lanjut berikut sesuai dengan capaian Anda.</p>
+
+        <div class="tl-grid">
+          <div class="tl-card bagi-yang-belum">
+            <h4>⚠️ Nilai &lt; 70 — Pelajari Ulang</h4>
+            <ul>
+              <li>Baca kembali seluruh materi BAB I secara seksama</li>
+              <li>Catat konsep-konsep kunci dan definisi penting</li>
+              <li>Kerjakan latihan soal tambahan dari buku referensi</li>
+              <li>Diskusikan materi yang sulit dengan teman atau dosen</li>
+              <li>Manfaatkan sesi konsultasi dengan dosen pengampu</li>
+            </ul>
+          </div>
+          <div class="tl-card bagi-yang-sudah">
+            <h4>✅ Nilai ≥ 70 — Perdalam & Kembangkan</h4>
+            <ul>
+              <li>Lanjutkan ke BAB II tentang Ruang Lingkup dan Tujuan</li>
+              <li>Baca referensi lanjutan (lihat daftar pustaka)</li>
+              <li>Kunjungi sekolah dan observasi praktik pengelolaan nyata</li>
+              <li>Buat analisis komparatif pengelolaan di berbagai jenis sekolah</li>
+              <li>Ikuti webinar atau seminar tentang manajemen pendidikan</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="infobox info" style="margin-top:20px">
+          <span class="infobox-icon">📚</span>
+          <div class="infobox-body">
+            <div class="infobox-title">Referensi Utama</div>
+            <div class="infobox-text">
+              Bush, T. & Middlewood, D. (2013). <em>Leading and Managing People in Education</em>. SAGE Publications.<br>
+              Mulyasa, E. (2011). <em>Manajemen Berbasis Sekolah</em>. PT Remaja Rosdakarya.<br>
+              Robbins, S.P. & Coulter, M. (2018). <em>Management</em> (14th ed.). Pearson.<br>
+              Undang-Undang No. 20 Tahun 2003 tentang Sistem Pendidikan Nasional.
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:36px;padding:30px;background:linear-gradient(135deg,var(--teal-pale),var(--bg2));border-radius:10px;border:1px solid var(--teal)">
+          <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--teal);margin-bottom:10px">SELAMAT MENYELESAIKAN BAB I</div>
+          <div style="font-family:'Merriweather',serif;font-size:20px;color:var(--ink);margin-bottom:6px">Konsep Dasar Pengelolaan Pendidikan</div>
+          <div style="font-size:13px;color:var(--ink2)">Disusun oleh <strong>Martin Bernard, M.Pd</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Back to top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── SIDEBAR TOGGLE (mobile) ──
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  const sb=document.getElementById('sidebar');
+  if(window.innerWidth<=768 && sb.classList.contains('open') && !sb.contains(e.target) && !e.target.closest('.menu-toggle'))
+    sb.classList.remove('open');
+});
+
+// ── ACTIVE NAV ──
+const navLinks = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('.section[id]');
+window.addEventListener('scroll',function(){
+  let cur='';
+  sections.forEach(s=>{
+    if(window.scrollY >= s.offsetTop-120) cur=s.id;
+  });
+  navLinks.forEach(l=>{
+    l.classList.toggle('active', l.getAttribute('href')==='#'+cur);
+  });
+
+  // back-to-top
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY>400);
+
+  // progress bar
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = Math.round((window.scrollY/total)*100);
+  document.getElementById('readProgress').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = pct+'%';
+});
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.08});
+document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+
+// ── ACCORDION ──
+function toggleAcc(header){
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  // close all in same accordion
+  header.closest('.accordion').querySelectorAll('.acc-body.open').forEach(b=>{
+    b.classList.remove('open');
+    b.previousElementSibling.classList.remove('open');
+  });
+  if(!isOpen){ body.classList.add('open'); header.classList.add('open'); }
+}
+
+// ── TABS ──
+function switchTab(btn, panelId){
+  btn.closest('.tabs').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.closest('.tabs').querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+// ── QUIZ ──
+let answered={};
+function answerQuiz(btn, chosen, correct){
+  const item = btn.closest('.quiz-item');
+  if(item.dataset.answered) return;
+  item.dataset.answered='true';
+  const qNum = [...document.querySelectorAll('.quiz-item')].indexOf(item)+1;
+  answered[qNum] = chosen===correct;
+  const fb = document.getElementById('fb_'+qNum);
+  item.querySelectorAll('.opt-btn').forEach(b=>b.classList.add('disabled'));
+  if(chosen===correct){
+    btn.classList.add('correct');
+    fb.className='feedback show correct';
+    fb.textContent='✅ '+fb.textContent.replace(/^[✅❌]\s*/,'');
+  } else {
+    btn.classList.add('wrong');
+    fb.className='feedback show wrong';
+    fb.textContent='❌ Jawaban kurang tepat. '+fb.textContent.replace(/^[✅❌]\s*/,'');
+    // highlight correct
+    item.querySelectorAll('.opt-btn').forEach(b=>{
+      if(b.querySelector('.opt-label').textContent===correct.toUpperCase()) b.classList.add('correct');
+    });
+  }
+  fb.style.display='block';
+}
+function showScore(){
+  const total=5;
+  const right=Object.values(answered).filter(v=>v).length;
+  const pct=Math.round((right/total)*100);
+  const el=document.getElementById('quizScore');
+  document.getElementById('scoreNum').textContent=pct;
+  let msg='';
+  if(pct>=80) msg='🌟 Luar biasa! Pemahaman Anda sangat baik.';
+  else if(pct>=60) msg='👍 Cukup baik! Pelajari kembali bagian yang belum tepat.';
+  else msg='📖 Perlu belajar lebih giat. Ulangi materi BAB I.';
+  document.getElementById('scoreMsg').textContent=msg;
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ── RATING STARS ──
+function setRating(groupId, val){
+  const stars=document.getElementById(groupId).querySelectorAll('.star');
+  stars.forEach((s,i)=>s.classList.toggle('active', i<val));
+}
+
+// ── UMPAN BALIK SUBMIT ──
+function submitFeedback(){
+  document.getElementById('fbForm').style.display='none';
+  document.getElementById('fbSuccess').style.display='block';
+}
+</script>
+</body>
+</html>
