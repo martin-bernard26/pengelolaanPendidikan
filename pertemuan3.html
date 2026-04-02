@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perencanaan Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --deep-blue: #1b2d45;
+    --teal: #1a6b6b;
+    --gold: #c9a84c;
+    --gold-light: #e4c880;
+    --cream: #f5f0e8;
+    --warm-white: #faf8f4;
+    --text-dark: #1a1a2e;
+    --text-mid: #3d4a5c;
+    --text-light: #6b7a8d;
+    --accent-red: #8b2e2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', serif;
+    background-color: var(--warm-white);
+    color: var(--text-dark);
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(26,107,107,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.15) 0%, transparent 50%);
+    color: var(--cream);
+    padding: 80px 60px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 59px,
+      rgba(255,255,255,0.02) 59px,
+      rgba(255,255,255,0.02) 60px
+    );
+  }
+  .hero-label {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: inline-block;
+    position: relative;
+  }
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    max-width: 680px;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-sub {
+    margin-top: 22px;
+    font-size: 1.05rem;
+    color: rgba(245,240,232,0.7);
+    max-width: 560px;
+    font-weight: 300;
+    position: relative;
+  }
+  .hero-ornament {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-ornament::before {
+    content: '';
+    width: 170px; height: 170px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 50%;
+    position: absolute;
+  }
+  .hero-ornament-icon {
+    font-size: 4rem;
+    opacity: 0.6;
+  }
+
+  /* ── NAV TOC ── */
+  .toc-bar {
+    background: var(--deep-blue);
+    padding: 0 60px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .toc-bar::-webkit-scrollbar { display: none; }
+  .toc-item {
+    padding: 16px 20px;
+    color: rgba(245,240,232,0.55);
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .toc-item:hover, .toc-item.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding-top: 72px;
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(26,107,107,0.15);
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: -8px;
+  }
+  .section-title-wrap {}
+  .section-tag {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    margin-bottom: 32px;
+    opacity: 0.3;
+  }
+
+  /* ── PROSE ── */
+  .prose p {
+    font-size: 1rem;
+    color: var(--text-mid);
+    margin-bottom: 16px;
+    line-height: 1.85;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* ── DEFINITION BOX ── */
+  .def-box {
+    border-left: 3px solid var(--gold);
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(26,107,107,0.04));
+    padding: 28px 32px;
+    margin: 28px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .def-box p {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--text-dark);
+    line-height: 1.8;
+  }
+  .def-box cite {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.82rem;
+    font-style: normal;
+    color: var(--text-light);
+    letter-spacing: 0.3px;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 28px 0;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 10px;
+    padding: 24px 26px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(13,27,42,0.1);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+  }
+  .card-icon {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    margin: 28px 0;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: 44px;
+    bottom: 44px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--teal), var(--gold));
+    opacity: 0.25;
+  }
+  .step {
+    display: flex;
+    gap: 24px;
+    padding: 20px 0;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 46px;
+    height: 46px;
+    background: var(--navy);
+    color: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--navy);
+    margin-bottom: 6px;
+    margin-top: 10px;
+  }
+  .step-content p {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+  }
+
+  /* ── TWO COLUMN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 28px 0;
+  }
+  @media (max-width: 680px) {
+    .two-col { grid-template-columns: 1fr; }
+    .hero { padding: 50px 24px; }
+    .hero-ornament { display: none; }
+    .toc-bar { padding: 0 20px; }
+    .page-wrap { padding: 0 20px 60px; }
+  }
+
+  /* ── HIGHLIGHT PANEL ── */
+  .panel {
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin: 28px 0;
+  }
+  .panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+  }
+  .panel ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .panel ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.85);
+    line-height: 1.6;
+  }
+  .panel ul li::before {
+    content: '▸';
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── ICT SECTION ── */
+  .ict-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 28px 0;
+  }
+  @media (max-width: 740px) {
+    .ict-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .ict-card {
+    background: linear-gradient(135deg, var(--deep-blue), var(--teal));
+    color: #fff;
+    border-radius: 10px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .ict-card .ict-icon { font-size: 2rem; margin-bottom: 10px; }
+  .ict-card h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; margin-bottom: 6px; }
+  .ict-card p { font-size: 0.82rem; opacity: 0.8; line-height: 1.6; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    color: rgba(245,240,232,0.4);
+    text-align: center;
+    padding: 28px;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── SCROLL ANIMATION ── */
+  .section { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .section.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <span class="hero-label">Materi Kuliah</span>
+  <h1>Perencanaan <em>Pendidikan</em></h1>
+  <p class="hero-sub">Kajian mendalam tentang konsep, prinsip, tahapan, dan implementasi perencanaan dalam sistem pendidikan modern.</p>
+  <div class="hero-ornament">
+    <span class="hero-ornament-icon">🎓</span>
+  </div>
+</header>
+
+<!-- TOC BAR -->
+<nav class="toc-bar">
+  <div class="toc-item active">Pengertian</div>
+  <div class="toc-item">Tujuan & Fungsi</div>
+  <div class="toc-item">Prinsip-Prinsip</div>
+  <div class="toc-item">Tahapan</div>
+  <div class="toc-item">Satuan Pendidikan</div>
+  <div class="toc-item">Implementasi</div>
+  <div class="toc-item">Pemanfaatan ICT</div>
+</nav>
+
+<main class="page-wrap">
+
+  <!-- 1. PENGERTIAN -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div class="section-title-wrap">
+        <div class="section-tag">Bab Pertama</div>
+        <h2 class="section-title">Pengertian Perencanaan Pendidikan</h2>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="prose">
+      <p>Perencanaan pendidikan adalah suatu proses intelektual dan sistematis dalam mempersiapkan keputusan-keputusan mengenai masa depan pendidikan, mulai dari penetapan tujuan hingga pengembangan strategi untuk mencapainya secara efektif dan efisien.</p>
+    </div>
+    <div class="def-box">
+      <p>Perencanaan pendidikan merupakan "penerapan yang rasional dari analisis sistematis proses perkembangan pendidikan dengan tujuan agar pendidikan itu lebih efektif dan efisien serta sesuai dengan kebutuhan dan tujuan para peserta didik dan masyarakatnya."</p>
+      <cite>— Coombs (dalam Udin Syaefudin Sa'ud & Abin Syamsuddin Makmun)</cite>
+    </div>
+    <div class="prose">
+      <p>Perencanaan pendidikan mencakup dimensi yang luas: dari perencanaan kurikulum, sumber daya manusia, anggaran, sarana prasarana, hingga program pembelajaran. Pada hakikatnya, perencanaan adalah proses pembuatan keputusan atas sejumlah alternatif mengenai sasaran dan cara-cara yang akan dilaksanakan di masa yang akan datang guna mencapai tujuan yang dikehendaki.</p>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <span class="card-icon">📐</span>
+        <h3>Perencanaan Makro</h3>
+        <p>Mencakup kebijakan pendidikan nasional, alokasi anggaran pendidikan nasional, dan arah pengembangan sistem pendidikan secara menyeluruh.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏫</span>
+        <h3>Perencanaan Mikro</h3>
+        <p>Berfokus pada satuan pendidikan (sekolah/madrasah), meliputi program tahunan, rencana pembelajaran, dan pengembangan kurikulum lokal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. TUJUAN & FUNGSI -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div class="section-title-wrap">
+        <div class="section-tag">Bab Kedua</div>
+        <h2 class="section-title">Tujuan dan Fungsi Perencanaan Pendidikan</h2>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="prose">
+      <p>Perencanaan pendidikan memiliki tujuan utama untuk menjamin agar perubahan atau tujuan pendidikan yang telah ditetapkan dapat dicapai dengan cara yang paling efektif, efisien, dan berkelanjutan. Perencanaan bukan sekadar dokumen administratif, melainkan peta jalan nyata pelaksanaan pendidikan.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <h3>Menentukan Arah</h3>
+        <p>Memberikan arah yang jelas bagi seluruh komponen pendidikan dalam mencapai tujuan bersama yang telah ditetapkan.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚙️</span>
+        <h3>Mengoptimalkan Sumber Daya</h3>
+        <p>Mengalokasikan sumber daya manusia, keuangan, dan material secara tepat sasaran dan menghindari pemborosan.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🛡️</span>
+        <h3>Mengurangi Ketidakpastian</h3>
+        <p>Mengantisipasi hambatan dan risiko yang mungkin muncul sehingga pelaksanaan pendidikan dapat berjalan lebih lancar.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <h3>Alat Pengawasan</h3>
+        <p>Menjadi standar dan tolok ukur dalam proses monitoring dan evaluasi ketercapaian program pendidikan.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🤝</span>
+        <h3>Koordinasi</h3>
+        <p>Menyeleraskan berbagai kegiatan dan unit kerja agar bergerak secara sinergis menuju tujuan pendidikan yang sama.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔄</span>
+        <h3>Perbaikan Berkelanjutan</h3>
+        <p>Mendorong refleksi dan penyesuaian program secara berkala berdasarkan data dan umpan balik lapangan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PRINSIP -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <div class="section-title-wrap">
+        <div class="section-tag">Bab Ketiga</div>
+        <h2 class="section-title">Prinsip-Prinsip Perencanaan Pendidikan</h2>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="prose">
+      <p>Agar perencanaan pendidikan dapat berjalan efektif dan menghasilkan program yang berkualitas, perlu dilandasi oleh prinsip-prinsip dasar yang menjadi pegangan dalam setiap tahap perumusan dan pelaksanaannya.</p>
+    </div>
+    <div class="panel">
+      <h3>Prinsip-Prinsip Utama</h3>
+      <ul>
+        <li>Komprehensif — Perencanaan harus mencakup seluruh aspek pendidikan secara menyeluruh dan terpadu, tidak parsial.</li>
+        <li>Integral — Menjadi bagian dari perencanaan pembangunan nasional dan daerah yang saling berkaitan.</li>
+        <li>Ilmiah — Disusun berdasarkan data dan fakta yang valid melalui analisis yang sistematis dan objektif.</li>
+        <li>Demokratis — Melibatkan partisipasi seluruh pemangku kepentingan (stakeholders) dalam proses penyusunannya.</li>
+        <li>Fleksibel — Mampu beradaptasi terhadap perubahan lingkungan tanpa mengabaikan tujuan utama yang telah ditetapkan.</li>
+        <li>Transparan dan Akuntabel — Perencanaan terbuka untuk diketahui publik dan dapat dipertanggungjawabkan hasilnya.</li>
+        <li>Berorientasi Masa Depan — Mempertimbangkan perubahan kebutuhan dan tantangan di masa yang akan datang.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. TAHAPAN -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <div class="section-title-wrap">
+        <div class="section-tag">Bab Keempat</div>
+        <h2 class="section-title">Tahapan Perencanaan Pendidikan</h2>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="prose">
+      <p>Perencanaan pendidikan yang baik dilaksanakan melalui serangkaian tahapan yang sistematis dan berurutan. Setiap tahap saling berkaitan dan menjadi dasar bagi tahap berikutnya.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Pengumpulan dan Analisis Data</h4>
+          <p>Menghimpun data kuantitatif dan kualitatif tentang kondisi pendidikan saat ini: jumlah peserta didik, kualitas guru, sarana prasarana, angka partisipasi sekolah, dan indikator relevan lainnya.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Diagnosis Keadaan Pendidikan</h4>
+          <p>Mengidentifikasi kesenjangan (gap) antara kondisi nyata dengan kondisi ideal yang diharapkan, serta menentukan masalah dan kebutuhan prioritas yang perlu diselesaikan.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Perumusan Tujuan dan Sasaran</h4>
+          <p>Menetapkan tujuan yang SMART (Specific, Measurable, Achievable, Relevant, Time-bound) sebagai arah dan target yang ingin dicapai dalam kurun waktu tertentu.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Perumusan Alternatif Kebijakan</h4>
+          <p>Mengidentifikasi dan menganalisis berbagai alternatif cara dan strategi untuk mencapai tujuan dengan mempertimbangkan kelayakan, efektivitas, dan efisiensinya.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Penetapan Rencana</h4>
+          <p>Memilih alternatif terbaik dan menuangkannya dalam dokumen rencana yang lengkap: rencana strategis, rencana operasional, dan rencana aksi yang terukur.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <h4>Implementasi Rencana</h4>
+          <p>Melaksanakan program dan kegiatan sesuai rencana yang telah ditetapkan dengan menggerakkan seluruh sumber daya yang tersedia secara terkoordinasi.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <h4>Evaluasi dan Pembaruan Rencana</h4>
+          <p>Memantau, menilai ketercapaian tujuan, mengidentifikasi hambatan, dan melakukan perbaikan rencana berdasarkan temuan evaluasi untuk siklus perencanaan berikutnya.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SATUAN PENDIDIKAN -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div class="section-title-wrap">
+        <div class="section-tag">Bab Kelima</div>
+        <h2 class="section-title">Perencanaan Pendidikan di Tingkat Satuan Pendidikan</h2>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="prose">
+      <p>Di tingkat satuan pendidikan (sekolah/madrasah), perencanaan diwujudkan melalui berbagai dokumen dan instrumen yang menjadi panduan operasional kegiatan pembelajaran dan manajemen sekolah sehari-hari.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">📋</span>
+        <h3>Rencana Kerja Sekolah (RKS)</h3>
+        <p>Dokumen perencanaan jangka menengah (4 tahun) yang mencakup visi, misi, tujuan sekolah, dan program-program strategis pengembangan mutu pendidikan.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📅</span>
+        <h3>Rencana Kerja Tahunan (RKT)</h3>
+        <p>Penjabaran RKS dalam program dan kegiatan konkret tahunan beserta target, anggaran, dan penanggung jawab masing-masing kegiatan.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💰</span>
+        <h3>RAPBS/RKAS</h3>
+        <p>Rencana Anggaran Pendapatan dan Belanja Sekolah sebagai instrumen perencanaan keuangan yang menjamin keterlaksanaan program.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📚</span>
+        <h3>Perencanaan Kurikulum</h3>
+        <p>Meliputi penyusunan KTSP/Kurikulum Merdeka, silabus, kalender akademik, dan program pengembangan pembelajaran yang kontekstual.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">👩‍🏫</span>
+        <h3>Perencanaan Guru & Tendik</h3>
+        <p>Perencanaan kebutuhan, rekrutmen, penempatan, dan pengembangan kompetensi pendidik dan tenaga kependidikan.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏗️</span>
+        <h3>Perencanaan Sarpras</h3>
+        <p>Perencanaan pengadaan, pemeliharaan, dan pengembangan sarana prasarana sekolah sesuai standar yang berlaku.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. IMPLEMENTASI -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <div class="section-title-wrap">
+        <div class="section-tag">Bab Keenam</div>
+        <h2 class="section-title">Implementasi Perencanaan Pendidikan di Lapangan</h2>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="prose">
+      <p>Implementasi perencanaan pendidikan merupakan tahap terpenting sekaligus paling menantang. Banyak rencana yang baik gagal di tahap implementasi karena lemahnya kepemimpinan, koordinasi, dan kapasitas pelaksana di lapangan.</p>
+      <p>Keberhasilan implementasi sangat ditentukan oleh kualitas kepemimpinan kepala sekolah, komitmen seluruh warga sekolah, serta dukungan dari pemangku kepentingan eksternal seperti komite sekolah, orang tua, dan pemerintah daerah.</p>
+    </div>
+    <div class="two-col">
+      <div class="panel" style="background: linear-gradient(135deg,#1a6b6b,#0d3d3d);">
+        <h3 style="color:#e4c880">Faktor Pendukung</h3>
+        <ul>
+          <li>Kepemimpinan kepala sekolah yang visioner dan transformatif</li>
+          <li>Komitmen dan kapasitas guru dalam melaksanakan program</li>
+          <li>Dukungan anggaran yang memadai dan tepat waktu</li>
+          <li>Budaya sekolah yang kolaboratif dan inovatif</li>
+          <li>Kemitraan kuat dengan orang tua dan komite sekolah</li>
+        </ul>
+      </div>
+      <div class="panel" style="background: linear-gradient(135deg,#6b2a1a,#3d1208);">
+        <h3 style="color:#e4c880">Hambatan Umum</h3>
+        <ul>
+          <li>Resistensi terhadap perubahan dari internal sekolah</li>
+          <li>Keterbatasan kompetensi sumber daya manusia</li>
+          <li>Anggaran yang tidak mencukupi atau terlambat cair</li>
+          <li>Pergantian kepemimpinan yang tidak terencana</li>
+          <li>Koordinasi lintas sektor yang lemah dan birokratis</li>
+        </ul>
+      </div>
+    </div>
+    <div class="def-box">
+      <p>Implementasi yang efektif memerlukan monitoring berkelanjutan. Kepala sekolah perlu secara rutin melakukan supervisi, mengumpulkan data kemajuan, dan melakukan refleksi bersama tim untuk memastikan rencana berjalan sesuai arah yang ditetapkan.</p>
+    </div>
+  </section>
+
+  <!-- 7. ICT -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <div class="section-title-wrap">
+        <div class="section-tag">Bab Ketujuh</div>
+        <h2 class="section-title">Pemanfaatan ICT dalam Perencanaan Pendidikan</h2>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="prose">
+      <p>Teknologi Informasi dan Komunikasi (ICT) telah merevolusi cara perencanaan pendidikan dilakukan. ICT memungkinkan pengumpulan data yang lebih akurat, analisis yang lebih cepat, kolaborasi yang lebih efisien, serta monitoring dan evaluasi yang lebih real-time dan berbasis bukti.</p>
+    </div>
+    <div class="ict-grid">
+      <div class="ict-card">
+        <div class="ict-icon">🗄️</div>
+        <h4>Sistem Informasi Manajemen</h4>
+        <p>DAPODIK, EMIS, dan SIM sekolah untuk manajemen data peserta didik, guru, dan sarana secara terintegrasi.</p>
+      </div>
+      <div class="ict-card">
+        <div class="ict-icon">📊</div>
+        <h4>Analisis Data Pendidikan</h4>
+        <p>Pemanfaatan dashboard dan visualisasi data untuk mendukung pengambilan keputusan berbasis bukti (evidence-based).</p>
+      </div>
+      <div class="ict-card">
+        <div class="ict-icon">☁️</div>
+        <h4>Platform Kolaborasi</h4>
+        <p>Google Workspace, Microsoft 365, dan platform daring lain untuk penyusunan dokumen perencanaan secara kolaboratif.</p>
+      </div>
+      <div class="ict-card">
+        <div class="ict-icon">🗺️</div>
+        <h4>GIS & Pemetaan</h4>
+        <p>Pemetaan kondisi dan kebutuhan pendidikan secara spasial untuk perencanaan distribusi sumber daya yang berkeadilan.</p>
+      </div>
+      <div class="ict-card">
+        <div class="ict-icon">📱</div>
+        <h4>Aplikasi Mobile</h4>
+        <p>Monitoring implementasi program secara real-time melalui aplikasi seluler oleh kepala sekolah dan pengawas.</p>
+      </div>
+      <div class="ict-card">
+        <div class="ict-icon">🤖</div>
+        <h4>Kecerdasan Buatan</h4>
+        <p>AI untuk prediksi tren, analisis kebutuhan belajar, dan personalisasi program pengembangan berbasis data historis.</p>
+      </div>
+    </div>
+    <div class="prose" style="margin-top: 12px;">
+      <p>Namun demikian, pemanfaatan ICT harus disertai dengan peningkatan kompetensi digital seluruh pemangku kepentingan, keamanan data, dan pemerataan akses teknologi agar tidak menciptakan kesenjangan baru dalam sistem pendidikan.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  Materi Perencanaan Pendidikan &nbsp;·&nbsp; Disusun untuk Keperluan Akademik
+</footer>
+
+<script>
+  // Scroll observer
+  const sections = document.querySelectorAll('.section');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  sections.forEach(s => obs.observe(s));
+
+  // TOC highlight
+  const tocItems = document.querySelectorAll('.toc-item');
+  const sectionIds = ['s1','s2','s3','s4','s5','s6','s7'];
+  window.addEventListener('scroll', () => {
+    let current = 0;
+    sectionIds.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top < 160) current = i;
+    });
+    tocItems.forEach((t,i) => t.classList.toggle('active', i === current));
+  });
+</script>
+</body>
+</html>
