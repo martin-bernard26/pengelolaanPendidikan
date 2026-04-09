@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Proyek Kebijakan Pendidikan</title>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+    }
+
+    textarea {
+        height: 120px;
+    }
+
+    button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        background: #4facfe;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #007bff;
+    }
+
+    .title-box {
+        background: #f0f8ff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>📘 Proyek Pengelola Pendidikan</h1>
+
+    <div class="title-box">
+        <b>Tema:</b> Kebijakan dalam Sistem Perencanaan Pendidikan  
+        <br><br>
+        <b>Instruksi:</b> Jawab pertanyaan berikut secara analisis dan kritis.
+    </div>
+
+    <form id="formProyek">
+
+        <label>Nama</label>
+        <input type="text" id="nama" required>
+
+        <label>NIM</label>
+        <input type="text" id="nim" required>
+
+        <label>1. Jelaskan konsep kebijakan dalam perencanaan pendidikan</label>
+        <textarea id="q1"></textarea>
+
+        <label>2. Analisis hubungan kebijakan dengan mutu pendidikan</label>
+        <textarea id="q2"></textarea>
+
+        <label>3. Berikan contoh kebijakan pendidikan di Indonesia</label>
+        <textarea id="q3"></textarea>
+
+        <label>4. Identifikasi masalah dalam implementasi kebijakan pendidikan</label>
+        <textarea id="q4"></textarea>
+
+        <label>5. Solusi inovatif yang Anda usulkan</label>
+        <textarea id="q5"></textarea>
+
+        <button type="submit">🚀 Kirim Jawaban</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("formProyek").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // GANTI SESUAI GOOGLE FORM
+    const FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSezIyoc6UgS9ggb5REppXItI5VFM8LCrOqKOydGIYTV0oqcuQ/formResponse";
+
+    const data = new FormData();
+    
+    data.append("entry.1381549421", document.getElementById("nama").value);
+    data.append("entry.900631718", document.getElementById("nim").value);
+    data.append("entry.54223967", document.getElementById("q1").value);
+    data.append("entry.110911950", document.getElementById("q2").value);
+    data.append("entry.268193133", document.getElementById("q3").value);
+    data.append("entry.59362974", document.getElementById("q4").value);
+    data.append("entry.1646949053", document.getElementById("q5").value);
+
+    fetch(FORM_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: data
+    })
+    .then(() => {
+        alert("Jawaban berhasil dikirim!");
+        document.getElementById("formProyek").reset();
+    })
+    .catch(() => {
+        alert("Terjadi kesalahan!");
+    });
+});
+</script>
+
+</body>
+</html>
