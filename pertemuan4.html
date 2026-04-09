@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kebijakan dalam Sistem Perencanaan Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --deep: #1b2d45;
+    --slate: #2c4a6e;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f5f0e8;
+    --paper: #faf7f2;
+    --text: #1a1a2e;
+    --muted: #5a6478;
+    --accent: #e05c2d;
+    --green: #2d6a4f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 80%, rgba(201,168,76,.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(44,74,110,.4) 0%, transparent 60%);
+  }
+
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,168,76,.06) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201,168,76,.04) 60px);
+  }
+
+  .hero-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    background: rgba(201,168,76,.1);
+    border: 1px solid rgba(201,168,76,.3);
+    padding: 6px 18px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    position: relative;
+    animation: fadeUp .8s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.12;
+    color: #fff;
+    max-width: 820px;
+    position: relative;
+    animation: fadeUp .8s .15s ease both;
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,.55);
+    margin-top: 20px;
+    max-width: 520px;
+    line-height: 1.7;
+    position: relative;
+    animation: fadeUp .8s .3s ease both;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    animation: fadeUp .8s .45s ease both;
+  }
+
+  .hero-meta-item {
+    text-align: center;
+  }
+
+  .hero-meta-item .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-meta-item .lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,.4);
+    text-transform: uppercase;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeUp .8s .6s ease both;
+  }
+
+  .scroll-hint span {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,.3);
+    text-transform: uppercase;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(201,168,76,.6), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── NAV TABS ── */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,27,42,.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,.2);
+    padding: 0 24px;
+  }
+
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-inner::-webkit-scrollbar { display: none; }
+
+  .nav-tab {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    padding: 16px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all .25s;
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .nav-tab:hover { color: rgba(255,255,255,.7); }
+  .nav-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    display: none;
+    animation: fadeIn .4s ease;
+  }
+
+  .section.active { display: block; }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .sec-header {
+    margin-bottom: 48px;
+    border-left: 3px solid var(--gold);
+    padding-left: 24px;
+  }
+
+  .sec-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  .sec-desc {
+    margin-top: 12px;
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 640px;
+  }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 4px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .25s, box-shadow .25s;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s ease;
+  }
+
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.1); }
+  .card:hover::before { transform: scaleX(1); }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--navy);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    font-size: .92rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ── PROSE BLOCK ── */
+  .prose {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.07);
+    border-radius: 4px;
+    padding: 36px 40px;
+    margin-bottom: 24px;
+  }
+
+  .prose h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,.08);
+  }
+
+  .prose p {
+    font-size: .97rem;
+    color: #3a3a4a;
+    line-height: 1.85;
+    margin-bottom: 12px;
+  }
+
+  .prose ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+
+  .prose ul li {
+    font-size: .95rem;
+    color: #3a3a4a;
+    line-height: 1.8;
+    margin-bottom: 6px;
+  }
+
+  .prose ul li::marker { color: var(--gold); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--deep) 100%);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin: 28px 0;
+    border-left: 4px solid var(--gold);
+  }
+
+  .callout p {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: rgba(255,255,255,.85);
+    line-height: 1.8;
+  }
+
+  .callout cite {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    margin-top: 10px;
+    font-style: normal;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 36px;
+    margin-top: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 6px; bottom: 6px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,.1));
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 36px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+
+  .tl-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .tl-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .tl-body {
+    font-size: .93rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ── TABLE ── */
+  .tbl-wrap {
+    overflow-x: auto;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,.08);
+    margin-top: 28px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+  }
+
+  thead {
+    background: var(--navy);
+  }
+
+  thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 14px 18px;
+    text-align: left;
+  }
+
+  tbody tr { border-bottom: 1px solid rgba(0,0,0,.06); transition: background .2s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(201,168,76,.04); }
+
+  tbody td {
+    padding: 14px 18px;
+    font-size: .9rem;
+    color: #3a3a4a;
+    line-height: 1.6;
+  }
+
+  tbody td:first-child {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  /* ── BADGE PILLS ── */
+  .pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .pill-gold { background: rgba(201,168,76,.15); color: #8a6a1a; }
+  .pill-blue { background: rgba(44,74,110,.1); color: var(--slate); }
+  .pill-green { background: rgba(45,106,79,.1); color: var(--green); }
+  .pill-red  { background: rgba(224,92,45,.1); color: var(--accent); }
+
+  /* ── ACCORDION ── */
+  .accordion { margin-top: 28px; }
+
+  .acc-item {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .acc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+
+  .acc-head:hover { background: rgba(201,168,76,.05); }
+
+  .acc-head h4 {
+    font-family: 'Source Serif 4', serif;
+    font-size: .98rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .acc-arrow {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform .3s;
+    font-size: 12px;
+    color: var(--gold);
+  }
+
+  .acc-item.open .acc-arrow { transform: rotate(180deg); }
+
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+  }
+
+  .acc-body-inner {
+    padding: 0 24px 20px;
+    font-size: .92rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .acc-body-inner ul { padding-left: 18px; margin-top: 8px; }
+  .acc-body-inner ul li { margin-bottom: 5px; }
+  .acc-body-inner ul li::marker { color: var(--gold); }
+
+  /* ── QUIZ ── */
+  .quiz-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 20px;
+  }
+
+  .quiz-q {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+
+  .quiz-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .quiz-opts { display: flex; flex-direction: column; gap: 10px; }
+
+  .quiz-opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .2s;
+    font-size: .93rem;
+    color: #3a3a4a;
+    line-height: 1.5;
+  }
+
+  .quiz-opt:hover { border-color: var(--gold); background: rgba(201,168,76,.04); }
+  .quiz-opt.correct { background: rgba(45,106,79,.08); border-color: var(--green); color: var(--green); }
+  .quiz-opt.wrong   { background: rgba(224,92,45,.08); border-color: var(--accent); color: var(--accent); }
+
+  .opt-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    font-weight: 500;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .quiz-feedback {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: .88rem;
+    display: none;
+  }
+
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: rgba(45,106,79,.08); color: var(--green); border-left: 3px solid var(--green); }
+  .quiz-feedback.no { background: rgba(224,92,45,.08); color: var(--accent); border-left: 3px solid var(--accent); }
+
+  .quiz-score-bar {
+    background: var(--navy);
+    border-radius: 4px;
+    padding: 24px 32px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .score-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,.5);
+    text-transform: uppercase;
+  }
+
+  .score-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .btn-reset {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity .2s;
+  }
+
+  .btn-reset:hover { opacity: .85; }
+
+  /* ── PROGRESS RING ── */
+  .progress-ring {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.07);
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .ring-svg { flex-shrink: 0; }
+
+  .ring-info h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .ring-info p { font-size: .9rem; color: var(--muted); margin-top: 4px; }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    background: var(--navy);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .page-footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,.35);
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .page-footer strong { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: .5; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.15); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .prose { padding: 24px 20px; }
+    .hero-meta { gap: 20px; }
+    .quiz-score-bar { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-lines"></div>
+  <div class="hero-badge">Pengelolaan Pendidikan · IKIP Siliwangi</div>
+  <h1>Kebijakan dalam Sistem <span>Perencanaan Pendidikan</span></h1>
+  <p class="hero-sub">Memahami landasan, proses, dan implementasi kebijakan sebagai instrumen utama dalam tata kelola perencanaan pendidikan nasional.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="num">5</span>
+      <span class="lbl">Topik Utama</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="num">4</span>
+      <span class="lbl">Jenis Kebijakan</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="num">8</span>
+      <span class="lbl">Soal Latihan</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Mulai Belajar</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <button class="nav-tab active" onclick="showSection('konsep')">Konsep Dasar</button>
+    <button class="nav-tab" onclick="showSection('jenis')">Jenis Kebijakan</button>
+    <button class="nav-tab" onclick="showSection('proses')">Proses Kebijakan</button>
+    <button class="nav-tab" onclick="showSection('landasan')">Landasan Hukum</button>
+    <button class="nav-tab" onclick="showSection('latihan')">Latihan Soal</button>
+  </div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: KONSEP DASAR -->
+<!-- ============================================================ -->
+<section class="section active" id="konsep">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Bagian 01</div>
+      <h2 class="sec-title">Konsep Dasar Kebijakan Pendidikan</h2>
+      <p class="sec-desc">Kebijakan pendidikan merupakan seperangkat keputusan yang ditetapkan oleh otoritas pemerintah untuk mengatur, mengarahkan, dan mengembangkan sistem pendidikan secara terencana dan berkelanjutan.</p>
+    </div>
+
+    <div class="callout">
+      <p>"Kebijakan pendidikan adalah seperangkat tindakan yang dipilih pemerintah untuk mencapai tujuan pendidikan nasional melalui instrumen hukum dan administratif yang mengikat seluruh pemangku kepentingan."</p>
+      <cite>— Tilaar & Nugroho, Kebijakan Pendidikan (2009)</cite>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>Definisi Kebijakan</h3>
+        <p>Kebijakan (policy) adalah serangkaian tindakan yang dipilih oleh pemerintah atau lembaga berwenang untuk merespons permasalahan publik dalam bidang pendidikan.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏛️</div>
+        <h3>Perencanaan Pendidikan</h3>
+        <p>Proses penyusunan rencana sistematis yang meliputi penetapan tujuan, strategi, program, dan anggaran pendidikan dalam kurun waktu tertentu.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔗</div>
+        <h3>Keterkaitan Keduanya</h3>
+        <p>Kebijakan menjadi kerangka normatif bagi perencanaan, sedangkan perencanaan merupakan operasionalisasi teknis dari kebijakan yang telah ditetapkan.</p>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:32px">
+      <h3>Karakteristik Kebijakan Pendidikan</h3>
+      <p>Sebuah kebijakan pendidikan yang efektif memiliki sejumlah karakteristik yang membedakannya dari sekadar peraturan biasa. Kebijakan bersifat <strong>teleologis</strong>—berorientasi pada tujuan jangka panjang—sekaligus <strong>normatif</strong> dalam memberikan panduan nilai dan etika bagi penyelenggaraan pendidikan.</p>
+      <ul>
+        <li><strong>Deliberatif</strong> — lahir dari proses kajian mendalam dan pertimbangan berbagai alternatif.</li>
+        <li><strong>Otoritatif</strong> — dikeluarkan oleh pihak yang memiliki kewenangan sah (legitimate authority).</li>
+        <li><strong>Mengikat</strong> — bersifat wajib dilaksanakan oleh seluruh pemangku kepentingan.</li>
+        <li><strong>Berorientasi kepentingan publik</strong> — ditujukan untuk kepentingan masyarakat luas, bukan kelompok tertentu.</li>
+        <li><strong>Dinamis</strong> — dapat direvisi sesuai perkembangan kondisi sosial dan kebutuhan pendidikan.</li>
+      </ul>
+    </div>
+
+    <div class="prose">
+      <h3>Hubungan Kebijakan dan Perencanaan Pendidikan</h3>
+      <p>Kebijakan dan perencanaan pendidikan merupakan dua sisi dari satu koin yang sama. Kebijakan tanpa perencanaan hanya akan menjadi dokumen normatif yang tidak operasional. Sebaliknya, perencanaan tanpa landasan kebijakan akan kehilangan arah dan legitimasinya.</p>
+      <p>Dalam praktik tata kelola pendidikan Indonesia, hubungan ini diwujudkan melalui hierarki dokumen: mulai dari <em>Rencana Pembangunan Jangka Panjang Nasional (RPJPN)</em> yang menjadi kerangka kebijakan makro, diturunkan ke <em>Rencana Strategis Kementerian</em>, hingga <em>Rencana Kerja Sekolah (RKS)</em> di tingkat satuan pendidikan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: JENIS KEBIJAKAN -->
+<!-- ============================================================ -->
+<section class="section" id="jenis">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Bagian 02</div>
+      <h2 class="sec-title">Jenis-Jenis Kebijakan Pendidikan</h2>
+      <p class="sec-desc">Kebijakan pendidikan dapat diklasifikasikan berdasarkan ruang lingkup, tingkatan otoritas, dan fungsinya dalam sistem perencanaan.</p>
+    </div>
+
+    <div class="accordion">
+      <div class="acc-item open">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <h4>🏛️ &nbsp; Kebijakan Substantif (Substantive Policy)</h4>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body" style="max-height:400px">
+          <div class="acc-body-inner">
+            <p>Kebijakan substantif adalah kebijakan yang berisi ketentuan mengenai <strong>apa yang akan dilakukan</strong> pemerintah di bidang pendidikan—mencakup tujuan, sasaran, dan program yang akan dijalankan.</p>
+            <ul>
+              <li>Kebijakan Wajib Belajar 12 Tahun</li>
+              <li>Kebijakan Pendidikan Karakter Nasional</li>
+              <li>Kebijakan Merdeka Belajar</li>
+              <li>Kebijakan Zonasi Penerimaan Peserta Didik Baru (PPDB)</li>
+            </ul>
+            <span class="pill pill-gold" style="margin-top:10px;display:inline-block">Berorientasi Tujuan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <h4>⚙️ &nbsp; Kebijakan Prosedural (Procedural Policy)</h4>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <p>Kebijakan prosedural mengatur <strong>bagaimana</strong> kebijakan substantif dilaksanakan—mencakup mekanisme, tata cara, dan prosedur yang harus diikuti oleh seluruh pihak pelaksana.</p>
+            <ul>
+              <li>Prosedur Akreditasi Sekolah oleh BAN-S/M</li>
+              <li>Mekanisme Penyusunan Kurikulum Operasional Sekolah</li>
+              <li>Tata Cara Sertifikasi Guru dan Tenaga Kependidikan</li>
+              <li>Prosedur Pencairan Dana BOS</li>
+            </ul>
+            <span class="pill pill-blue" style="margin-top:10px;display:inline-block">Berorientasi Mekanisme</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <h4>📐 &nbsp; Kebijakan Distributif (Distributive Policy)</h4>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <p>Kebijakan distributif berkaitan dengan <strong>pembagian sumber daya</strong>—baik finansial, tenaga, maupun sarana prasarana—kepada berbagai kelompok dan wilayah secara berkeadilan.</p>
+            <ul>
+              <li>Dana Bantuan Operasional Sekolah (BOS) berdasarkan jumlah siswa</li>
+              <li>Program Distribusi Guru ke Daerah Terpencil (3T)</li>
+              <li>Program Indonesia Pintar (PIP) untuk siswa kurang mampu</li>
+              <li>Dana Alokasi Khusus (DAK) Fisik Pendidikan</li>
+            </ul>
+            <span class="pill pill-green" style="margin-top:10px;display:inline-block">Berorientasi Keadilan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-head" onclick="toggleAcc(this)">
+          <h4>⚖️ &nbsp; Kebijakan Redistributif (Redistributive Policy)</h4>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <p>Kebijakan redistributif bertujuan <strong>mengurangi ketimpangan</strong> dengan mengalihkan sumber daya dari kelompok mampu ke kelompok kurang mampu demi pemerataan akses pendidikan.</p>
+            <ul>
+              <li>Beasiswa Bidikmisi / KIP Kuliah untuk mahasiswa tidak mampu</li>
+              <li>Afirmasi khusus daerah Papua dan Papua Barat</li>
+              <li>Program sekolah gratis untuk jenjang SD dan SMP negeri</li>
+              <li>Subsidi silang antar sekolah dalam kawasan yang sama</li>
+            </ul>
+            <span class="pill pill-red" style="margin-top:10px;display:inline-block">Berorientasi Pemerataan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Jenis Kebijakan</th>
+            <th>Fokus Utama</th>
+            <th>Contoh Instrumen</th>
+            <th>Tingkat Dampak</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Substantif</td>
+            <td>Tujuan & Program</td>
+            <td>UU, Perpres, Permendikbud</td>
+            <td><span class="pill pill-gold">Tinggi</span></td>
+          </tr>
+          <tr>
+            <td>Prosedural</td>
+            <td>Mekanisme Pelaksanaan</td>
+            <td>SOP, Juknis, Juklak</td>
+            <td><span class="pill pill-blue">Menengah</span></td>
+          </tr>
+          <tr>
+            <td>Distributif</td>
+            <td>Alokasi Sumber Daya</td>
+            <td>Perda, SK Bupati/Walikota</td>
+            <td><span class="pill pill-green">Tinggi</span></td>
+          </tr>
+          <tr>
+            <td>Redistributif</td>
+            <td>Pemerataan Akses</td>
+            <td>Program Beasiswa, Subsidi</td>
+            <td><span class="pill pill-red">Sangat Tinggi</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: PROSES KEBIJAKAN -->
+<!-- ============================================================ -->
+<section class="section" id="proses">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Bagian 03</div>
+      <h2 class="sec-title">Proses Perumusan Kebijakan Pendidikan</h2>
+      <p class="sec-desc">Perumusan kebijakan pendidikan mengikuti siklus yang sistematis—dari identifikasi masalah hingga evaluasi implementasi—sebagai bentuk tata kelola yang akuntabel.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-label">Tahap 01</div>
+        <div class="tl-title">Identifikasi Masalah (Problem Identification)</div>
+        <div class="tl-body">Pemerintah dan pemangku kepentingan mengidentifikasi permasalahan nyata dalam sistem pendidikan—seperti angka putus sekolah, kualitas guru, atau ketimpangan akses—yang memerlukan respons kebijakan. Data statistik, hasil riset, dan aspirasi masyarakat menjadi sumber utama identifikasi.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-label">Tahap 02</div>
+        <div class="tl-title">Perumusan Agenda (Agenda Setting)</div>
+        <div class="tl-body">Dari sekian banyak masalah yang teridentifikasi, hanya beberapa yang masuk ke dalam agenda kebijakan pemerintah. Proses ini dipengaruhi oleh tekanan politik, urgensi masalah, ketersediaan solusi, dan kapasitas kelembagaan yang ada.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-label">Tahap 03</div>
+        <div class="tl-title">Formulasi Kebijakan (Policy Formulation)</div>
+        <div class="tl-body">Penyusunan rancangan kebijakan secara teknis-substantif oleh tim ahli, birokrat, dan konsultan pendidikan. Pada tahap ini dilakukan kajian komparatif, analisis biaya-manfaat, dan konsultasi publik untuk menghasilkan alternatif-alternatif kebijakan yang feasible.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-label">Tahap 04</div>
+        <div class="tl-title">Legitimasi Kebijakan (Policy Legitimation)</div>
+        <div class="tl-body">Rancangan kebijakan mendapatkan legitimasi hukum melalui proses legislasi (DPR bersama pemerintah) atau regulasi (peraturan pemerintah, peraturan menteri). Proses ini memastikan kebijakan memiliki dasar hukum yang kuat dan dapat diimplementasikan.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-label">Tahap 05</div>
+        <div class="tl-title">Implementasi Kebijakan (Policy Implementation)</div>
+        <div class="tl-body">Pelaksanaan kebijakan oleh aparatur pemerintah di berbagai tingkatan—pusat, provinsi, kabupaten/kota, hingga satuan pendidikan. Keberhasilan implementasi sangat bergantung pada kapasitas kelembagaan, sumber daya, dan komitmen pelaksana di lapangan.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-label">Tahap 06</div>
+        <div class="tl-title">Evaluasi Kebijakan (Policy Evaluation)</div>
+        <div class="tl-body">Penilaian sistematis terhadap efektivitas, efisiensi, relevansi, dan dampak kebijakan yang telah diimplementasikan. Hasil evaluasi menjadi umpan balik (feedback) bagi siklus kebijakan berikutnya—apakah kebijakan dilanjutkan, direvisi, atau dihentikan.</div>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:40px">
+      <h3>Model Pendekatan dalam Perumusan Kebijakan</h3>
+      <p>Terdapat beberapa pendekatan teoritis yang digunakan dalam menganalisis dan merumuskan kebijakan pendidikan:</p>
+      <ul>
+        <li><strong>Model Rasional-Komprehensif</strong> — kebijakan dirumuskan melalui analisis sistematis seluruh alternatif yang tersedia untuk memaksimalkan tujuan yang ditetapkan.</li>
+        <li><strong>Model Inkremental (Lindblom)</strong> — kebijakan baru hanya sedikit berbeda dari kebijakan sebelumnya; perubahan bersifat bertahap dan pragmatis.</li>
+        <li><strong>Model Mixed-Scanning (Etzioni)</strong> — gabungan antara pendekatan rasional untuk keputusan fundamental dan inkremental untuk keputusan teknis sehari-hari.</li>
+        <li><strong>Model Partisipatif</strong> — melibatkan seluruh pemangku kepentingan dalam proses perumusan kebijakan untuk meningkatkan legitimasi dan akseptabilitas.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: LANDASAN HUKUM -->
+<!-- ============================================================ -->
+<section class="section" id="landasan">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Bagian 04</div>
+      <h2 class="sec-title">Landasan Hukum Kebijakan Pendidikan</h2>
+      <p class="sec-desc">Sistem perencanaan pendidikan Indonesia berpijak pada hierarki peraturan perundang-undangan yang bersumber dari UUD 1945 hingga peraturan teknis di tingkat daerah.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">📜</div>
+        <h3>UUD 1945</h3>
+        <p>Pasal 31 mengamanatkan hak setiap warga negara untuk mendapat pendidikan, dan mewajibkan negara membiayai pendidikan dasar. Ini menjadi landasan konstitusional tertinggi seluruh kebijakan pendidikan.</p>
+        <div style="margin-top:12px"><span class="pill pill-gold">Tingkat Konstitusi</span></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📗</div>
+        <h3>UU No. 20 Tahun 2003</h3>
+        <p>Undang-Undang Sistem Pendidikan Nasional (Sisdiknas) menjadi induk seluruh regulasi pendidikan, mengatur tujuan, hak-kewajiban, jalur, jenjang, dan jenis pendidikan di Indonesia.</p>
+        <div style="margin-top:12px"><span class="pill pill-blue">Tingkat Undang-Undang</span></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📘</div>
+        <h3>PP No. 57 Tahun 2021</h3>
+        <p>Standar Nasional Pendidikan (SNP) sebagai kerangka acuan mutu yang meliputi 8 standar: isi, proses, kompetensi lulusan, pendidik, sarana, pengelolaan, pembiayaan, dan penilaian.</p>
+        <div style="margin-top:12px"><span class="pill pill-green">Tingkat PP</span></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📙</div>
+        <h3>Permendikbudristek</h3>
+        <p>Peraturan Menteri mengatur secara teknis operasional berbagai aspek pendidikan—kurikulum, penilaian, akreditasi, tata kelola sekolah—dan dapat diperbarui sesuai kebutuhan yang berkembang.</p>
+        <div style="margin-top:12px"><span class="pill pill-red">Tingkat Peraturan Menteri</span></div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Regulasi</th>
+            <th>Tahun</th>
+            <th>Pokok Pengaturan</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>UUD 1945 Pasal 31</td>
+            <td>1945 / Amandemen 2002</td>
+            <td>Hak atas pendidikan, anggaran 20% APBN</td>
+            <td><span class="pill pill-gold">Berlaku</span></td>
+          </tr>
+          <tr>
+            <td>UU No. 20 / 2003</td>
+            <td>2003</td>
+            <td>Sistem Pendidikan Nasional (Sisdiknas)</td>
+            <td><span class="pill pill-gold">Berlaku</span></td>
+          </tr>
+          <tr>
+            <td>UU No. 14 / 2005</td>
+            <td>2005</td>
+            <td>Guru dan Dosen</td>
+            <td><span class="pill pill-gold">Berlaku</span></td>
+          </tr>
+          <tr>
+            <td>PP No. 57 / 2021</td>
+            <td>2021</td>
+            <td>Standar Nasional Pendidikan</td>
+            <td><span class="pill pill-gold">Berlaku</span></td>
+          </tr>
+          <tr>
+            <td>PP No. 4 / 2022</td>
+            <td>2022</td>
+            <td>Perubahan PP 57/2021 SNP</td>
+            <td><span class="pill pill-gold">Berlaku</span></td>
+          </tr>
+          <tr>
+            <td>Perpres No. 18 / 2020</td>
+            <td>2020</td>
+            <td>RPJMN 2020–2024</td>
+            <td><span class="pill pill-blue">Transisi</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:32px">
+      <p>"Perencanaan pendidikan yang baik harus bersandar pada hierarki norma yang jelas—dari konstitusi ke undang-undang, peraturan pemerintah, dan peraturan teknis—sehingga setiap kebijakan memiliki basis legitimasi yang tidak dapat digugat."</p>
+      <cite>— Hasbullah, Dasar-dasar Ilmu Pendidikan (2012)</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: LATIHAN SOAL -->
+<!-- ============================================================ -->
+<section class="section" id="latihan">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Bagian 05</div>
+      <h2 class="sec-title">Latihan Soal Pemahaman</h2>
+      <p class="sec-desc">Uji pemahaman Anda terhadap materi kebijakan dalam sistem perencanaan pendidikan melalui soal-soal pilihan ganda berikut ini.</p>
+    </div>
+
+    <div class="quiz-score-bar" id="scoreBar">
+      <div>
+        <div class="score-label">Skor Saat Ini</div>
+        <div class="score-val" id="scoreVal">0 / 8</div>
+      </div>
+      <div>
+        <div class="score-label">Status</div>
+        <div style="color:rgba(255,255,255,.6);font-size:.9rem;margin-top:4px" id="scoreStatus">Belum ada jawaban</div>
+      </div>
+      <button class="btn-reset" onclick="resetQuiz()">↺ Ulangi</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="quiz-card">
+      <span class="quiz-num">Soal 01</span>
+      <div class="quiz-q">Kebijakan pendidikan yang berkaitan dengan pengaturan <em>bagaimana</em> suatu program dilaksanakan, termasuk tata cara dan mekanisme kerja, disebut kebijakan…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="checkAns(this,0,1,'A')"><span class="opt-letter">A</span> Substantif</div>
+        <div class="quiz-opt" onclick="checkAns(this,0,1,'B')"><span class="opt-letter">B</span> Prosedural ✓</div>
+        <div class="quiz-opt" onclick="checkAns(this,0,1,'C')"><span class="opt-letter">C</span> Distributif</div>
+        <div class="quiz-opt" onclick="checkAns(this,0,1,'D')"><span class="opt-letter">D</span> Redistributif</div>
+      </div>
+      <div class="quiz-feedback" id="fb-0"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-card">
+      <span class="quiz-num">Soal 02</span>
+      <div class="quiz-q">Pasal berapa dalam UUD 1945 yang secara eksplisit mengatur hak warga negara atas pendidikan dan kewajiban negara membiayai pendidikan dasar?</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="checkAns(this,1,2,'A')"><span class="opt-letter">A</span> Pasal 28 C</div>
+        <div class="quiz-opt" onclick="checkAns(this,1,2,'B')"><span class="opt-letter">B</span> Pasal 29</div>
+        <div class="quiz-opt" onclick="checkAns(this,1,2,'C')"><span class="opt-letter">C</span> Pasal 31 ✓</div>
+        <div class="quiz-opt" onclick="checkAns(this,1,2,'D')"><span class="opt-letter">D</span> Pasal 33</div>
+      </div>
+      <div class="quiz-feedback" id="fb-1"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-card">
+      <span class="quiz-num">Soal 03</span>
+      <div class="quiz-q">Dalam siklus kebijakan, tahap di mana hasil pelaksanaan kebijakan dinilai secara sistematis untuk menentukan apakah kebijakan dilanjutkan, direvisi, atau dihentikan disebut…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="checkAns(this,2,3,'A')"><span class="opt-letter">A</span> Formulasi Kebijakan</div>
+        <div class="quiz-opt" onclick="checkAns(this,2,3,'B')"><span class="opt-letter">B</span> Legitimasi Kebijakan</div>
+        <div class="quiz-opt" onclick="checkAns(this,2,3,'C')"><span class="opt-letter">C</span> Implementasi Kebijakan</div>
+        <div class="quiz-opt" onclick="checkAns(this,2,3,'D')"><span class="opt-letter">D</span> Evaluasi Kebijakan ✓</div>
+      </div>
+      <div class="quiz-feedback" id="fb-2"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-card">
+      <span class="quiz-num">Soal 04</span>
+      <div class="quiz-q">Program KIP Kuliah yang ditujukan untuk mahasiswa dari keluarga kurang mampu merupakan contoh implementasi kebijakan…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="checkAns(this,3,4,'A')"><span class="opt-letter">A</span> Substantif</div>
+        <div class="quiz-opt" onclick="checkAns(this,3,4,'B')"><span class="opt-letter">B</span> Prosedural</div>
+        <div class="quiz-opt" onclick="checkAns(this,3,4,'C')"><span class="opt-letter">C</span> Distributif</div>
+        <div class="quiz-opt" onclick="checkAns(this,3,4,'D')"><span class="opt-letter">D</span> Redistributif ✓</div>
+      </div>
+      <div class="quiz-feedback" id="fb-3"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-card">
+      <span class="quiz-num">Soal 05</span>
+      <div class="quiz-q">Model perumusan kebijakan yang berpandangan bahwa kebijakan baru hanya sedikit berbeda dari kebijakan sebelumnya dan perubahan bersifat bertahap adalah model…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="checkAns(this,4,5,'A')"><span class="opt-letter">A</span> Rasional-Komprehensif</div>
+        <div class="quiz-opt" onclick="checkAns(this,4,5,'B')"><span class="opt-letter">B</span> Inkremental ✓</div>
+        <div class="quiz-opt" onclick="checkAns(this,4,5,'C')"><span class="opt-letter">C</span> Mixed-Scanning</div>
+        <div class="quiz-opt" onclick="checkAns(this,4,5,'D')"><span class="opt-letter">D</span> Partisipatif</div>
+      </div>
+      <div class="quiz-feedback" id="fb-4"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-card">
+      <span class="quiz-num">Soal 06</span>
+      <div class="quiz-q">Undang-Undang yang menjadi induk seluruh regulasi tentang sistem pendidikan di Indonesia adalah…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="checkAns(this,5,6,'A')"><span class="opt-letter">A</span> UU No. 20 Tahun 2003 ✓</div>
+        <div class="quiz-opt" onclick="checkAns(this,5,6,'B')"><span class="opt-letter">B</span> UU No. 14 Tahun 2005</div>
+        <div class="quiz-opt" onclick="checkAns(this,5,6,'C')"><span class="opt-letter">C</span> PP No. 57 Tahun 2021</div>
+        <div class="quiz-opt" onclick="checkAns(this,5,6,'D')"><span class="opt-letter">D</span> Perpres No. 18 Tahun 2020</div>
+      </div>
+      <div class="quiz-feedback" id="fb-5"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-card">
+      <span class="quiz-num">Soal 07</span>
+      <div class="quiz-q">Salah satu karakteristik kebijakan pendidikan yang menyatakan bahwa kebijakan bersifat wajib dilaksanakan oleh seluruh pemangku kepentingan disebut karakteristik…</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="checkAns(this,6,7,'A')"><span class="opt-letter">A</span> Deliberatif</div>
+        <div class="quiz-opt" onclick="checkAns(this,6,7,'B')"><span class="opt-letter">B</span> Teleologis</div>
+        <div class="quiz-opt" onclick="checkAns(this,6,7,'C')"><span class="opt-letter">C</span> Mengikat ✓</div>
+        <div class="quiz-opt" onclick="checkAns(this,6,7,'D')"><span class="opt-letter">D</span> Dinamis</div>
+      </div>
+      <div class="quiz-feedback" id="fb-6"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-card">
+      <span class="quiz-num">Soal 08</span>
+      <div class="quiz-q">Standar Nasional Pendidikan (SNP) yang diatur dalam PP No. 57 Tahun 2021 mencakup berapa standar utama?</div>
+      <div class="quiz-opts">
+        <div class="quiz-opt" onclick="checkAns(this,7,8,'A')"><span class="opt-letter">A</span> 6 standar</div>
+        <div class="quiz-opt" onclick="checkAns(this,7,8,'B')"><span class="opt-letter">B</span> 7 standar</div>
+        <div class="quiz-opt" onclick="checkAns(this,7,8,'C')"><span class="opt-letter">C</span> 8 standar ✓</div>
+        <div class="quiz-opt" onclick="checkAns(this,7,8,'D')"><span class="opt-letter">D</span> 10 standar</div>
+      </div>
+      <div class="quiz-feedback" id="fb-7"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <p>
+    <strong>Martin Bernard, M.Pd.</strong> · Pengelolaan Pendidikan<br>
+    Program Studi Pendidikan Matematika & PGSD · <strong>IKIP Siliwangi</strong>, Cimahi
+  </p>
+</footer>
+
+<script>
+  /* ── NAV ── */
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.sticky-nav').offsetTop - 1, behavior: 'smooth' });
+  }
+
+  /* ── ACCORDION ── */
+  function toggleAcc(head) {
+    const item = head.parentElement;
+    const body = item.querySelector('.acc-body');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.acc-body').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  /* ── QUIZ ── */
+  const correctAnswers = {
+    0: 'B', 1: 'C', 2: 'D', 3: 'D', 4: 'B', 5: 'A', 6: 'C', 7: 'C'
+  };
+
+  const explanations = {
+    0: 'Kebijakan prosedural mengatur <em>bagaimana</em> (how) suatu program dilaksanakan, bukan apa yang dilaksanakan.',
+    1: 'Pasal 31 UUD 1945 menegaskan hak setiap warga atas pendidikan dan kewajiban pemerintah membiayai pendidikan dasar serta mengalokasikan 20% APBN untuk pendidikan.',
+    2: 'Evaluasi kebijakan adalah tahap akhir siklus kebijakan yang menilai efektivitas dan dampak implementasi untuk menentukan tindak lanjut kebijakan.',
+    3: 'KIP Kuliah mengalihkan sumber daya dari negara kepada kelompok kurang mampu—ini adalah ciri khas kebijakan redistributif yang bertujuan mengurangi ketimpangan akses.',
+    4: 'Model inkremental (Lindblom) menekankan bahwa kebijakan baru hanya berbeda sedikit dari sebelumnya; perubahan bersifat parsial dan bertahap, bukan radikal.',
+    5: 'UU No. 20 Tahun 2003 tentang Sisdiknas adalah regulasi induk yang mengatur keseluruhan sistem pendidikan nasional Indonesia.',
+    6: 'Karakteristik "mengikat" berarti kebijakan bersifat mandatori—semua pihak yang tercakup wajib mematuhinya, berbeda dengan rekomendasi yang bersifat sukarela.',
+    7: 'PP No. 57 Tahun 2021 menetapkan 8 Standar Nasional Pendidikan: isi, proses, kompetensi lulusan, pendidik & tenaga kependidikan, sarana prasarana, pengelolaan, pembiayaan, dan penilaian.'
+  };
+
+  let answered = new Array(8).fill(false);
+  let score = 0;
+
+  function checkAns(el, qIdx, qNum, chosen) {
+    if (answered[qIdx]) return;
+    answered[qIdx] = true;
+
+    const correct = correctAnswers[qIdx];
+    const opts = el.parentElement.querySelectorAll('.quiz-opt');
+    const letters = ['A','B','C','D'];
+    opts.forEach((opt, i) => {
+      opt.style.pointerEvents = 'none';
+      if (letters[i] === correct) opt.classList.add('correct');
+    });
+
+    const fb = document.getElementById('fb-' + qIdx);
+    fb.classList.add('show');
+
+    if (chosen === correct) {
+      el.classList.add('correct');
+      score++;
+      fb.classList.add('ok');
+      fb.innerHTML = '✓ Benar! ' + explanations[qIdx];
+    } else {
+      el.classList.add('wrong');
+      fb.classList.add('no');
+      fb.innerHTML = '✗ Kurang tepat. ' + explanations[qIdx];
+    }
+
+    updateScore();
+  }
+
+  function updateScore() {
+    const total = answered.filter(Boolean).length;
+    document.getElementById('scoreVal').textContent = score + ' / 8';
+    const pct = Math.round((score / total) * 100);
+    let status = '';
+    if (total === 0) status = 'Belum ada jawaban';
+    else if (pct === 100) status = '🏆 Sempurna! Luar biasa!';
+    else if (pct >= 75) status = '👍 Sangat Baik';
+    else if (pct >= 50) status = '📚 Cukup Baik — terus belajar!';
+    else status = '💪 Perlu lebih banyak latihan';
+    document.getElementById('scoreStatus').textContent = status;
+  }
+
+  function resetQuiz() {
+    answered = new Array(8).fill(false);
+    score = 0;
+    document.querySelectorAll('.quiz-opt').forEach(o => {
+      o.classList.remove('correct','wrong');
+      o.style.pointerEvents = '';
+    });
+    document.querySelectorAll('.quiz-feedback').forEach(f => {
+      f.classList.remove('show','ok','no');
+      f.innerHTML = '';
+    });
+    updateScore();
+    document.getElementById('scoreStatus').textContent = 'Belum ada jawaban';
+  }
+
+  /* Init first accordion open */
+  document.querySelector('.acc-item.open .acc-body').style.maxHeight = '400px';
+</script>
+</body>
+</html>
