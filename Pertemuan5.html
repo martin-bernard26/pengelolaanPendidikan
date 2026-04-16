@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Struktur dan Organisasi Pendidikan — Pengelolaan Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$']] }, svg: { fontCache: 'global' } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1208;
+    --gold: #C8922A;
+    --gold-light: #E8B84B;
+    --rust: #8B3A2F;
+    --sage: #4A6741;
+    --slate: #3D4F5C;
+    --paper: #EDE8DC;
+    --shadow: rgba(26,18,8,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(200,146,42,.15) 39px, rgba(200,146,42,.15) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(200,146,42,.08) 39px, rgba(200,146,42,.08) 40px);
+  }
+  header::after {
+    content: '⬡';
+    position: absolute; right: -40px; top: -40px;
+    font-size: 280px; color: rgba(200,146,42,.06);
+    line-height: 1;
+  }
+  .header-inner { max-width: 900px; margin: 0 auto; position: relative; }
+  .header-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 900; line-height: 1.1;
+    color: var(--cream);
+  }
+  header h1 em { color: var(--gold); font-style: normal; }
+  .header-sub {
+    margin-top: 16px; font-size: 15px; color: rgba(245,240,232,.6);
+    font-style: italic;
+  }
+  .author-badge {
+    display: inline-block; margin-top: 24px;
+    background: rgba(200,146,42,.2); border: 1px solid rgba(200,146,42,.4);
+    padding: 6px 16px; border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--gold-light); letter-spacing: 1px;
+  }
+
+  /* ── TOC SIDEBAR / NAV ── */
+  .layout { max-width: 1100px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: 240px 1fr; gap: 48px; align-items: start; }
+  @media(max-width:800px){ .layout { grid-template-columns: 1fr; } .toc { display: none; } }
+
+  .toc {
+    position: sticky; top: 24px;
+    background: var(--paper);
+    border: 1px solid rgba(200,146,42,.3);
+    border-top: 3px solid var(--gold);
+    padding: 24px 20px;
+  }
+  .toc-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
+  }
+  .toc ol { list-style: none; counter-reset: toc; }
+  .toc li { counter-increment: toc; margin-bottom: 8px; position: relative; padding-left: 28px; }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    position: absolute; left: 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--gold); font-weight: 600;
+  }
+  .toc a {
+    text-decoration: none; color: var(--ink); font-size: 12px; line-height: 1.4;
+    transition: color .2s;
+  }
+  .toc a:hover { color: var(--rust); }
+  .toc a.active { color: var(--rust); font-weight: 600; }
+
+  /* ── MAIN CONTENT ── */
+  main { min-width: 0; }
+
+  .section {
+    margin-bottom: 64px;
+    animation: fadeUp .5s ease both;
+  }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: none; } }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 16px;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 12px; margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif; font-size: 40px;
+    font-weight: 900; color: var(--gold); line-height: 1;
+    opacity: .35; flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: 22px;
+    font-weight: 700; color: var(--ink); line-height: 1.2;
+  }
+
+  p { margin-bottom: 16px; }
+
+  /* ── DEFINITION BOX ── */
+  .def-box {
+    background: var(--paper);
+    border-left: 4px solid var(--gold);
+    padding: 20px 24px; margin: 24px 0;
+    position: relative;
+  }
+  .def-box .def-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .def-box p { margin-bottom: 0; font-style: italic; font-size: 15px; }
+
+  /* ── GRID CARDS ── */
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+    gap: 16px; margin: 24px 0;
+  }
+  .card {
+    background: var(--paper); border: 1px solid rgba(200,146,42,.25);
+    padding: 20px; position: relative; overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+    cursor: default;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px var(--shadow); }
+  .card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--gold); transform: scaleX(0);
+    transition: transform .3s; transform-origin: left;
+  }
+  .card:hover::after { transform: scaleX(1); }
+  .card-icon { font-size: 28px; margin-bottom: 10px; }
+  .card h4 { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .card p { font-size: 13px; color: #555; margin-bottom: 0; line-height: 1.5; }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; margin: 24px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead tr { background: var(--ink); color: var(--cream); }
+  thead th { padding: 12px 16px; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  tbody tr { border-bottom: 1px solid rgba(200,146,42,.2); }
+  tbody tr:hover { background: var(--paper); }
+  tbody td { padding: 11px 16px; vertical-align: top; }
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 1px; font-weight: 600;
+  }
+  .badge-green { background: rgba(74,103,65,.15); color: var(--sage); }
+  .badge-rust  { background: rgba(139,58,47,.15); color: var(--rust); }
+  .badge-gold  { background: rgba(200,146,42,.15); color: #9a6e1a; }
+
+  /* ── ORG CHART ── */
+  .org-wrap { margin: 24px 0; overflow-x: auto; }
+  .org-tree { display: flex; flex-direction: column; align-items: center; gap: 0; font-family: 'Source Serif 4', serif; min-width: 600px; }
+  .org-level { display: flex; justify-content: center; gap: 12px; position: relative; }
+  .org-node {
+    background: var(--ink); color: var(--cream);
+    border: 2px solid var(--gold); padding: 10px 18px;
+    font-size: 12px; text-align: center; min-width: 130px;
+    position: relative; transition: background .2s;
+  }
+  .org-node.root { background: var(--gold); color: var(--ink); font-weight: 700; font-size: 13px; }
+  .org-node.mid { background: var(--slate); }
+  .org-node.leaf { background: var(--paper); color: var(--ink); border-color: rgba(200,146,42,.4); font-size: 11px; }
+  .org-node:hover { opacity: .85; }
+  .org-connector-v { width: 2px; height: 28px; background: var(--gold); margin: 0 auto; }
+  .org-connector-h { position: relative; height: 2px; background: var(--gold); }
+  .org-row { display: flex; flex-direction: column; align-items: center; }
+  .org-branch { display: flex; flex-direction: column; align-items: center; }
+
+  /* ── ICT DIAGRAM ── */
+  .ict-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin: 24px 0; }
+  @media(max-width:560px){ .ict-grid { grid-template-columns: 1fr 1fr; } }
+  .ict-card {
+    background: var(--ink); color: var(--cream);
+    padding: 20px 16px; text-align: center;
+    border-bottom: 3px solid var(--gold);
+    transition: transform .2s;
+  }
+  .ict-card:hover { transform: translateY(-4px); }
+  .ict-card .ict-icon { font-size: 32px; margin-bottom: 10px; }
+  .ict-card h5 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--gold-light); }
+  .ict-card p { font-size: 12px; color: rgba(245,240,232,.7); margin: 0; line-height: 1.5; }
+
+  /* ── INTERACTIVE QUIZ ── */
+  .quiz-box {
+    background: var(--paper); border: 1px solid rgba(200,146,42,.3);
+    padding: 28px; margin-top: 32px;
+  }
+  .quiz-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+  }
+  .quiz-header h3 { font-family: 'Playfair Display', serif; font-size: 18px; }
+  .quiz-header .quiz-icon { font-size: 24px; }
+  .question { margin-bottom: 28px; }
+  .question p { font-weight: 600; margin-bottom: 12px; font-size: 15px; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt-btn {
+    background: var(--cream); border: 1.5px solid rgba(200,146,42,.3);
+    padding: 10px 16px; text-align: left; cursor: pointer;
+    font-family: 'Source Serif 4', serif; font-size: 14px; color: var(--ink);
+    transition: all .2s; border-radius: 2px;
+  }
+  .opt-btn:hover { background: var(--paper); border-color: var(--gold); }
+  .opt-btn.correct { background: rgba(74,103,65,.15); border-color: var(--sage); color: var(--sage); }
+  .opt-btn.wrong   { background: rgba(139,58,47,.12); border-color: var(--rust); color: var(--rust); }
+  .feedback { font-size: 13px; margin-top: 8px; padding: 8px 12px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: rgba(74,103,65,.1); color: var(--sage); border-left: 3px solid var(--sage); }
+  .feedback.err { background: rgba(139,58,47,.08); color: var(--rust); border-left: 3px solid var(--rust); }
+  .quiz-score {
+    display: none; text-align: center; padding: 20px;
+    background: var(--ink); color: var(--cream); margin-top: 16px;
+  }
+  .quiz-score.show { display: block; }
+  .quiz-score .score-num {
+    font-family: 'Playfair Display', serif; font-size: 56px; color: var(--gold);
+  }
+  #quiz-btn {
+    background: var(--gold); color: var(--ink); border: none;
+    padding: 12px 28px; font-family: 'Source Serif 4', serif;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: background .2s; margin-top: 8px;
+  }
+  #quiz-btn:hover { background: var(--gold-light); }
+
+  /* ── ACCORDION (Implementasi) ── */
+  .accordion { margin: 16px 0; }
+  .acc-item { border-bottom: 1px solid rgba(200,146,42,.25); }
+  .acc-trigger {
+    width: 100%; background: none; border: none; text-align: left;
+    padding: 14px 0; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; font-family: 'Source Serif 4', serif; font-size: 15px;
+    font-weight: 600; color: var(--ink); transition: color .2s;
+  }
+  .acc-trigger:hover { color: var(--rust); }
+  .acc-trigger span.arrow {
+    font-size: 18px; transition: transform .3s; color: var(--gold);
+  }
+  .acc-trigger.open span.arrow { transform: rotate(45deg); }
+  .acc-body {
+    max-height: 0; overflow: hidden; transition: max-height .35s ease;
+    font-size: 14px; color: #444; line-height: 1.7;
+  }
+  .acc-body.open { max-height: 400px; }
+  .acc-body-inner { padding: 0 0 16px; }
+  .acc-body-inner ul { padding-left: 20px; }
+  .acc-body-inner li { margin-bottom: 6px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(245,240,232,.5);
+    text-align: center; padding: 32px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px;
+    margin-top: 60px;
+  }
+  footer strong { color: var(--gold); }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
+    width: 0%; z-index: 999; transition: width .1s linear;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-tag">Pengelolaan Pendidikan · IKIP Siliwangi</div>
+    <h1>Struktur dan<br><em>Organisasi Pendidikan</em></h1>
+    <p class="header-sub">Materi Kuliah — 7 Pokok Bahasan Lengkap dengan Contoh Konkrit</p>
+    <div class="author-badge">Martin Bernard, M.Pd. — IKIP Siliwangi</div>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- TOC -->
+  <nav class="toc" aria-label="Daftar Isi">
+    <div class="toc-title">Daftar Isi</div>
+    <ol>
+      <li><a href="#s1">Pengertian Struktur dan Organisasi</a></li>
+      <li><a href="#s2">Tujuan Struktur dan Organisasi</a></li>
+      <li><a href="#s3">Bentuk-Bentuk Struktur Organisasi</a></li>
+      <li><a href="#s4">Komponen Struktur Organisasi</a></li>
+      <li><a href="#s5">Koordinasi dan Komunikasi</a></li>
+      <li><a href="#s6">Implementasi di Lapangan</a></li>
+      <li><a href="#s7">Pemanfaatan ICT</a></li>
+    </ol>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- ══════════════════════════════
+         1. PENGERTIAN
+    ══════════════════════════════ -->
+    <section class="section" id="s1">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Pengertian Struktur dan Organisasi Pendidikan</h2>
+      </div>
+
+      <p><strong>Organisasi pendidikan</strong> adalah suatu sistem sosial yang terdiri dari sekelompok individu yang bekerja sama secara terkoordinasi untuk mencapai tujuan pendidikan yang telah ditetapkan. Dalam konteks kelembagaan, organisasi pendidikan mencakup sekolah, perguruan tinggi, dinas pendidikan, serta berbagai lembaga penunjang lainnya.</p>
+
+      <div class="def-box">
+        <div class="def-label">Definisi Kunci</div>
+        <p><strong>Struktur organisasi pendidikan</strong> adalah kerangka yang menggambarkan pola hubungan formal antarpihak dalam suatu lembaga pendidikan — meliputi pembagian tugas, wewenang, tanggung jawab, serta jalur koordinasi antar-unit kerja.</p>
+      </div>
+
+      <p>Menurut <em>Robbins &amp; Judge (2013)</em>, struktur organisasi mendefinisikan cara pekerjaan dibagi, dikelompokkan, dan dikoordinasikan secara formal. Dalam lembaga pendidikan, hal ini terwujud melalui <em>statuta</em>, <em>Surat Keputusan</em> (SK), dan <em>tata pamong</em>.</p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🏛️</div>
+          <h4>Sistem Formal</h4>
+          <p>Aturan, SK, statuta, dan regulasi yang mengikat seluruh warga organisasi.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤝</div>
+          <h4>Sistem Informal</h4>
+          <p>Norma, budaya, dan hubungan sosial yang tumbuh di luar aturan formal.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h4>Orientasi Tujuan</h4>
+          <p>Setiap komponen diarahkan pada pencapaian tujuan pendidikan nasional.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h4>Sistem Terbuka</h4>
+          <p>Berinteraksi dinamis dengan lingkungan sosial, ekonomi, dan kebijakan.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         2. TUJUAN
+    ══════════════════════════════ -->
+    <section class="section" id="s2">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Tujuan Struktur dan Organisasi Pendidikan</h2>
+      </div>
+
+      <p>Pembentukan struktur organisasi yang baik bukan sekadar administratif, melainkan merupakan fondasi pencapaian mutu pendidikan secara berkelanjutan.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tujuan</th>
+              <th>Indikator Keberhasilan</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-gold">01</span></td>
+              <td>Mempertegas pembagian tugas dan tanggung jawab</td>
+              <td>Tidak ada tumpang-tindih jabatan; job description jelas</td>
+              <td><span class="badge badge-rust">Operasional</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-gold">02</span></td>
+              <td>Menciptakan koordinasi yang efektif antar unit</td>
+              <td>Rapat koordinasi terjadwal; keputusan cepat dieksekusi</td>
+              <td><span class="badge badge-green">Manajerial</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-gold">03</span></td>
+              <td>Memudahkan pengawasan dan akuntabilitas</td>
+              <td>Laporan kinerja berkala; audit internal aktif</td>
+              <td><span class="badge badge-green">Manajerial</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-gold">04</span></td>
+              <td>Mendukung pengambilan keputusan berbasis data</td>
+              <td>Sistem informasi terintegrasi; data valid tersedia</td>
+              <td><span class="badge badge-rust">Strategis</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-gold">05</span></td>
+              <td>Menjamin mutu layanan pendidikan</td>
+              <td>Akreditasi BAN-PT/BAN-S/M; kepuasan pemangku kepentingan</td>
+              <td><span class="badge badge-rust">Strategis</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="def-box">
+        <div class="def-label">Contoh Konkrit — IKIP Siliwangi</div>
+        <p>Di IKIP Siliwangi, tujuan ini diwujudkan melalui pemisahan jelas antara <em>Bidang Akademik</em> (Wakil Rektor I), <em>Bidang Kemahasiswaan</em> (Wakil Rektor III), dan <em>Bidang Umum &amp; Keuangan</em> (Wakil Rektor II), sehingga setiap bidang dapat fokus tanpa konflik wewenang.</p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         3. BENTUK-BENTUK
+    ══════════════════════════════ -->
+    <section class="section" id="s3">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Bentuk-Bentuk Struktur Organisasi Pendidikan</h2>
+      </div>
+
+      <p>Lembaga pendidikan di Indonesia mengadopsi berbagai bentuk struktur organisasi sesuai skala, kompleksitas, dan kebutuhan kelembagaan masing-masing.</p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">📐</div>
+          <h4>Struktur Lini (Line)</h4>
+          <p>Wewenang mengalir vertikal dari pimpinan ke bawahan. Cocok untuk sekolah kecil/madrasah ibtidaiyah. <em>Contoh: SDN dengan Kepala Sekolah → Guru.</em></p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧩</div>
+          <h4>Lini dan Staf</h4>
+          <p>Ditambah unit staf sebagai penasihat. Umum di SMA/SMK. <em>Contoh: Kepala Sekolah ← Tim Penjaminan Mutu → Wakasek → Guru.</em></p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔀</div>
+          <h4>Fungsional</h4>
+          <p>Pembagian unit berdasarkan fungsi (kurikulum, kesiswaan, humas). Efektif untuk PT. <em>Contoh: LPPM, LP3M, Biro Akademik.</em></p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⬡</div>
+          <h4>Matriks</h4>
+          <p>Kombinasi fungsional dan proyek. Dosen melapor ke Kaprodi sekaligus ke Ketua Penelitian. Fleksibel untuk universitas besar.</p>
+        </div>
+      </div>
+
+      <!-- ORG CHART DEMO -->
+      <p style="margin-top:32px;font-weight:600;">Contoh Bagan Organisasi — <em>Perguruan Tinggi (Lini &amp; Fungsional)</em></p>
+      <div class="org-wrap">
+        <div class="org-tree">
+          <div class="org-level">
+            <div class="org-node root">Rektor</div>
+          </div>
+          <div class="org-connector-v"></div>
+
+          <!-- Senat + WR -->
+          <div style="display:flex; gap:40px; align-items:flex-start; justify-content:center; width:100%;">
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node mid">Senat Akademik</div>
+            </div>
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node mid">WR I — Akademik</div>
+            </div>
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node mid">WR II — Umum &amp; Keu.</div>
+            </div>
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node mid">WR III — Kemahasiswaan</div>
+            </div>
+          </div>
+
+          <div style="height:16px;"></div>
+          <!-- Bawahan WR I -->
+          <div style="display:flex; gap:16px; justify-content:center;">
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node leaf">Dekan Fakultas</div>
+            </div>
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node leaf">LPPM</div>
+            </div>
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node leaf">LP3M</div>
+            </div>
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node leaf">Biro Akademik</div>
+            </div>
+            <div class="org-row">
+              <div class="org-connector-v"></div>
+              <div class="org-node leaf">UPT Perpustakaan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         4. KOMPONEN
+    ══════════════════════════════ -->
+    <section class="section" id="s4">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Komponen Struktur Organisasi Pendidikan</h2>
+      </div>
+
+      <p>Mintzberg (1979) mengidentifikasi lima komponen universal yang membentuk organisasi, yang dapat diaplikasikan secara langsung pada lembaga pendidikan:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Komponen</th>
+              <th>Fungsi</th>
+              <th>Contoh di Sekolah</th>
+              <th>Contoh di Perguruan Tinggi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Strategic Apex</strong></td>
+              <td>Pengambil keputusan tertinggi</td>
+              <td>Kepala Sekolah</td>
+              <td>Rektor / Pimpinan PT</td>
+            </tr>
+            <tr>
+              <td><strong>Middle Line</strong></td>
+              <td>Manajer menengah; jembatan apex–core</td>
+              <td>Wakil Kepala Sekolah</td>
+              <td>Dekan, Wakil Rektor</td>
+            </tr>
+            <tr>
+              <td><strong>Operating Core</strong></td>
+              <td>Pelaksana utama layanan pendidikan</td>
+              <td>Guru, Wali Kelas</td>
+              <td>Dosen, Kaprodi</td>
+            </tr>
+            <tr>
+              <td><strong>Technostructure</strong></td>
+              <td>Standardisasi proses &amp; sistem</td>
+              <td>Tim Kurikulum, TPMPS</td>
+              <td>LP3M, Penjaminan Mutu</td>
+            </tr>
+            <tr>
+              <td><strong>Support Staff</strong></td>
+              <td>Layanan penunjang non-inti</td>
+              <td>TU, Perpustakaan, Keamanan</td>
+              <td>Biro AAKK, UPT, IT Center</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="def-box">
+        <div class="def-label">Catatan Pedagogis</div>
+        <p>Keseimbangan antara kelima komponen menentukan efektivitas organisasi. Lembaga yang terlalu didominasi <em>technostructure</em> cenderung birokratis dan lambat berinovasi, sementara yang lemah <em>technostructure</em>-nya rentan terhadap inkonsistensi mutu.</p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         5. KOORDINASI & KOMUNIKASI
+    ══════════════════════════════ -->
+    <section class="section" id="s5">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Koordinasi dan Komunikasi dalam Organisasi Pendidikan</h2>
+      </div>
+
+      <p>Koordinasi adalah proses mengintegrasikan berbagai aktivitas unit organisasi agar tujuan bersama tercapai secara efisien. Dalam lembaga pendidikan, koordinasi yang buruk mengakibatkan tumpang-tindih program, konflik antar-unit, dan rendahnya akuntabilitas.</p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <h4>Koordinasi Vertikal</h4>
+          <p>Antara pimpinan dan bawahan. Contoh: Rektor menerbitkan SK → Dekan melaksanakan → Kaprodi menindaklanjuti.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">↔️</div>
+          <h4>Koordinasi Horizontal</h4>
+          <p>Antar-unit setara. Contoh: Prodi Matematika berkoordinasi dengan LPPM untuk penelitian kolaboratif dosen.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔄</div>
+          <h4>Koordinasi Diagonal</h4>
+          <p>Lintas level dan unit. Contoh: Dosen (operasional) berkoordinasi langsung dengan LP3M (teknostruktur) untuk hibah penelitian.</p>
+        </div>
+      </div>
+
+      <p style="margin-top:24px;"><strong>Mekanisme Koordinasi Mintzberg</strong> yang relevan di lembaga pendidikan:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Mekanisme</th><th>Cara Kerja</th><th>Contoh Konkrit</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mutual Adjustment</td>
+              <td>Penyesuaian spontan antar-individu</td>
+              <td>Dua dosen mengatur jadwal praktikum secara informal via WhatsApp</td>
+            </tr>
+            <tr>
+              <td>Direct Supervision</td>
+              <td>Atasan langsung memantau bawahan</td>
+              <td>Kepala Sekolah melakukan supervisi kelas setiap semester</td>
+            </tr>
+            <tr>
+              <td>Standardisasi Proses</td>
+              <td>Prosedur baku ditetapkan</td>
+              <td>RPS (Rencana Pembelajaran Semester) wajib diunggah di SIAK</td>
+            </tr>
+            <tr>
+              <td>Standardisasi Output</td>
+              <td>Target hasil ditetapkan</td>
+              <td>IPK minimum kelulusan, capaian pembelajaran prodi</td>
+            </tr>
+            <tr>
+              <td>Standardisasi Keahlian</td>
+              <td>Sertifikasi/kualifikasi anggota</td>
+              <td>Dosen wajib S2, guru wajib sertifikasi pendidik</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         6. IMPLEMENTASI
+    ══════════════════════════════ -->
+    <section class="section" id="s6">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2 class="section-title">Implementasi Struktur dan Organisasi Pendidikan di Lapangan</h2>
+      </div>
+
+      <p>Implementasi struktur organisasi tidak cukup dengan menerbitkan bagan; diperlukan internalisasi peran, penguatan kapasitas, dan evaluasi berkala. Berikut tahapan implementasi berbasis <em>Plan–Do–Check–Action (PDCA)</em>:</p>
+
+      <div class="accordion" id="acc">
+        <div class="acc-item">
+          <button class="acc-trigger" data-acc="a1">
+            <span>🔵 Plan — Perencanaan Struktur Organisasi</span>
+            <span class="arrow">+</span>
+          </button>
+          <div class="acc-body" id="a1">
+            <div class="acc-body-inner">
+              <ul>
+                <li>Analisis kebutuhan organisasi berdasarkan SOTK (Struktur Organisasi dan Tata Kerja)</li>
+                <li>Identifikasi unit kerja yang diperlukan sesuai misi lembaga</li>
+                <li>Penyusunan uraian tugas (job description) untuk setiap jabatan</li>
+                <li>Penetapan jalur koordinasi dan pelaporan secara tertulis</li>
+              </ul>
+              <p style="margin-top:12px;"><em>Contoh: IKIP Siliwangi menyusun ORTALA (Organisasi dan Tata Laksana) mengacu pada Statuta yang ditetapkan Kemenristekdikti.</em></p>
+            </div>
+          </div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" data-acc="a2">
+            <span>🟡 Do — Pelaksanaan dan Pengisian Jabatan</span>
+            <span class="arrow">+</span>
+          </button>
+          <div class="acc-body" id="a2">
+            <div class="acc-body-inner">
+              <ul>
+                <li>Rekrutmen dan seleksi pejabat struktural berdasarkan kompetensi</li>
+                <li>Penerbitan SK pengangkatan oleh pimpinan tertinggi</li>
+                <li>Orientasi jabatan dan sosialisasi job description</li>
+                <li>Pelaksanaan rapat kerja perdana untuk menyelaraskan program</li>
+              </ul>
+              <p style="margin-top:12px;"><em>Contoh: Pemilihan Dekan di IKIP Siliwangi melalui rapat senat dengan mempertimbangkan rekam jejak akademik dan manajerial.</em></p>
+            </div>
+          </div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" data-acc="a3">
+            <span>🟠 Check — Monitoring dan Evaluasi</span>
+            <span class="arrow">+</span>
+          </button>
+          <div class="acc-body" id="a3">
+            <div class="acc-body-inner">
+              <ul>
+                <li>Audit kinerja unit oleh Satuan Pengawas Internal (SPI)</li>
+                <li>Evaluasi capaian melalui Laporan Akuntabilitas Kinerja (LAKIP)</li>
+                <li>Survei kepuasan pemangku kepentingan (mahasiswa, dosen, tenaga kependidikan)</li>
+                <li>Benchmarking dengan lembaga pendidikan serupa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" data-acc="a4">
+            <span>🟢 Act — Tindak Lanjut dan Perbaikan</span>
+            <span class="arrow">+</span>
+          </button>
+          <div class="acc-body" id="a4">
+            <div class="acc-body-inner">
+              <ul>
+                <li>Revisi uraian tugas yang tidak relevan atau tumpang-tindih</li>
+                <li>Restrukturisasi unit yang kinerjanya di bawah standar</li>
+                <li>Pelatihan manajerial bagi pejabat baru</li>
+                <li>Pembaruan sistem informasi untuk mendukung koordinasi</li>
+              </ul>
+              <p style="margin-top:12px;"><em>Contoh: Pembentukan Pusat Studi Pembelajaran (PSP) baru sebagai respons atas kebutuhan penguatan inovasi pedagogi.</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         7. ICT
+    ══════════════════════════════ -->
+    <section class="section" id="s7">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2 class="section-title">Pemanfaatan ICT dalam Struktur dan Organisasi Pendidikan</h2>
+      </div>
+
+      <p>Transformasi digital mengubah cara organisasi pendidikan berkoordinasi, mendistribusikan informasi, dan mengevaluasi kinerja. ICT bukan sekadar alat bantu, melainkan <em>enabler</em> perubahan fundamental dalam tata kelola pendidikan.</p>
+
+      <div class="ict-grid">
+        <div class="ict-card">
+          <div class="ict-icon">🖥️</div>
+          <h5>SIAKAD / SIAK</h5>
+          <p>Sistem Informasi Akademik terintegrasi untuk KRS, nilai, KHS, dan transkrip secara digital.</p>
+        </div>
+        <div class="ict-card">
+          <div class="ict-icon">📚</div>
+          <h5>LMS (E-Learning)</h5>
+          <p>Moodle, Google Classroom, Edmodo — platform distribusi materi, tugas, dan penilaian.</p>
+        </div>
+        <div class="ict-card">
+          <div class="ict-icon">💬</div>
+          <h5>Komunikasi Digital</h5>
+          <p>WhatsApp Group, MS Teams, Zoom — koordinasi rapat dan pengumuman lintas unit.</p>
+        </div>
+        <div class="ict-card">
+          <div class="ict-icon">📊</div>
+          <h5>Dashboard Kinerja</h5>
+          <p>Tableau, Power BI, Google Data Studio — visualisasi data kinerja akademik real-time.</p>
+        </div>
+        <div class="ict-card">
+          <div class="ict-icon">🗂️</div>
+          <h5>Manajemen Dokumen</h5>
+          <p>Google Drive, SharePoint — penyimpanan dan distribusi dokumen kebijakan secara terpusat.</p>
+        </div>
+        <div class="ict-card">
+          <div class="ict-icon">🔐</div>
+          <h5>Keamanan Data</h5>
+          <p>Enkripsi data mahasiswa, kebijakan PDPA, backup berkala sesuai regulasi Kemendikbud.</p>
+        </div>
+      </div>
+
+      <div class="def-box" style="margin-top:24px;">
+        <div class="def-label">Tantangan ICT dalam Organisasi Pendidikan</div>
+        <p>Implementasi ICT tidak terlepas dari tantangan: <strong>kesenjangan digital</strong> antar-daerah, <strong>resistensi perubahan</strong> tenaga pendidik senior, keterbatasan <strong>anggaran infrastruktur</strong>, serta isu <strong>keamanan data</strong> dan privasi mahasiswa. Diperlukan strategi change management yang komprehensif agar adopsi teknologi berjalan efektif.</p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         KUIS INTERAKTIF
+    ══════════════════════════════ -->
+    <div class="quiz-box" id="quiz">
+      <div class="quiz-header">
+        <span class="quiz-icon">📝</span>
+        <h3>Kuis Formatif — Struktur dan Organisasi Pendidikan</h3>
+      </div>
+
+      <div class="question" id="q0">
+        <p>1. Komponen yang berfungsi sebagai pelaksana utama layanan pendidikan menurut Mintzberg disebut…</p>
+        <div class="options">
+          <button class="opt-btn" data-q="0" data-i="0">a. Strategic Apex</button>
+          <button class="opt-btn" data-q="0" data-i="1">b. Middle Line</button>
+          <button class="opt-btn" data-q="0" data-i="2">c. Operating Core</button>
+          <button class="opt-btn" data-q="0" data-i="3">d. Technostructure</button>
+        </div>
+        <div class="feedback" id="fb0"></div>
+      </div>
+
+      <div class="question" id="q1">
+        <p>2. Mekanisme koordinasi "standardisasi proses" di perguruan tinggi diwujudkan melalui…</p>
+        <div class="options">
+          <button class="opt-btn" data-q="1" data-i="0">a. Rapat informal dosen via WhatsApp</button>
+          <button class="opt-btn" data-q="1" data-i="1">b. RPS wajib diunggah ke SIAKAD sebelum perkuliahan</button>
+          <button class="opt-btn" data-q="1" data-i="2">c. IPK minimum kelulusan</button>
+          <button class="opt-btn" data-q="1" data-i="3">d. Sertifikasi dosen</button>
+        </div>
+        <div class="feedback" id="fb1"></div>
+      </div>
+
+      <div class="question" id="q2">
+        <p>3. Struktur organisasi yang paling tepat untuk sekolah dasar kecil dengan sedikit staf adalah…</p>
+        <div class="options">
+          <button class="opt-btn" data-q="2" data-i="0">a. Matriks</button>
+          <button class="opt-btn" data-q="2" data-i="1">b. Fungsional</button>
+          <button class="opt-btn" data-q="2" data-i="2">c. Lini Sederhana</button>
+          <button class="opt-btn" data-q="2" data-i="3">d. Divisional</button>
+        </div>
+        <div class="feedback" id="fb2"></div>
+      </div>
+
+      <div class="question" id="q3">
+        <p>4. Siklus penjaminan mutu implementasi organisasi pendidikan yang paling sistematis menggunakan model…</p>
+        <div class="options">
+          <button class="opt-btn" data-q="3" data-i="0">a. SWOT Analysis</button>
+          <button class="opt-btn" data-q="3" data-i="1">b. PDCA (Plan–Do–Check–Act)</button>
+          <button class="opt-btn" data-q="3" data-i="2">c. Fishbone Diagram</button>
+          <button class="opt-btn" data-q="3" data-i="3">d. Balanced Scorecard</button>
+        </div>
+        <div class="feedback" id="fb3"></div>
+      </div>
+
+      <div class="question" id="q4">
+        <p>5. Pemanfaatan ICT yang berfungsi sebagai platform distribusi materi kuliah dan penilaian tugas adalah…</p>
+        <div class="options">
+          <button class="opt-btn" data-q="4" data-i="0">a. SIAKAD</button>
+          <button class="opt-btn" data-q="4" data-i="1">b. Dashboard Power BI</button>
+          <button class="opt-btn" data-q="4" data-i="2">c. LMS (Google Classroom / Moodle)</button>
+          <button class="opt-btn" data-q="4" data-i="3">d. SharePoint</button>
+        </div>
+        <div class="feedback" id="fb4"></div>
+      </div>
+
+      <div class="quiz-score" id="quiz-score">
+        <div class="score-num" id="score-val">0/5</div>
+        <p id="score-msg" style="font-size:15px; margin-top:8px;"></p>
+      </div>
+    </div>
+    <!-- end quiz -->
+
+  </main>
+</div>
+
+<footer>
+  <p>© 2025 <strong>Martin Bernard, M.Pd.</strong> · IKIP Siliwangi, Cimahi</p>
+  <p style="margin-top:6px;">Mata Kuliah: Pengelolaan Pendidikan · Materi: Struktur dan Organisasi Pendidikan</p>
+</footer>
+
+<script>
+/* ── Progress bar ── */
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total    = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('progress-bar').style.width = (scrolled / total * 100) + '%';
+});
+
+/* ── TOC active ── */
+const sections = document.querySelectorAll('section.section');
+const tocLinks = document.querySelectorAll('.toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const id = e.target.getAttribute('id');
+      const link = document.querySelector(`.toc a[href="#${id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+/* ── Accordion ── */
+document.querySelectorAll('.acc-trigger').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.acc;
+    const body = document.getElementById(id);
+    const open = btn.classList.contains('open');
+    // close all
+    document.querySelectorAll('.acc-trigger').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.acc-body').forEach(b => b.classList.remove('open'));
+    if (!open) {
+      btn.classList.add('open');
+      body.classList.add('open');
+    }
+  });
+});
+
+/* ── Quiz ── */
+const answers  = [2, 1, 2, 1, 2]; // correct indices (0-based)
+const messages = [
+  '✅ Tepat! <em>Operating Core</em> adalah pelaksana langsung layanan pendidikan (guru/dosen).',
+  '✅ Benar! RPS yang distandarkan adalah wujud standardisasi proses.',
+  '✅ Betul! Sekolah kecil paling efisien menggunakan struktur lini sederhana.',
+  '✅ Tepat! PDCA adalah siklus penjaminan mutu yang sistematis dan berkelanjutan.',
+  '✅ Benar! LMS (Google Classroom / Moodle) adalah platform e-learning utama.'
+];
+const wrongs = [
+  '❌ Kurang tepat. <em>Strategic Apex</em> adalah pimpinan tertinggi, bukan pelaksana operasional.',
+  '❌ Kurang tepat. Rapat informal adalah <em>mutual adjustment</em>, bukan standardisasi proses.',
+  '❌ Kurang tepat. Struktur matriks dan fungsional lebih kompleks, tidak cocok untuk SD kecil.',
+  '❌ Kurang tepat. SWOT dan Fishbone adalah alat analisis, bukan siklus penjaminan mutu operasional.',
+  '❌ Kurang tepat. SIAKAD untuk administrasi akademik; LMS khusus untuk pembelajaran daring.'
+];
+
+let answered   = new Array(5).fill(false);
+let score      = 0;
+let totalScore = 0;
+
+document.querySelectorAll('.opt-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    const q  = parseInt(this.dataset.q);
+    const i  = parseInt(this.dataset.i);
+    if (answered[q]) return;
+    answered[q] = true;
+
+    const siblings = document.querySelectorAll(`.opt-btn[data-q="${q}"]`);
+    siblings.forEach(b => b.disabled = true);
+
+    const fb = document.getElementById('fb' + q);
+    if (i === answers[q]) {
+      this.classList.add('correct');
+      fb.innerHTML = messages[q];
+      fb.className = 'feedback show ok';
+      score++;
+    } else {
+      this.classList.add('wrong');
+      siblings[answers[q]].classList.add('correct');
+      fb.innerHTML = wrongs[q];
+      fb.className = 'feedback show err';
+    }
+
+    totalScore = answered.filter(Boolean).length;
+    if (totalScore === 5) showScore();
+  });
+});
+
+function showScore() {
+  const scoreBox = document.getElementById('quiz-score');
+  const num      = document.getElementById('score-val');
+  const msg      = document.getElementById('score-msg');
+  num.textContent = score + '/5';
+  if      (score === 5) msg.textContent = '🎉 Sempurna! Pemahaman Anda sangat baik.';
+  else if (score >= 3) msg.textContent = '👍 Baik! Ulangi materi yang masih keliru.';
+  else                 msg.textContent = '📖 Perlu pendalaman lebih lanjut. Baca kembali materi di atas.';
+  scoreBox.classList.add('show');
+  scoreBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>
