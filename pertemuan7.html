@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengelolaan Kurikulum | Pengelolaan Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0b;
+    --surface: #1a1914;
+    --surface2: #222118;
+    --border: #2e2c22;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: #7a6530;
+    --cream: #f0e8d0;
+    --cream-dim: #9c927a;
+    --accent: #8b4513;
+    --green: #4a7c59;
+    --text: #e8dfc8;
+    --text-dim: #7a7260;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  /* Ornamental background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(139,69,19,0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  header {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px 50px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .header-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 5px 18px;
+    margin-bottom: 24px;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+
+  h1 span {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: var(--gold-dim);
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+  .ornament::before,
+  .ornament::after {
+    content: '';
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim));
+  }
+  .ornament::after { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+
+  /* Navigation pills */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,14,11,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+
+  .nav-inner {
+    display: inline-flex;
+    gap: 0;
+    min-width: 100%;
+    justify-content: center;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    background: none;
+    border: none;
+    color: var(--cream-dim);
+    font-family: 'Source Serif 4', serif;
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: color .25s;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover { color: var(--cream); }
+  .nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .nav-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    color: var(--bg);
+    font-size: 9px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .nav-btn.active .nav-num { background: var(--gold); }
+
+  /* Main layout */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Sections */
+  .section {
+    display: none;
+    animation: fadeSlide .5s ease both;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    padding: 56px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.15;
+  }
+
+  .section-icon {
+    float: right;
+    font-size: 4rem;
+    opacity: 0.12;
+    margin-top: -10px;
+    line-height: 1;
+  }
+
+  /* Content blocks */
+  .lead {
+    font-size: 1.1rem;
+    color: var(--cream);
+    font-style: italic;
+    font-weight: 300;
+    margin-bottom: 32px;
+    padding-left: 20px;
+    border-left: 3px solid var(--gold);
+    line-height: 1.7;
+  }
+
+  p { margin-bottom: 18px; color: var(--text); }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin: 36px 0 14px;
+  }
+
+  h3::before {
+    content: '§ ';
+    color: var(--gold-dim);
+    font-size: 0.9rem;
+  }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 28px 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 24px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s, transform .3s;
+  }
+  .card:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .card-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .card-body { font-size: 0.88rem; color: var(--cream-dim); line-height: 1.7; }
+
+  /* Numbered list */
+  .fancy-list {
+    list-style: none;
+    margin: 24px 0;
+  }
+
+  .fancy-list li {
+    display: flex;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .list-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .list-text strong {
+    display: block;
+    color: var(--cream);
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+    font-family: 'Playfair Display', serif;
+  }
+  .list-text span { font-size: 0.87rem; color: var(--cream-dim); }
+
+  /* Quote block */
+  .quote-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    padding: 24px 28px;
+    margin: 32px 0;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .quote-block p {
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+
+  .quote-source { font-size: 0.82rem; color: var(--gold); letter-spacing: 1px; }
+
+  /* Steps / phases */
+  .steps {
+    position: relative;
+    margin: 32px 0;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 24px;
+    bottom: 24px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), var(--gold-dim), transparent);
+  }
+
+  .step {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-left: 4px;
+  }
+
+  .step-dot {
+    flex-shrink: 0;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    z-index: 1;
+    position: relative;
+  }
+
+  .step-content { flex: 1; }
+  .step-content strong {
+    display: block;
+    color: var(--cream);
+    font-size: 0.97rem;
+    margin-bottom: 5px;
+    font-family: 'Playfair Display', serif;
+  }
+  .step-content p { font-size: 0.87rem; color: var(--cream-dim); margin: 0; }
+
+  /* Table */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 0.87rem;
+  }
+
+  .styled-table th {
+    background: var(--surface2);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 2px solid var(--gold-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .styled-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .styled-table tr:hover td { background: var(--surface); }
+
+  /* Info pills */
+  .pill {
+    display: inline-block;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin: 3px 3px 3px 0;
+    letter-spacing: 0.5px;
+  }
+
+  /* Highlight box */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.07), rgba(139,69,19,0.07));
+    border: 1px solid var(--gold-dim);
+    border-radius: 2px;
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+  .highlight-box .hb-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    position: relative;
+    z-index: 1;
+  }
+  footer strong { color: var(--gold); }
+
+  /* Progress bar */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index: 999;
+    transition: width .3s;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .section-icon { display: none; }
+    .styled-table { font-size: 0.8rem; }
+    .styled-table th, .styled-table td { padding: 9px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<header>
+  <div class="header-badge">Mata Kuliah Pengelolaan Pendidikan</div>
+  <h1>Pengelolaan <span>Kurikulum</span></h1>
+  <p class="subtitle">IKIP Siliwangi · Program Studi Pendidikan Matematika</p>
+  <div class="ornament">✦ MATERI PERKULIAHAN ✦</div>
+</header>
+
+<nav>
+  <div class="nav-inner" id="navInner"></div>
+</nav>
+
+<main>
+  <!-- SECTION 1 -->
+  <section class="section active" id="s1">
+    <div class="section-header">
+      <span class="section-num">Bagian 01 — Fondasi</span>
+      <span class="section-icon">📖</span>
+      <h2 class="section-title">Pengertian Pengelolaan Kurikulum</h2>
+    </div>
+
+    <p class="lead">
+      Pengelolaan kurikulum merupakan suatu sistem pengelolaan yang kooperatif, komprehensif, sistemik, dan sistematik dalam rangka mewujudkan ketercapaian tujuan kurikulum.
+    </p>
+
+    <p>
+      Secara etimologis, kata <strong>kurikulum</strong> berasal dari bahasa Latin <em>currere</em>, yang berarti berlari/memacu. Dalam perkembangannya, istilah ini digunakan dalam konteks pendidikan sebagai <em>race course</em> atau jalur yang harus ditempuh oleh peserta didik untuk mencapai suatu gelar kehormatan.
+    </p>
+
+    <div class="quote-block">
+      <p>"Kurikulum adalah seperangkat rencana dan pengaturan mengenai tujuan, isi, dan bahan pelajaran serta cara yang digunakan sebagai pedoman penyelenggaraan kegiatan pembelajaran untuk mencapai tujuan pendidikan tertentu."</p>
+      <div class="quote-source">— UU No. 20 Tahun 2003 tentang Sisdiknas, Pasal 1 Ayat 19</div>
+    </div>
+
+    <h3>Dimensi Pengertian Kurikulum</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">📄</span>
+        <div class="card-title">Kurikulum sebagai Dokumen</div>
+        <div class="card-body">Seperangkat rencana dan pengaturan tujuan, isi, dan bahan pelajaran yang tertuang secara tertulis dan resmi.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚙️</span>
+        <div class="card-title">Kurikulum sebagai Proses</div>
+        <div class="card-body">Aktivitas nyata yang terjadi dalam pembelajaran, meliputi seluruh pengalaman belajar peserta didik di bawah bimbingan sekolah.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">💡</span>
+        <div class="card-title">Kurikulum sebagai Hasil</div>
+        <div class="card-body">Capaian belajar peserta didik berupa perubahan perilaku, sikap, pengetahuan, dan keterampilan sebagai output pendidikan.</div>
+      </div>
+    </div>
+
+    <h3>Komponen Utama Kurikulum</h3>
+    <ul class="fancy-list">
+      <li>
+        <div class="list-num">1</div>
+        <div class="list-text"><strong>Tujuan (Goals & Objectives)</strong><span>Arah dan sasaran yang ingin dicapai dalam proses pendidikan, mulai dari tujuan nasional hingga tujuan instruksional khusus.</span></div>
+      </li>
+      <li>
+        <div class="list-num">2</div>
+        <div class="list-text"><strong>Isi/Materi (Content)</strong><span>Bahan kajian yang dipilih dan disusun secara sistematis sesuai dengan tujuan dan karakteristik peserta didik.</span></div>
+      </li>
+      <li>
+        <div class="list-num">3</div>
+        <div class="list-text"><strong>Proses Pembelajaran (Process)</strong><span>Strategi dan metode yang digunakan guru dalam menyampaikan materi kepada peserta didik.</span></div>
+      </li>
+      <li>
+        <div class="list-num">4</div>
+        <div class="list-text"><strong>Evaluasi (Evaluation)</strong><span>Sistem penilaian untuk mengukur ketercapaian tujuan pembelajaran dan efektivitas kurikulum.</span></div>
+      </li>
+    </ul>
+
+    <div class="highlight-box">
+      <div class="hb-title">🏫 Pengelolaan Kurikulum di Sekolah</div>
+      <p style="font-size:0.9rem;color:var(--cream-dim);margin:0;">Pengelolaan kurikulum di tingkat satuan pendidikan mencakup kegiatan merencanakan, mengorganisasikan, melaksanakan, dan mengevaluasi kurikulum secara terpadu demi peningkatan mutu pendidikan secara berkesinambungan.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2 -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">Bagian 02 — Orientasi</span>
+      <span class="section-icon">🎯</span>
+      <h2 class="section-title">Tujuan dan Fungsi Pengelolaan Kurikulum</h2>
+    </div>
+
+    <p class="lead">
+      Pengelolaan kurikulum bertujuan memastikan bahwa seluruh komponen pendidikan berjalan secara sinergis untuk menghasilkan lulusan yang berkualitas sesuai kebutuhan masyarakat dan tuntutan zaman.
+    </p>
+
+    <h3>Tujuan Pengelolaan Kurikulum</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🏆</span>
+        <div class="card-title">Pencapaian Tujuan Pendidikan</div>
+        <div class="card-body">Memastikan tercapainya standar kompetensi nasional yang ditetapkan dalam kurikulum secara efektif dan efisien.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔄</span>
+        <div class="card-title">Kesinambungan Belajar</div>
+        <div class="card-body">Menjamin pengalaman belajar yang terstruktur, berurutan, dan berkesinambungan antar jenjang pendidikan.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚖️</span>
+        <div class="card-title">Relevansi Pendidikan</div>
+        <div class="card-body">Menyesuaikan isi dan proses pembelajaran dengan kebutuhan nyata peserta didik dan tuntutan masyarakat.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <div class="card-title">Akuntabilitas</div>
+        <div class="card-body">Memberikan pertanggungjawaban yang jelas atas penyelenggaraan program pendidikan kepada seluruh pemangku kepentingan.</div>
+      </div>
+    </div>
+
+    <h3>Fungsi Pengelolaan Kurikulum</h3>
+    <ul class="fancy-list">
+      <li>
+        <div class="list-num">F1</div>
+        <div class="list-text"><strong>Fungsi Penyesuaian (The Adjustive Function)</strong><span>Kurikulum berfungsi menyesuaikan diri terhadap perubahan dan tuntutan masyarakat yang terus berkembang.</span></div>
+      </li>
+      <li>
+        <div class="list-num">F2</div>
+        <div class="list-text"><strong>Fungsi Integrasi (The Integrating Function)</strong><span>Kurikulum berfungsi menghasilkan pribadi yang utuh dan terintegrasi — cognitif, afektif, dan psikomotorik.</span></div>
+      </li>
+      <li>
+        <div class="list-num">F3</div>
+        <div class="list-text"><strong>Fungsi Diferensiasi (The Differentiating Function)</strong><span>Kurikulum memberikan pelayanan terhadap perbedaan individual peserta didik dalam hal minat, bakat, dan kemampuan.</span></div>
+      </li>
+      <li>
+        <div class="list-num">F4</div>
+        <div class="list-text"><strong>Fungsi Persiapan (The Propaedeutic Function)</strong><span>Kurikulum mempersiapkan peserta didik agar mampu melanjutkan studi ke jenjang yang lebih tinggi.</span></div>
+      </li>
+      <li>
+        <div class="list-num">F5</div>
+        <div class="list-text"><strong>Fungsi Pemilihan (The Selective Function)</strong><span>Kurikulum memberikan kesempatan bagi peserta didik untuk memilih program yang sesuai dengan minat dan kemampuannya.</span></div>
+      </li>
+      <li>
+        <div class="list-num">F6</div>
+        <div class="list-text"><strong>Fungsi Diagnostik (The Diagnostic Function)</strong><span>Kurikulum membantu peserta didik memahami dan menerima dirinya sendiri serta mengembangkan potensi yang dimiliki.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">Bagian 03 — Perencanaan</span>
+      <span class="section-icon">🗺️</span>
+      <h2 class="section-title">Perencanaan Kurikulum</h2>
+    </div>
+
+    <p class="lead">
+      Perencanaan kurikulum adalah proses pengambilan keputusan tentang tujuan pembelajaran, pengalaman belajar, serta pengaturan waktu dan sumber daya yang diperlukan sebelum pembelajaran berlangsung.
+    </p>
+
+    <p>
+      Perencanaan kurikulum yang baik merupakan fondasi keberhasilan seluruh proses pendidikan. Tanpa perencanaan yang matang, pelaksanaan pembelajaran akan berlangsung tanpa arah yang jelas dan tidak akan menghasilkan lulusan yang berkualitas.
+    </p>
+
+    <h3>Prinsip-Prinsip Perencanaan Kurikulum</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <div class="card-title">Relevansi</div>
+        <div class="card-body">Kurikulum harus relevan dengan kebutuhan dan karakteristik peserta didik, serta tuntutan kehidupan masyarakat.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔗</span>
+        <div class="card-title">Fleksibilitas</div>
+        <div class="card-body">Kurikulum harus cukup fleksibel untuk mengakomodasi perbedaan individu dan kondisi lokal sekolah.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📈</span>
+        <div class="card-title">Kontinuitas</div>
+        <div class="card-body">Materi kurikulum disusun secara berkesinambungan dari jenjang yang lebih rendah ke jenjang yang lebih tinggi.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">✅</span>
+        <div class="card-title">Efisiensi</div>
+        <div class="card-body">Pemanfaatan sumber daya (waktu, tenaga, biaya) secara optimal untuk mencapai hasil yang maksimal.</div>
+      </div>
+    </div>
+
+    <h3>Tahapan Perencanaan Kurikulum</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot">1</div>
+        <div class="step-content">
+          <strong>Analisis Kebutuhan (Need Assessment)</strong>
+          <p>Mengidentifikasi kebutuhan peserta didik, masyarakat, dan perkembangan ilmu pengetahuan sebagai dasar pengembangan kurikulum.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">2</div>
+        <div class="step-content">
+          <strong>Perumusan Tujuan</strong>
+          <p>Menetapkan tujuan pendidikan nasional, tujuan institusional, tujuan kurikuler, hingga tujuan instruksional secara berjenjang.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">3</div>
+        <div class="step-content">
+          <strong>Pemilihan dan Pengorganisasian Isi</strong>
+          <p>Memilih materi yang relevan, bermakna, dan sesuai perkembangan peserta didik, serta mengorganisasikannya secara logis.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">4</div>
+        <div class="step-content">
+          <strong>Pemilihan Pengalaman Belajar</strong>
+          <p>Merancang aktivitas dan pengalaman belajar yang bervariasi untuk mengakomodasi berbagai gaya belajar peserta didik.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">5</div>
+        <div class="step-content">
+          <strong>Pengembangan Alat Evaluasi</strong>
+          <p>Merancang instrumen penilaian yang valid dan reliabel sesuai dengan tujuan pembelajaran yang telah ditetapkan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="hb-title">📋 Dokumen Perencanaan Kurikulum</div>
+      <div style="margin-top:10px;">
+        <span class="pill">Silabus</span>
+        <span class="pill">RPP / Modul Ajar</span>
+        <span class="pill">Prota & Prosem</span>
+        <span class="pill">ATP (Alur Tujuan Pembelajaran)</span>
+        <span class="pill">CP (Capaian Pembelajaran)</span>
+        <span class="pill">Kriteria Ketercapaian</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">Bagian 04 — Pelaksanaan</span>
+      <span class="section-icon">🚀</span>
+      <h2 class="section-title">Pelaksanaan Kurikulum</h2>
+    </div>
+
+    <p class="lead">
+      Pelaksanaan kurikulum merupakan penerapan atau implementasi program kurikulum yang telah disusun dalam kegiatan nyata di kelas, sehingga peserta didik menguasai kompetensi yang telah ditetapkan.
+    </p>
+
+    <h3>Tingkatan Pelaksanaan Kurikulum</h3>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Tingkatan</th>
+          <th>Pelaksana</th>
+          <th>Wujud Kegiatan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tingkat Nasional</strong></td>
+          <td>Kemendikbudristek</td>
+          <td>Penetapan standar, regulasi, kerangka kurikulum nasional</td>
+        </tr>
+        <tr>
+          <td><strong>Tingkat Daerah</strong></td>
+          <td>Dinas Pendidikan</td>
+          <td>Muatan lokal, supervisi, pelatihan guru di wilayah</td>
+        </tr>
+        <tr>
+          <td><strong>Tingkat Sekolah</strong></td>
+          <td>Kepala Sekolah & Tim</td>
+          <td>KTSP/Kurikulum Operasional, penjadwalan, pengelolaan kelas</td>
+        </tr>
+        <tr>
+          <td><strong>Tingkat Kelas</strong></td>
+          <td>Guru</td>
+          <td>Pelaksanaan pembelajaran, pengelolaan kelas, penilaian harian</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Faktor-Faktor yang Memengaruhi Pelaksanaan</h3>
+    <ul class="fancy-list">
+      <li>
+        <div class="list-num">①</div>
+        <div class="list-text"><strong>Karakteristik Kurikulum</strong><span>Tingkat kelengkapan, kejelasan, dan kemudahan implementasi dokumen kurikulum yang tersedia.</span></div>
+      </li>
+      <li>
+        <div class="list-num">②</div>
+        <div class="list-text"><strong>Kompetensi Guru</strong><span>Penguasaan materi, kemampuan pedagogik, dan keterampilan mengelola kelas secara profesional.</span></div>
+      </li>
+      <li>
+        <div class="list-num">③</div>
+        <div class="list-text"><strong>Ketersediaan Sarana dan Prasarana</strong><span>Kelengkapan fasilitas belajar, media pembelajaran, dan lingkungan sekolah yang kondusif.</span></div>
+      </li>
+      <li>
+        <div class="list-num">④</div>
+        <div class="list-text"><strong>Dukungan Kepala Sekolah</strong><span>Kepemimpinan instruksional yang kuat dalam memfasilitasi dan mendukung pelaksanaan kurikulum.</span></div>
+      </li>
+      <li>
+        <div class="list-num">⑤</div>
+        <div class="list-text"><strong>Keterlibatan Orang Tua & Masyarakat</strong><span>Partisipasi aktif stakeholder dalam mendukung proses pendidikan di sekolah.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- SECTION 5 -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">Bagian 05 — Evaluasi</span>
+      <span class="section-icon">📊</span>
+      <h2 class="section-title">Evaluasi Kurikulum</h2>
+    </div>
+
+    <p class="lead">
+      Evaluasi kurikulum adalah proses sistematis untuk mengumpulkan informasi tentang efektivitas dan keberhasilan kurikulum guna mengambil keputusan penyempurnaan secara berkelanjutan.
+    </p>
+
+    <h3>Model-Model Evaluasi Kurikulum</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <div class="card-title">Model Tyler</div>
+        <div class="card-body">Evaluasi berbasis pencapaian tujuan (goal-attainment). Mengukur sejauh mana tujuan kurikulum telah tercapai oleh peserta didik.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔍</span>
+        <div class="card-title">Model CIPP (Stufflebeam)</div>
+        <div class="card-body">Mengevaluasi Context, Input, Process, dan Product secara komprehensif. Model yang paling banyak digunakan dalam evaluasi pendidikan.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🗣️</span>
+        <div class="card-title">Model Responsif (Stake)</div>
+        <div class="card-body">Evaluasi yang berfokus pada kebutuhan nyata dan respon dari berbagai pemangku kepentingan terhadap program pendidikan.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">💰</span>
+        <div class="card-title">Model Bebas Tujuan (Scriven)</div>
+        <div class="card-body">Evaluasi tanpa patokan tujuan formal — menilai semua efek nyata (termasuk efek samping) dari suatu program kurikulum.</div>
+      </div>
+    </div>
+
+    <h3>Lingkup Evaluasi Kurikulum</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot">C</div>
+        <div class="step-content">
+          <strong>Context Evaluation</strong>
+          <p>Menilai kebutuhan, masalah, dan peluang yang menjadi dasar penetapan tujuan dan prioritas program kurikulum.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">I</div>
+        <div class="step-content">
+          <strong>Input Evaluation</strong>
+          <p>Menilai rencana, sumber daya, dan strategi yang digunakan untuk melaksanakan program guna mencapai tujuan.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">P</div>
+        <div class="step-content">
+          <strong>Process Evaluation</strong>
+          <p>Memantau pelaksanaan program, mengidentifikasi hambatan, dan mendokumentasikan prosedur yang terjadi di lapangan.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot">P</div>
+        <div class="step-content">
+          <strong>Product Evaluation</strong>
+          <p>Mengukur dan menginterpretasikan hasil yang dicapai, baik selama program berlangsung maupun setelah program selesai.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6 -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">Bagian 06 — Implementasi</span>
+      <span class="section-icon">🏫</span>
+      <h2 class="section-title">Implementasi Pengelolaan Kurikulum di Lapangan</h2>
+    </div>
+
+    <p class="lead">
+      Implementasi pengelolaan kurikulum di lapangan adalah wujud nyata dari seluruh proses perencanaan yang telah dilakukan, di mana teori bertemu dengan realitas kondisi sekolah dan peserta didik.
+    </p>
+
+    <div class="quote-block">
+      <p>"Kurikulum yang baik di atas kertas belum menjamin keberhasilan pendidikan. Keberhasilan sesungguhnya ditentukan oleh kualitas implementasinya di lapangan."</p>
+      <div class="quote-source">— Prinsip Pengelolaan Kurikulum Berbasis Sekolah</div>
+    </div>
+
+    <h3>Strategi Implementasi yang Efektif</h3>
+    <ul class="fancy-list">
+      <li>
+        <div class="list-num">01</div>
+        <div class="list-text"><strong>Sosialisasi dan Internalisasi</strong><span>Seluruh warga sekolah memahami dan menghayati visi, misi, dan tujuan kurikulum yang akan diimplementasikan.</span></div>
+      </li>
+      <li>
+        <div class="list-num">02</div>
+        <div class="list-text"><strong>Pengembangan Kapasitas Guru</strong><span>Program pelatihan, workshop, IHT (In-House Training), dan komunitas belajar profesional (KKG/MGMP) secara berkelanjutan.</span></div>
+      </li>
+      <li>
+        <div class="list-num">03</div>
+        <div class="list-text"><strong>Pengelolaan Sumber Daya</strong><span>Optimalisasi penggunaan anggaran, fasilitas, dan waktu pembelajaran untuk mendukung implementasi kurikulum.</span></div>
+      </li>
+      <li>
+        <div class="list-num">04</div>
+        <div class="list-text"><strong>Supervisi Klinis</strong><span>Pemantauan dan pembinaan langsung oleh kepala sekolah/pengawas terhadap proses pembelajaran di kelas.</span></div>
+      </li>
+      <li>
+        <div class="list-num">05</div>
+        <div class="list-text"><strong>Refleksi dan Perbaikan Berkelanjutan</strong><span>Budaya evaluasi diri secara rutin oleh guru dan sekolah untuk terus meningkatkan kualitas pembelajaran.</span></div>
+      </li>
+    </ul>
+
+    <h3>Tantangan di Lapangan</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">⚠️</span>
+        <div class="card-title">Resistensi terhadap Perubahan</div>
+        <div class="card-body">Sebagian guru cenderung bertahan pada pola lama dan enggan mengadopsi pendekatan baru yang dituntut kurikulum.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📦</span>
+        <div class="card-title">Keterbatasan Sumber Daya</div>
+        <div class="card-body">Minimnya sarana prasarana, buku teks, dan media pembelajaran terutama di sekolah daerah terpencil.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔄</span>
+        <div class="card-title">Sering Berganti Kebijakan</div>
+        <div class="card-body">Pergantian kurikulum yang terlalu sering menyebabkan kebingungan dan kelelahan di kalangan guru dan sekolah.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7 -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">Bagian 07 — Teknologi</span>
+      <span class="section-icon">💻</span>
+      <h2 class="section-title">Pemanfaatan ICT dalam Pengelolaan Kurikulum</h2>
+    </div>
+
+    <p class="lead">
+      Teknologi Informasi dan Komunikasi (ICT) telah mengubah paradigma pengelolaan kurikulum dari sistem manual menjadi sistem terpadu digital yang lebih efisien, transparan, dan akuntabel.
+    </p>
+
+    <h3>Peran ICT dalam Siklus Pengelolaan Kurikulum</h3>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Tahap</th>
+          <th>Pemanfaatan ICT</th>
+          <th>Contoh Aplikasi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Perencanaan</strong></td>
+          <td>Penyusunan dokumen digital, analisis data kebutuhan, kolaborasi online</td>
+          <td>Google Docs, Canva, e-RKAM</td>
+        </tr>
+        <tr>
+          <td><strong>Pelaksanaan</strong></td>
+          <td>Pembelajaran daring/blended, media interaktif, LMS</td>
+          <td>Google Classroom, Moodle, Zoom</td>
+        </tr>
+        <tr>
+          <td><strong>Evaluasi</strong></td>
+          <td>Penilaian online, analisis data otomatis, rapor digital</td>
+          <td>Google Forms, Kahoot, Quizizz</td>
+        </tr>
+        <tr>
+          <td><strong>Supervisi</strong></td>
+          <td>Monitoring jarak jauh, dokumentasi digital, pelaporan real-time</td>
+          <td>e-Supervisi, SIMPKB, PMM</td>
+        </tr>
+        <tr>
+          <td><strong>Komunikasi</strong></td>
+          <td>Koordinasi guru, komunikasi orang tua-sekolah</td>
+          <td>WhatsApp, SIMS, e-Rapor</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Manfaat ICT untuk Pengelolaan Kurikulum</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <div class="card-title">Efisiensi Waktu</div>
+        <div class="card-body">Otomatisasi pekerjaan administratif seperti penyusunan jadwal, absensi, dan laporan memungkinkan guru fokus pada tugas inti.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌐</span>
+        <div class="card-title">Aksesibilitas Luas</div>
+        <div class="card-body">Materi dan dokumen kurikulum dapat diakses kapan saja dan di mana saja oleh semua pemangku kepentingan.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📱</span>
+        <div class="card-title">Pembelajaran Interaktif</div>
+        <div class="card-body">Media digital, video, simulasi, dan gamifikasi meningkatkan keterlibatan dan motivasi belajar peserta didik.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📉</span>
+        <div class="card-title">Analisis Data Berbasis Bukti</div>
+        <div class="card-body">Data hasil belajar dapat dianalisis secara cepat untuk pengambilan keputusan perbaikan kurikulum yang berbasis data.</div>
+      </div>
+    </div>
+
+    <h3>Platform Merdeka Mengajar (PMM)</h3>
+    <p>
+      Dalam konteks Kurikulum Merdeka, platform <strong>Merdeka Mengajar</strong> menjadi tulang punggung digitalisasi pengelolaan kurikulum di Indonesia. Platform ini menyediakan:
+    </p>
+    <div style="margin-top:16px;">
+      <span class="pill">📚 Perangkat Ajar Digital</span>
+      <span class="pill">🎓 Pelatihan Mandiri Guru</span>
+      <span class="pill">📋 Asesmen Murid</span>
+      <span class="pill">🏆 Bukti Karya</span>
+      <span class="pill">🏫 Komunitas Belajar</span>
+      <span class="pill">📊 Rapor Pendidikan</span>
+    </div>
+
+    <div class="highlight-box" style="margin-top:32px;">
+      <div class="hb-title">⚠️ Tantangan Implementasi ICT</div>
+      <p style="font-size:0.9rem;color:var(--cream-dim);margin:0;">Tidak semua sekolah memiliki infrastruktur digital yang memadai. Kesenjangan digital (digital divide) antara sekolah perkotaan dan pedesaan masih menjadi tantangan utama yang perlu diatasi melalui kebijakan dan investasi pemerintah secara berkelanjutan.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>
+    <strong>Pengelolaan Kurikulum</strong> · Mata Kuliah Pengelolaan Pendidikan<br>
+    <span style="margin-top:6px;display:block;">IKIP Siliwangi Cimahi · Program Studi Pendidikan Matematika</span>
+  </div>
+</footer>
+
+<script>
+  const sections = [
+    { id: 's1', label: 'Pengertian' },
+    { id: 's2', label: 'Tujuan & Fungsi' },
+    { id: 's3', label: 'Perencanaan' },
+    { id: 's4', label: 'Pelaksanaan' },
+    { id: 's5', label: 'Evaluasi' },
+    { id: 's6', label: 'Implementasi' },
+    { id: 's7', label: 'ICT' },
+  ];
+
+  const nav = document.getElementById('navInner');
+  let activeIdx = 0;
+
+  sections.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn' + (i === 0 ? ' active' : '');
+    btn.innerHTML = `<span class="nav-num">${i + 1}</span>${s.label}`;
+    btn.addEventListener('click', () => showSection(i));
+    nav.appendChild(btn);
+  });
+
+  function showSection(idx) {
+    sections.forEach((s, i) => {
+      const el = document.getElementById(s.id);
+      const btn = nav.querySelectorAll('.nav-btn')[i];
+      if (i === idx) {
+        el.classList.add('active');
+        btn.classList.add('active');
+      } else {
+        el.classList.remove('active');
+        btn.classList.remove('active');
+      }
+    });
+    activeIdx = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const pct = ((activeIdx + 1) / sections.length) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
