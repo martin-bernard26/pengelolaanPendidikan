@@ -67,7 +67,7 @@ button:hover {
     <input type="text" id="nim" placeholder="NIM masing-masing">
     <input type="text" id="link1" placeholder="Link Laporan (word) (Drive/Github)">
     <input type="text" id="link2" placeholder="Link Presentasi (PPT) (Drive/Github)">
-    <input type="text" id="link3" placeholder="Link Hasil Presesntasi (Drive/Github)">
+    <input type="text" id="link3" placeholder="Link Hasil Presesntasi (Video) (Drive/Github)">
 
 
     <button onclick="kirimData()">Kirim</button>
@@ -83,7 +83,7 @@ function kirimData() {
     let link2 = document.getElementById("link2").value;
     let link3 = document.getElementById("link3").value;
 
-    if(nama === "" || nim === "" || link === "") {
+    if(nama === "" || nim === "" || link1 === "" || link2 === "" || link3 === "") {
         document.getElementById("status").innerHTML = "❌ Semua field harus diisi!";
         return;
     }
