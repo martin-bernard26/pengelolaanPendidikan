@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAB VIII – Pengelolaan Peserta Didik | BK IKIP Siliwangi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --warm-white: #faf8f4;
+    --ink: #1a1410;
+    --ink-soft: #3d3028;
+    --gold: #c49a3c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --teal: #2a6b6e;
+    --teal-light: #3d8e91;
+    --teal-pale: #d4eeef;
+    --rust: #8b3a2a;
+    --rust-light: #c25a45;
+    --blush: #f0e4d8;
+    --shadow: rgba(26,20,16,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: var(--ink);
+    min-height: 340px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding: 0 0 48px 0;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(196,154,60,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(42,107,110,0.22) 0%, transparent 70%),
+      linear-gradient(160deg, #1a1410 0%, #2a1e14 55%, #1e2a2b 100%);
+  }
+  .hero-ornament {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(196,154,60,0.07) 39px, rgba(196,154,60,0.07) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(196,154,60,0.07) 39px, rgba(196,154,60,0.07) 40px);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 60px 32px 0;
+    width: 100%;
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+  .hero-chapter {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(13px, 2vw, 15px);
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    color: var(--warm-white);
+    line-height: 1.15;
+    margin-bottom: 18px;
+    font-weight: 700;
+  }
+  .hero-title span { color: var(--gold-light); }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(245,240,232,0.6);
+    letter-spacing: 0.5px;
+  }
+  .hero-line {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--gold), var(--rust));
+  }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: var(--warm-white);
+    border-radius: 4px;
+    box-shadow: 0 2px 16px var(--shadow);
+    margin-bottom: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(196,154,60,0.15);
+    transition: box-shadow 0.3s ease;
+  }
+  .section-card:hover { box-shadow: 0 6px 32px rgba(26,20,16,0.16); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  .section-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 24px; right: 24px;
+    height: 1px;
+    background: rgba(196,154,60,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .section-card.open .section-header::after { opacity: 1; }
+
+  .section-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 2px solid;
+  }
+  .num-A { background: var(--blush); color: var(--rust); border-color: var(--rust-light); }
+  .num-1 { background: var(--teal-pale); color: var(--teal); border-color: var(--teal-light); }
+  .num-2 { background: var(--gold-pale); color: #7a5c10; border-color: var(--gold); }
+  .num-3 { background: #e8f4f0; color: #2a6b50; border-color: #4aab80; }
+  .num-4 { background: #f0e8f4; color: #5a2a8b; border-color: #9a60c4; }
+  .num-5 { background: #fde8e8; color: var(--rust); border-color: var(--rust-light); }
+  .num-6 { background: var(--blush); color: #6b4a2a; border-color: #c48a50; }
+
+  .section-label {
+    flex: 1;
+  }
+  .section-label h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .section-label p {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  .section-arrow {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: var(--gold-pale);
+    color: var(--gold);
+    font-size: 14px;
+    transition: transform 0.35s ease, background 0.3s;
+    flex-shrink: 0;
+  }
+  .section-card.open .section-arrow {
+    transform: rotate(180deg);
+    background: var(--gold);
+    color: white;
+  }
+
+  .section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .section-card.open .section-body { max-height: 2000px; }
+  .section-inner { padding: 28px 24px 32px; }
+
+  /* ── TYPOGRAPHY ── */
+  .prose {
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+  }
+  .prose p { margin-bottom: 14px; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--ink); }
+
+  h4.sub-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--teal);
+    margin: 20px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--teal-pale);
+    display: flex; align-items: center; gap: 8px;
+  }
+  h4.sub-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 14px;
+    background: var(--teal);
+    border-radius: 2px;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    border-left: 4px solid;
+  }
+  .callout-gold { background: var(--gold-pale); border-color: var(--gold); color: #5a4010; }
+  .callout-teal { background: var(--teal-pale); border-color: var(--teal); color: #1a4a4c; }
+  .callout-rust { background: var(--blush); border-color: var(--rust); color: #5a2010; }
+  .callout-purple { background: #f0e8f8; border-color: #8060b0; color: #4a3060; }
+  .callout-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ── LIST ── */
+  .styled-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+  }
+  .styled-list li {
+    padding: 8px 0 8px 22px;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    border-bottom: 1px dashed rgba(196,154,60,0.2);
+  }
+  .styled-list li:last-child { border-bottom: none; }
+  .styled-list li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-size: 12px;
+    top: 10px;
+  }
+  .styled-list.teal li::before { color: var(--teal); }
+  .styled-list.rust li::before { color: var(--rust); }
+
+  /* ── CPMK TABLE ── */
+  .cpmk-grid {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1px;
+    background: rgba(196,154,60,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 12px 0;
+    border: 1px solid rgba(196,154,60,0.2);
+  }
+  .cpmk-cell {
+    background: var(--warm-white);
+    padding: 12px 14px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .cpmk-cell.num {
+    background: var(--ink);
+    color: var(--gold-light);
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cpmk-cell.head {
+    background: var(--ink-soft);
+    color: var(--cream);
+    font-family: 'DM Serif Display', serif;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    display: flex; align-items: center;
+    padding: 10px 14px;
+  }
+
+  /* ── SUBCPMK TAG ── */
+  .sub-cpmk-list {
+    display: flex; flex-direction: column; gap: 10px;
+    margin: 12px 0;
+  }
+  .sub-cpmk-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #f8f5f0;
+    border-radius: 4px;
+    padding: 12px 14px;
+    border: 1px solid rgba(196,154,60,0.15);
+  }
+  .sub-cpmk-code {
+    background: var(--rust);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .sub-cpmk-text {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* ── PETUNJUK STEPS ── */
+  .petunjuk-steps {
+    display: flex; flex-direction: column; gap: 10px;
+    margin: 12px 0;
+    counter-reset: step;
+  }
+  .petunjuk-step {
+    display: flex; align-items: flex-start; gap: 14px;
+    counter-increment: step;
+  }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), #1a4a4c);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(42,107,110,0.3);
+  }
+  .step-text {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    padding-top: 6px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar-wrap {
+    margin: 24px 0 8px;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .progress-bar-track {
+    height: 6px;
+    background: rgba(196,154,60,0.15);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    width: 0%;
+    transition: width 1s ease;
+  }
+
+  /* ── QUIZ SECTION ── */
+  .quiz-wrap {
+    background: var(--ink);
+    border-radius: 6px;
+    padding: 24px;
+    margin-top: 16px;
+  }
+  .quiz-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold-light);
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  .quiz-sub { font-size: 12px; color: rgba(245,240,232,0.5); margin-bottom: 20px; }
+  .quiz-q {
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(196,154,60,0.2);
+    display: none;
+  }
+  .quiz-q.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .quiz-q-text {
+    font-size: 14px;
+    color: var(--cream);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(196,154,60,0.2);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: rgba(245,240,232,0.85);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .quiz-opt:hover:not(:disabled) {
+    background: rgba(196,154,60,0.12);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+  .quiz-opt.correct { background: rgba(42,107,110,0.3); border-color: var(--teal); color: #a0e0e2; }
+  .quiz-opt.wrong { background: rgba(139,58,42,0.3); border-color: var(--rust); color: #f0a090; }
+  .quiz-feedback {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: rgba(42,107,110,0.2); color: #80d0d2; border: 1px solid var(--teal); }
+  .quiz-feedback.no { background: rgba(139,58,42,0.2); color: #f0a080; border: 1px solid var(--rust); }
+
+  .quiz-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 16px;
+  }
+  .quiz-btn {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 9px 20px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .quiz-btn:hover { background: var(--gold-light); }
+  .quiz-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .quiz-counter { font-size: 12px; color: rgba(245,240,232,0.5); }
+  .quiz-score {
+    text-align: center;
+    padding: 24px 0 8px;
+    display: none;
+  }
+  .quiz-score.show { display: block; }
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .score-label { font-size: 13px; color: rgba(245,240,232,0.5); margin-top: 6px; }
+  .score-msg { font-size: 14px; color: var(--cream); margin-top: 12px; line-height: 1.6; }
+
+  /* ── PROGRESS TRACKER ── */
+  .tracker-bar {
+    position: sticky;
+    top: 0; z-index: 100;
+    background: var(--ink);
+    border-bottom: 1px solid rgba(196,154,60,0.2);
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .tracker-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--gold-light);
+    white-space: nowrap;
+    display: none;
+  }
+  .tracker-dots { display: flex; gap: 6px; flex: 1; flex-wrap: wrap; }
+  .tracker-dot {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(196,154,60,0.3);
+    color: rgba(245,240,232,0.4);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .tracker-dot.done {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+  .tracker-dot:hover { border-color: var(--gold); color: var(--gold); }
+  .tracker-pct {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--ink);
+    padding: 28px 24px;
+    text-align: center;
+    color: rgba(245,240,232,0.4);
+    font-size: 12px;
+    line-height: 1.8;
+    border-top: 3px solid;
+    border-image: linear-gradient(90deg, var(--teal), var(--gold), var(--rust)) 1;
+  }
+  .footer strong { color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .ornament-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+  .ornament-divider::before, .ornament-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  @media (max-width: 600px) {
+    .hero-content { padding: 40px 16px 0; }
+    .main { padding: 24px 12px 60px; }
+    .section-inner { padding: 20px 16px 24px; }
+    .cpmk-grid { grid-template-columns: 38px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TRACKER BAR -->
+<div class="tracker-bar">
+  <span class="tracker-title">BAB VIII</span>
+  <div class="tracker-dots" id="trackerDots"></div>
+  <span class="tracker-pct" id="trackerPct">0%</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <span class="hero-badge">Pengelolaan Pendidikan · BK IKIP Siliwangi</span>
+    <div class="hero-chapter">Bab VIII</div>
+    <h1 class="hero-title">Pengelolaan<br><span>Peserta Didik</span></h1>
+    <p class="hero-sub">Program Studi Bimbingan dan Konseling &nbsp;|&nbsp; Martin Bernard, M.Pd.</p>
+  </div>
+  <div class="hero-line"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PENDAHULUAN -->
+  <div class="section-card" id="card-A">
+    <div class="section-header" onclick="toggle('card-A','A')">
+      <div class="section-num num-A">A</div>
+      <div class="section-label">
+        <h3>Pendahuluan</h3>
+        <p>Pengantar bab pengelolaan peserta didik</p>
+      </div>
+      <div class="section-arrow">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="callout callout-gold">
+          <div class="callout-title">✦ Gambaran Umum</div>
+          Pengelolaan peserta didik merupakan inti dari pelayanan Bimbingan dan Konseling di sekolah. Bab ini mengajak Anda memahami bagaimana sebuah sekolah mengelola peserta didiknya—dari penerimaan hingga kelulusan—dan bagaimana peran BK menjadi fondasi yang tak tergantikan dalam proses tersebut.
+        </div>
+        <div class="prose">
+          <p>Peserta didik adalah subjek utama pendidikan, bukan sekadar objek yang dikelola. Oleh karena itu, pengelolaan peserta didik harus bertumpu pada prinsip <strong>humanistik</strong>—menghargai potensi, keunikan, dan hak setiap individu untuk tumbuh dan berkembang.</p>
+          <p>Dalam konteks BK, pengelolaan peserta didik tidak hanya berurusan dengan administrasi, melainkan mencakup aspek perkembangan pribadi, sosial, akademik, dan karier—yang semuanya menjadi domain layanan konselor sekolah.</p>
+        </div>
+        <h4 class="sub-title">Mengapa Ini Penting bagi Konselor?</h4>
+        <ul class="styled-list teal">
+          <li>Konselor berada di garis terdepan dalam memahami kebutuhan perkembangan peserta didik.</li>
+          <li>Kebijakan pengelolaan peserta didik berdampak langsung pada iklim belajar dan kesejahteraan siswa.</li>
+          <li>Kolaborasi antara konselor dan manajemen sekolah menentukan kualitas layanan BK secara menyeluruh.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1 DESKRIPSI SINGKAT -->
+  <div class="section-card" id="card-1">
+    <div class="section-header" onclick="toggle('card-1','1')">
+      <div class="section-num num-1">1</div>
+      <div class="section-label">
+        <h3>Deskripsi Singkat</h3>
+        <p>Gambaran umum materi bab ini</p>
+      </div>
+      <div class="section-arrow">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="prose">
+          <p>Bab ini membahas konsep, prinsip, dan praktik <strong>pengelolaan peserta didik</strong> yang mencakup seluruh siklus kehidupan siswa di sekolah, mulai dari rekrutmen dan penerimaan hingga pindah dan tamat belajar.</p>
+          <p>Topik utama yang akan dibahas meliputi penerimaan peserta didik baru, orientasi, pencatatan dan pelaporan, pembinaan disiplin, serta pengembangan bakat dan minat peserta didik. Seluruh materi dikaitkan langsung dengan peran dan fungsi konselor sekolah.</p>
+        </div>
+        <div class="ornament-divider">✦</div>
+        <h4 class="sub-title">Ruang Lingkup Pembahasan</h4>
+        <ul class="styled-list">
+          <li><strong>Konsep dasar</strong> pengelolaan peserta didik dalam perspektif manajemen pendidikan</li>
+          <li><strong>Penerimaan Peserta Didik Baru (PPDB)</strong> dan prosedur orientasi siswa</li>
+          <li><strong>Administrasi kesiswaan</strong>: pencatatan, pelaporan, dan dokumentasi</li>
+          <li><strong>Pembinaan</strong> dan pengembangan potensi peserta didik</li>
+          <li><strong>Tata tertib dan disiplin</strong> sekolah dalam perspektif BK</li>
+          <li><strong>Peran konselor</strong> dalam setiap aspek pengelolaan peserta didik</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 RELEVANSI -->
+  <div class="section-card" id="card-2">
+    <div class="section-header" onclick="toggle('card-2','2')">
+      <div class="section-num num-2">2</div>
+      <div class="section-label">
+        <h3>Relevansi</h3>
+        <p>Keterhubungan materi dengan profesi BK</p>
+      </div>
+      <div class="section-arrow">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="callout callout-teal">
+          <div class="callout-title">📌 Relevansi Materi</div>
+          Memahami pengelolaan peserta didik adalah <strong>kompetensi wajib</strong> konselor sekolah. Tanpa pemahaman ini, konselor tidak dapat berkolaborasi secara efektif dengan kepala sekolah dan wakil bidang kesiswaan dalam merancang program BK yang komprehensif.
+        </div>
+        <div class="prose">
+          <p>Materi ini relevan bagi mahasiswa BK karena konselor sekolah adalah bagian integral dari tim manajemen kesiswaan. Dalam praktiknya, konselor terlibat dalam keputusan terkait peserta didik berkebutuhan khusus, kasus pelanggaran disiplin, pelacakan alumni, hingga perencanaan karier siswa.</p>
+        </div>
+        <h4 class="sub-title">Keterkaitan dengan Mata Kuliah Lain</h4>
+        <ul class="styled-list rust">
+          <li><strong>Layanan BK Komprehensif</strong> — program layanan harus selaras dengan kebijakan kesiswaan</li>
+          <li><strong>Konseling Kelompok</strong> — dibutuhkan saat menangani masalah kelompok peserta didik</li>
+          <li><strong>Penilaian dalam BK</strong> — data peserta didik menjadi dasar asesmen kebutuhan</li>
+          <li><strong>Etika Profesi BK</strong> — pengelolaan data siswa harus mematuhi prinsip kerahasiaan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 CAPAIAN PEMBELAJARAN -->
+  <div class="section-card" id="card-3">
+    <div class="section-header" onclick="toggle('card-3','3')">
+      <div class="section-num num-3">3</div>
+      <div class="section-label">
+        <h3>Capaian Pembelajaran</h3>
+        <p>Learning outcomes bab ini</p>
+      </div>
+      <div class="section-arrow">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="callout callout-purple">
+          <div class="callout-title">🎯 Tujuan Pembelajaran</div>
+          Setelah mempelajari bab ini, mahasiswa diharapkan mampu memahami, menganalisis, dan menerapkan konsep pengelolaan peserta didik dalam konteks layanan Bimbingan dan Konseling di sekolah.
+        </div>
+        <h4 class="sub-title">Aspek Capaian</h4>
+        <ul class="styled-list teal">
+          <li><strong>Pengetahuan:</strong> Mendeskripsikan konsep, fungsi, dan prinsip pengelolaan peserta didik secara sistematis</li>
+          <li><strong>Pemahaman:</strong> Menjelaskan prosedur penerimaan, orientasi, dan pembinaan peserta didik di sekolah</li>
+          <li><strong>Aplikasi:</strong> Menganalisis kasus pengelolaan peserta didik dan merumuskan peran konselor yang tepat</li>
+          <li><strong>Sintesis:</strong> Merancang program BK yang terintegrasi dengan sistem pengelolaan peserta didik sekolah</li>
+          <li><strong>Evaluasi:</strong> Menilai efektivitas kebijakan kesiswaan dari perspektif pengembangan peserta didik</li>
+        </ul>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-label"><span>Progres Belajar Anda</span><span id="pctLabel">0%</span></div>
+          <div class="progress-bar-track"><div class="progress-bar-fill" id="mainProgress"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 CPMK -->
+  <div class="section-card" id="card-4">
+    <div class="section-header" onclick="toggle('card-4','4')">
+      <div class="section-num num-4">4</div>
+      <div class="section-label">
+        <h3>Capaian Pembelajaran Mata Kuliah (CPMK)</h3>
+        <p>Kompetensi yang harus dicapai mahasiswa</p>
+      </div>
+      <div class="section-arrow">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="prose">
+          <p>CPMK merupakan penjabaran dari Capaian Pembelajaran Program Studi (CPL-PS) yang secara spesifik harus dicapai melalui mata kuliah ini.</p>
+        </div>
+        <div class="cpmk-grid">
+          <div class="cpmk-cell head">No</div>
+          <div class="cpmk-cell head">Capaian Pembelajaran Mata Kuliah</div>
+
+          <div class="cpmk-cell num">1</div>
+          <div class="cpmk-cell">Mahasiswa mampu <strong>menjelaskan konsep dasar dan ruang lingkup</strong> pengelolaan peserta didik dalam sistem pendidikan Indonesia.</div>
+
+          <div class="cpmk-cell num">2</div>
+          <div class="cpmk-cell">Mahasiswa mampu <strong>mengidentifikasi prosedur dan mekanisme</strong> penerimaan peserta didik baru (PPDB) serta program orientasi siswa.</div>
+
+          <div class="cpmk-cell num">3</div>
+          <div class="cpmk-cell">Mahasiswa mampu <strong>menganalisis sistem pencatatan, dokumentasi, dan pelaporan</strong> data peserta didik sesuai regulasi yang berlaku.</div>
+
+          <div class="cpmk-cell num">4</div>
+          <div class="cpmk-cell">Mahasiswa mampu <strong>merancang program pembinaan</strong> bakat, minat, dan prestasi peserta didik yang berlandaskan prinsip perkembangan.</div>
+
+          <div class="cpmk-cell num">5</div>
+          <div class="cpmk-cell">Mahasiswa mampu <strong>mengevaluasi kebijakan tata tertib</strong> sekolah dan merancang pendekatan konseling dalam penanganan pelanggaran disiplin.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 SUB-CPMK -->
+  <div class="section-card" id="card-5">
+    <div class="section-header" onclick="toggle('card-5','5')">
+      <div class="section-num num-5">5</div>
+      <div class="section-label">
+        <h3>Sub Capaian Pembelajaran Mata Kuliah (Sub-CPMK)</h3>
+        <p>Indikator ketercapaian yang lebih spesifik</p>
+      </div>
+      <div class="section-arrow">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="sub-cpmk-list">
+          <div class="sub-cpmk-item">
+            <span class="sub-cpmk-code">Sub-CPMK 1</span>
+            <div class="sub-cpmk-text">Mendeskripsikan pengertian, tujuan, dan fungsi pengelolaan peserta didik berdasarkan peraturan perundang-undangan pendidikan nasional.</div>
+          </div>
+          <div class="sub-cpmk-item">
+            <span class="sub-cpmk-code">Sub-CPMK 2</span>
+            <div class="sub-cpmk-text">Menguraikan tahapan-tahapan PPDB dan menyusun panduan singkat program orientasi siswa (masa pengenalan lingkungan sekolah).</div>
+          </div>
+          <div class="sub-cpmk-item">
+            <span class="sub-cpmk-code">Sub-CPMK 3</span>
+            <div class="sub-cpmk-text">Membuat instrumen pencatatan data peserta didik (buku induk, daftar hadir, leger nilai) dan menjelaskan alur pelaporannya kepada pihak terkait.</div>
+          </div>
+          <div class="sub-cpmk-item">
+            <span class="sub-cpmk-code">Sub-CPMK 4</span>
+            <div class="sub-cpmk-text">Mengidentifikasi program ekstrakurikuler, bimbingan belajar, dan pembinaan karier sebagai wahana pengembangan potensi peserta didik.</div>
+          </div>
+          <div class="sub-cpmk-item">
+            <span class="sub-cpmk-code">Sub-CPMK 5</span>
+            <div class="sub-cpmk-text">Menganalisis penyebab pelanggaran disiplin peserta didik dan merancang intervensi BK yang tepat berdasarkan pendekatan perkembangan.</div>
+          </div>
+          <div class="sub-cpmk-item">
+            <span class="sub-cpmk-code">Sub-CPMK 6</span>
+            <div class="sub-cpmk-text">Mensimulasikan kolaborasi antara konselor, wali kelas, dan waka kesiswaan dalam menangani kasus peserta didik bermasalah secara etis dan profesional.</div>
+          </div>
+          <div class="sub-cpmk-item">
+            <span class="sub-cpmk-code">Sub-CPMK 7</span>
+            <div class="sub-cpmk-text">Menyusun laporan singkat evaluasi pengelolaan peserta didik di sebuah sekolah berdasarkan studi kasus atau observasi lapangan.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 PETUNJUK PEMBELAJARAN -->
+  <div class="section-card" id="card-6">
+    <div class="section-header" onclick="toggle('card-6','6')">
+      <div class="section-num num-6">6</div>
+      <div class="section-label">
+        <h3>Petunjuk Pembelajaran</h3>
+        <p>Panduan belajar efektif bab ini</p>
+      </div>
+      <div class="section-arrow">▾</div>
+    </div>
+    <div class="section-body">
+      <div class="section-inner">
+        <div class="prose">
+          <p>Untuk memaksimalkan pemahaman Anda terhadap materi Pengelolaan Peserta Didik, ikutilah langkah-langkah pembelajaran berikut secara berurutan dan penuh tanggung jawab.</p>
+        </div>
+        <h4 class="sub-title">Langkah-Langkah Belajar</h4>
+        <div class="petunjuk-steps">
+          <div class="petunjuk-step">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Baca secara menyeluruh</strong> — Baca seluruh materi bab ini terlebih dahulu tanpa membuat catatan, untuk mendapatkan gambaran umum (big picture) materi.</div>
+          </div>
+          <div class="petunjuk-step">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Identifikasi konsep kunci</strong> — Baca ulang dan tandai istilah serta konsep penting. Buat peta konsep sederhana untuk menghubungkan antar ide.</div>
+          </div>
+          <div class="petunjuk-step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Kaitkan dengan pengalaman</strong> — Refleksikan setiap konsep dengan pengalaman Anda sebagai siswa. Apa yang Anda alami terkait pengelolaan peserta didik di sekolah Anda dulu?</div>
+          </div>
+          <div class="petunjuk-step">
+            <div class="step-num">4</div>
+            <div class="step-text"><strong>Kerjakan latihan soal</strong> — Selesaikan kuis refleksi di bawah ini secara mandiri dan jujur. Kuis ini bukan penilaian akhir, melainkan alat ukur pemahaman Anda.</div>
+          </div>
+          <div class="petunjuk-step">
+            <div class="step-num">5</div>
+            <div class="step-text"><strong>Diskusikan dengan rekan</strong> — Diskusikan temuan Anda bersama teman sekelas atau dalam forum online. Perspektif berbeda akan memperkaya pemahaman.</div>
+          </div>
+          <div class="petunjuk-step">
+            <div class="step-num">6</div>
+            <div class="step-text"><strong>Susun catatan refleksi</strong> — Tuliskan 3 hal yang Anda pelajari, 2 hal yang masih perlu diperdalam, dan 1 pertanyaan yang ingin Anda ajukan kepada dosen.</div>
+          </div>
+        </div>
+
+        <div class="callout callout-gold" style="margin-top:20px">
+          <div class="callout-title">💡 Tips Belajar</div>
+          Pengelolaan peserta didik adalah topik yang <strong>sangat kontekstual</strong>. Semakin banyak Anda membaca regulasi (Permendikbud, Permendikbud-Ristek terbaru) dan kasus nyata dari sekolah, semakin dalam pemahaman Anda. Jadikan lingkungan sekolah di sekitar Anda sebagai laboratorium belajar!
+        </div>
+
+        <!-- KUIS REFLEKSI -->
+        <div class="ornament-divider" style="margin-top:28px">KUIS REFLEKSI</div>
+        <div class="quiz-wrap">
+          <div class="quiz-title">Uji Pemahaman Awal</div>
+          <div class="quiz-sub">5 soal pilihan ganda · klik jawaban Anda</div>
+
+          <div id="q0" class="quiz-q active">
+            <div class="quiz-q-text">1. Apa yang dimaksud dengan pengelolaan peserta didik dalam konteks manajemen pendidikan?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answer(this,0,false)">A. Kegiatan mengatur jadwal mata pelajaran di sekolah</button>
+              <button class="quiz-opt" onclick="answer(this,0,true)">B. Upaya pengaturan terhadap peserta didik mulai dari masuk hingga keluar sekolah</button>
+              <button class="quiz-opt" onclick="answer(this,0,false)">C. Proses seleksi guru oleh kepala sekolah</button>
+              <button class="quiz-opt" onclick="answer(this,0,false)">D. Sistem penilaian hasil belajar siswa secara periodik</button>
+            </div>
+            <div class="quiz-feedback" id="fb0"></div>
+          </div>
+
+          <div id="q1" class="quiz-q">
+            <div class="quiz-q-text">2. Peran konselor sekolah dalam PPDB yang paling tepat adalah...</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answer(this,1,false)">A. Menentukan batas nilai minimum penerimaan siswa baru</button>
+              <button class="quiz-opt" onclick="answer(this,1,false)">B. Menjadi panitia keuangan penerimaan siswa baru</button>
+              <button class="quiz-opt" onclick="answer(this,1,true)">C. Membantu identifikasi kebutuhan perkembangan calon peserta didik dan menyiapkan program orientasi</button>
+              <button class="quiz-opt" onclick="answer(this,1,false)">D. Membuat pengumuman diterima/ditolaknya calon siswa</button>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div id="q2" class="quiz-q">
+            <div class="quiz-q-text">3. Prinsip yang mendasari pengelolaan peserta didik yang humanistik adalah...</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answer(this,2,false)">A. Peserta didik harus patuh pada semua aturan tanpa pengecualian</button>
+              <button class="quiz-opt" onclick="answer(this,2,true)">B. Peserta didik dipandang sebagai subjek yang memiliki potensi unik dan hak untuk berkembang</button>
+              <button class="quiz-opt" onclick="answer(this,2,false)">C. Efisiensi administrasi harus diutamakan di atas kebutuhan individu siswa</button>
+              <button class="quiz-opt" onclick="answer(this,2,false)">D. Setiap peserta didik diperlakukan secara identik tanpa mempertimbangkan perbedaan individual</button>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+
+          <div id="q3" class="quiz-q">
+            <div class="quiz-q-text">4. Dokumen administrasi peserta didik yang memuat data lengkap seluruh siswa dari awal hingga akhir sekolah disebut...</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answer(this,3,false)">A. Raport</button>
+              <button class="quiz-opt" onclick="answer(this,3,false)">B. Daftar hadir kelas</button>
+              <button class="quiz-opt" onclick="answer(this,3,true)">C. Buku induk siswa</button>
+              <button class="quiz-opt" onclick="answer(this,3,false)">D. Leger nilai</button>
+            </div>
+            <div class="quiz-feedback" id="fb3"></div>
+          </div>
+
+          <div id="q4" class="quiz-q">
+            <div class="quiz-q-text">5. Dalam menangani peserta didik yang melanggar disiplin, pendekatan yang paling sesuai dengan peran konselor BK adalah...</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answer(this,4,false)">A. Memberikan hukuman fisik agar menimbulkan efek jera</button>
+              <button class="quiz-opt" onclick="answer(this,4,false)">B. Langsung memanggil orang tua tanpa melakukan konseling terlebih dahulu</button>
+              <button class="quiz-opt" onclick="answer(this,4,true)">C. Melakukan konseling individual untuk memahami akar masalah dan merancang intervensi berbasis perkembangan</button>
+              <button class="quiz-opt" onclick="answer(this,4,false)">D. Menyerahkan sepenuhnya kepada waka kesiswaan untuk diputuskan</button>
+            </div>
+            <div class="quiz-feedback" id="fb4"></div>
+          </div>
+
+          <div class="quiz-score" id="quizScore">
+            <div class="score-num" id="scoreNum">0/5</div>
+            <div class="score-label">Skor Kuis Refleksi</div>
+            <div class="score-msg" id="scoreMsg"></div>
+          </div>
+
+          <div class="quiz-nav" id="quizNav">
+            <button class="quiz-btn" id="btnPrev" onclick="prevQ()" disabled>← Sebelumnya</button>
+            <span class="quiz-counter" id="qCounter">Soal 1 dari 5</span>
+            <button class="quiz-btn" id="btnNext" onclick="nextQ()">Selanjutnya →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Martin Bernard, M.Pd.</strong><br>
+  Dosen Pengelolaan Pendidikan · IKIP Siliwangi Cimahi<br>
+  Program Studi Bimbingan dan Konseling<br>
+  <span style="opacity:0.4">© 2025 IKIP Siliwangi · Materi Perkuliahan Digital</span>
+</div>
+
+<script>
+// ── SECTIONS ──
+const cards = ['A','1','2','3','4','5','6'];
+const opened = new Set();
+
+function toggle(id, key) {
+  const card = document.getElementById(id);
+  const isOpen = card.classList.contains('open');
+  if (!isOpen) {
+    card.classList.add('open');
+    opened.add(key);
+  } else {
+    card.classList.remove('open');
+    opened.delete(key);
+  }
+  updateProgress();
+}
+
+// ── TRACKER ──
+const trackerDots = document.getElementById('trackerDots');
+cards.forEach((k, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'tracker-dot';
+  dot.id = `dot-${k}`;
+  dot.textContent = k;
+  dot.title = `Bagian ${k}`;
+  dot.onclick = () => {
+    const card = document.getElementById(`card-${k}`);
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => {
+      if (!card.classList.contains('open')) toggle(`card-${k}`, k);
+    }, 400);
+  };
+  trackerDots.appendChild(dot);
+});
+
+function updateProgress() {
+  const total = cards.length;
+  const done = opened.size;
+  const pct = Math.round((done / total) * 100);
+
+  // tracker dots
+  cards.forEach(k => {
+    const dot = document.getElementById(`dot-${k}`);
+    if (opened.has(k)) dot.classList.add('done');
+    else dot.classList.remove('done');
+  });
+
+  document.getElementById('trackerPct').textContent = pct + '%';
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('pctLabel').textContent = pct + '%';
+}
+
+// ── QUIZ ──
+let currentQ = 0;
+const totalQ = 5;
+let answered = new Array(totalQ).fill(false);
+let score = 0;
+const feedbacks = [
+  'Tepat! Pengelolaan peserta didik mencakup seluruh proses dari penerimaan hingga kelulusan, bukan hanya satu aspek saja.',
+  'Benar! Konselor berperan dalam mempersiapkan program orientasi dan mengidentifikasi kebutuhan awal peserta didik baru.',
+  'Tepat! Humanisme menempatkan peserta didik sebagai subjek yang unik dengan potensi untuk terus berkembang.',
+  'Benar! Buku induk siswa adalah dokumen utama yang memuat data lengkap seluruh peserta didik.',
+  'Tepat! Konselor BK mendekati masalah disiplin melalui konseling untuk memahami akar permasalahan secara holistik.'
+];
+const wrongFeedbacks = [
+  'Kurang tepat. Pengelolaan peserta didik cakupannya jauh lebih luas dari sekadar penjadwalan pelajaran.',
+  'Belum tepat. Peran konselor bukan di bidang keuangan, melainkan pada aspek perkembangan dan orientasi siswa.',
+  'Belum tepat. Pendekatan humanistik justru menekankan keunikan dan potensi masing-masing individu.',
+  'Belum tepat. Raport dan leger nilai fokus pada hasil belajar, bukan rekam data lengkap siswa.',
+  'Belum tepat. Hukuman fisik dan tindakan sepihak bertentangan dengan prinsip etika dan pendekatan BK.'
+];
+
+function answer(btn, qIdx, isCorrect) {
+  if (answered[qIdx]) return;
+  answered[qIdx] = true;
+  const opts = btn.parentElement.querySelectorAll('.quiz-opt');
+  opts.forEach(o => { o.disabled = true; });
+  const fb = document.getElementById('fb' + qIdx);
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++;
+    fb.className = 'quiz-feedback show ok';
+    fb.textContent = '✓ ' + feedbacks[qIdx];
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'quiz-feedback show no';
+    fb.textContent = '✗ ' + wrongFeedbacks[qIdx];
+    // show correct
+    opts.forEach(o => {
+      if (o.onclick && o.onclick.toString().includes('true')) o.classList.add('correct');
+    });
+  }
+}
+
+function showQ(idx) {
+  document.querySelectorAll('.quiz-q').forEach(q => q.classList.remove('active'));
+  const el = document.getElementById('q' + idx);
+  if (el) el.classList.add('active');
+  document.getElementById('qCounter').textContent = `Soal ${idx + 1} dari ${totalQ}`;
+  document.getElementById('btnPrev').disabled = idx === 0;
+
+  const isLast = idx === totalQ - 1;
+  const btn = document.getElementById('btnNext');
+  btn.textContent = isLast ? 'Lihat Hasil ✦' : 'Selanjutnya →';
+}
+
+function nextQ() {
+  if (currentQ < totalQ - 1) {
+    currentQ++;
+    showQ(currentQ);
+  } else {
+    // show result
+    document.querySelectorAll('.quiz-q').forEach(q => q.classList.remove('active'));
+    const scoreEl = document.getElementById('quizScore');
+    scoreEl.classList.add('show');
+    document.getElementById('quizNav').style.display = 'none';
+    document.getElementById('scoreNum').textContent = score + '/' + totalQ;
+    let msg = '';
+    if (score === 5) msg = 'Luar biasa! Anda sudah memiliki pemahaman yang sangat baik. Siap untuk mendalami materi lebih lanjut! 🌟';
+    else if (score >= 3) msg = 'Bagus! Anda memahami sebagian besar konsep. Pelajari kembali soal yang belum tepat untuk memperkuat fondasi Anda.';
+    else msg = 'Jangan khawatir. Baca kembali materi secara perlahan, terutama konsep pengelolaan peserta didik dan peran konselor. Anda pasti bisa!';
+    document.getElementById('scoreMsg').textContent = msg;
+  }
+}
+
+function prevQ() {
+  if (currentQ > 0) { currentQ--; showQ(currentQ); }
+}
+
+showQ(0);
+updateProgress();
+
+// auto-open A on load
+setTimeout(() => toggle('card-A','A'), 300);
+</script>
+</body>
+</html>
