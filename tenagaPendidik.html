@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengelolaan Pendidik dan Tenaga Kependidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  :root {
+    --ink: #1a1209;
+    --parchment: #f8f3e8;
+    --cream: #fdf9f0;
+    --gold: #c8971a;
+    --gold-light: #e8b84b;
+    --gold-pale: #f5e8c0;
+    --rust: #8b3a12;
+    --teal: #1a5c5c;
+    --teal-light: #2a8080;
+    --border: #c8a96e;
+    --shadow: rgba(26,18,9,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.7;
+    background-image: 
+      radial-gradient(ellipse at 10% 20%, rgba(200,151,26,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(26,92,92,0.08) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, var(--ink) 0%, #2d1f0a 60%, var(--teal) 100%);
+    color: var(--parchment);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent, transparent 40px,
+      rgba(200,151,26,0.04) 40px, rgba(200,151,26,0.04) 41px
+    );
+  }
+  .header-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    border: 1px solid rgba(200,151,26,0.4);
+    padding: 0.3rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+  .site-header h1 span { color: var(--gold-light); }
+  .site-header .subtitle {
+    font-size: 0.92rem;
+    font-style: italic;
+    color: rgba(248,243,232,0.7);
+    margin-bottom: 0.3rem;
+  }
+  .header-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.4rem auto 0;
+  }
+
+  /* ── TOC ── */
+  .toc-wrapper {
+    max-width: 860px;
+    margin: 2.5rem auto 0;
+    padding: 0 1.2rem;
+  }
+  .toc-box {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 4px 24px var(--shadow);
+  }
+  .toc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .toc-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .toc-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1rem; }
+  @media (max-width: 600px) { .toc-list { grid-template-columns: 1fr; } }
+  .toc-list li a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.88rem;
+    padding: 0.25rem 0.4rem;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  .toc-list li a:hover { background: var(--gold-pale); color: var(--rust); }
+  .toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    font-weight: 500;
+    flex-shrink: 0;
+    min-width: 1.4rem;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.2rem 4rem;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 16px var(--shadow);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.3rem 1.8rem;
+    background: linear-gradient(90deg, var(--ink) 0%, #2d1f0a 100%);
+    color: var(--parchment);
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-header:hover { background: linear-gradient(90deg, #2d1f0a, var(--teal)); }
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--gold);
+    color: var(--ink);
+    width: 2rem; height: 2rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 3px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    flex: 1;
+  }
+  .toggle-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+    color: var(--gold-light);
+  }
+  .section-header.open .toggle-icon { transform: rotate(180deg); }
+
+  .section-body {
+    padding: 0 1.8rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+  }
+  .section-body.open { max-height: 4000px; padding: 1.6rem 1.8rem 1.8rem; }
+
+  /* ── TYPOGRAPHY ── */
+  .section-body p { margin-bottom: 1rem; font-size: 0.95rem; }
+  .section-body p:last-child { margin-bottom: 0; }
+
+  .lead {
+    font-size: 1.02rem !important;
+    font-weight: 300;
+    color: #2a1a06;
+    border-left: 3px solid var(--gold);
+    padding-left: 1rem;
+    margin-bottom: 1.2rem !important;
+    font-style: italic;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--teal);
+    margin: 1.5rem 0 0.6rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  h3::before {
+    content: '';
+    display: inline-block;
+    width: 14px; height: 14px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    flex-shrink: 0;
+  }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+  .card {
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+    border-top: 3px solid var(--gold);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow); }
+  .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.88rem;
+    color: var(--teal);
+    margin-bottom: 0.4rem;
+  }
+  .card p { font-size: 0.82rem !important; color: #4a3a20; }
+
+  /* ── LIST ── */
+  .styled-list {
+    list-style: none;
+    margin: 0.6rem 0 1rem;
+  }
+  .styled-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed rgba(200,151,26,0.25);
+  }
+  .styled-list li:last-child { border-bottom: none; }
+  .styled-list li::before {
+    content: '▸';
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    font-size: 0.75rem;
+  }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; margin: 1rem 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  thead tr { background: var(--teal); color: var(--parchment); }
+  th { padding: 0.65rem 0.9rem; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; letter-spacing: 0.05em; }
+  td { padding: 0.6rem 0.9rem; border-bottom: 1px solid rgba(200,151,26,0.3); }
+  tr:nth-child(even) td { background: rgba(200,151,26,0.06); }
+  tr:hover td { background: var(--gold-pale); }
+
+  /* ── QUOTE BOX ── */
+  .quote-box {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--teal);
+    background: rgba(26,92,92,0.05);
+    border-radius: 0 6px 6px 0;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #2a4040;
+  }
+  .quote-box cite {
+    display: block;
+    margin-top: 0.4rem;
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--teal-light);
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: linear-gradient(135deg, var(--gold-pale), rgba(200,151,26,0.1));
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+  }
+  .highlight-box strong { color: var(--rust); font-family: 'Playfair Display', serif; }
+
+  /* ── STEP FLOW ── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 1rem 0; }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    position: relative;
+  }
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 1.15rem;
+    top: 3rem;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+  .step-num {
+    width: 2.3rem; height: 2.3rem;
+    background: var(--gold);
+    color: var(--ink);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .step-content h4 { font-family: 'Playfair Display', serif; color: var(--teal); margin-bottom: 0.2rem; font-size: 0.95rem; }
+  .step-content p { font-size: 0.87rem !important; margin-bottom: 0 !important; color: #3a2a10; }
+
+  /* ── TAG CHIPS ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.8rem 0; }
+  .chip {
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--teal);
+    transition: background 0.2s;
+  }
+  .chip:hover { background: var(--teal); color: var(--parchment); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(26,18,9,0.45);
+    border-top: 1px solid var(--border);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--teal));
+    z-index: 999;
+    transition: width 0.1s;
+  }
+
+  /* ── BACK TO TOP ── */
+  .back-top {
+    position: fixed;
+    bottom: 2rem; right: 1.5rem;
+    width: 2.5rem; height: 2.5rem;
+    background: var(--ink);
+    color: var(--gold);
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px var(--shadow);
+    transition: background 0.2s;
+  }
+  .back-top:hover { background: var(--teal); }
+  .back-top.show { display: flex; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- HEADER -->
+<header class="site-header" id="top">
+  <div class="header-badge">Materi Perkuliahan · Pengelolaan Pendidikan</div>
+  <h1>Pengelolaan <span>Pendidik & Tenaga</span><br>Kependidikan</h1>
+  <p class="subtitle">Martin Bernard, M.Pd. &nbsp;·&nbsp; IKIP Siliwangi, Cimahi &nbsp;·&nbsp; Pendidikan Matematika</p>
+  <div class="header-line"></div>
+</header>
+
+<!-- TOC -->
+<div class="toc-wrapper">
+  <div class="toc-box">
+    <div class="toc-title">Daftar Isi</div>
+    <ul class="toc-list">
+      <li><a href="#s0"><span class="toc-num">0.</span> Pendahuluan</a></li>
+      <li><a href="#s1"><span class="toc-num">1.</span> Pengertian PTK</a></li>
+      <li><a href="#s2"><span class="toc-num">2.</span> Tujuan dan Prinsip</a></li>
+      <li><a href="#s3"><span class="toc-num">3.</span> Perencanaan dan Pengadaan</a></li>
+      <li><a href="#s4"><span class="toc-num">4.</span> Pengembangan dan Pembinaan</a></li>
+      <li><a href="#s5"><span class="toc-num">5.</span> Penilaian Kinerja</a></li>
+      <li><a href="#s6"><span class="toc-num">6.</span> Implementasi di Lapangan</a></li>
+      <li><a href="#s7"><span class="toc-num">7.</span> Pemanfaatan ICT</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<main class="container">
+
+  <!-- PENDAHULUAN -->
+  <div class="section visible" id="s0">
+    <div class="section-header open" onclick="toggleSection(this)">
+      <span class="sec-num">0</span>
+      <h2>Pendahuluan</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-body open">
+      <p class="lead">Pendidik dan Tenaga Kependidikan (PTK) merupakan komponen paling vital dalam sistem pendidikan nasional. Kualitas PTK menentukan mutu lulusan dan daya saing bangsa.</p>
+      <p>Pengelolaan PTK adalah serangkaian proses sistematis dalam merencanakan, mengadakan, mengembangkan, menilai, dan mempertahankan SDM pendidikan agar mampu mencapai tujuan pendidikan nasional secara efektif dan efisien.</p>
+      <div class="quote-box">
+        "Guru adalah pahlawan tanpa tanda jasa yang membentuk karakter generasi penerus bangsa. Pengelolaan yang tepat atas mereka berarti investasi jangka panjang bagi kemajuan negara."
+        <cite>— Filosofi Dasar Pengelolaan PTK Indonesia</cite>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🏛️</div>
+          <h4>Landasan Hukum</h4>
+          <p>UU No. 20/2003 tentang Sisdiknas dan UU No. 14/2005 tentang Guru dan Dosen.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h4>Ruang Lingkup</h4>
+          <p>Meliputi perencanaan, rekrutmen, seleksi, penempatan, pengembangan, penilaian, hingga pemberhentian PTK.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔗</div>
+          <h4>Keterkaitan</h4>
+          <p>Berkaitan erat dengan manajemen sekolah, kebijakan nasional, dan desentralisasi pendidikan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section" id="s1">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="sec-num">1</span>
+      <h2>Pengertian Pendidik dan Tenaga Kependidikan</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="lead">Memahami siapa yang termasuk Pendidik dan Tenaga Kependidikan (PTK) adalah langkah pertama dalam pengelolaan SDM pendidikan yang efektif.</p>
+
+      <h3>Definisi Menurut Undang-Undang</h3>
+      <p>Berdasarkan <strong>UU No. 20 Tahun 2003 Pasal 1</strong>, terdapat dua kategori utama:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Kategori</th><th>Definisi</th><th>Contoh</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Pendidik</strong></td><td>Tenaga kependidikan yang berkualifikasi sebagai guru, dosen, konselor, pamong belajar, tutor, instruktur, fasilitator, dan sebutan lain sesuai kekhususannya</td><td>Guru, Dosen, Konselor</td></tr>
+            <tr><td><strong>Tenaga Kependidikan</strong></td><td>Anggota masyarakat yang mengabdikan diri dan diangkat untuk menunjang penyelenggaraan pendidikan</td><td>Kepala sekolah, TU, pustakawan, laboran, teknisi</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Klasifikasi PTK</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">📚</div>
+          <h4>Guru / Dosen</h4>
+          <p>Pendidik profesional yang tugas utamanya mengajar, mendidik, membimbing, dan mengevaluasi peserta didik.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏫</div>
+          <h4>Kepala Sekolah</h4>
+          <p>Pemimpin satuan pendidikan yang bertanggung jawab atas pengelolaan sekolah secara keseluruhan.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛠️</div>
+          <h4>Tenaga Penunjang</h4>
+          <p>Pustakawan, laboran, teknisi, dan tenaga administrasi yang menunjang proses pembelajaran.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <h4>Konselor / BK</h4>
+          <p>Memberikan layanan bimbingan dan konseling untuk perkembangan optimal peserta didik.</p>
+        </div>
+      </div>
+
+      <h3>Kualifikasi dan Kompetensi</h3>
+      <p>Setiap pendidik wajib memiliki empat kompetensi utama sesuai Permendiknas No. 16/2007:</p>
+      <div class="chips">
+        <span class="chip">Kompetensi Pedagogik</span>
+        <span class="chip">Kompetensi Kepribadian</span>
+        <span class="chip">Kompetensi Sosial</span>
+        <span class="chip">Kompetensi Profesional</span>
+      </div>
+      <div class="highlight-box">
+        <strong>Catatan Penting:</strong> Kualifikasi akademik minimal S1/D-IV bagi guru (UU No. 14/2005 Pasal 9), dan S2/S3 bagi dosen (Pasal 46).
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="s2">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="sec-num">2</span>
+      <h2>Tujuan dan Prinsip Pengelolaan PTK</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="lead">Pengelolaan PTK yang baik harus dilandasi tujuan yang jelas dan prinsip-prinsip manajemen SDM yang kuat agar menghasilkan pendidik berkualitas tinggi.</p>
+
+      <h3>Tujuan Pengelolaan PTK</h3>
+      <ul class="styled-list">
+        <li>Menjamin tersedianya PTK yang kompeten, berkarakter, dan profesional di setiap satuan pendidikan.</li>
+        <li>Meningkatkan kualitas layanan pendidikan melalui peningkatan kualitas SDM pendidikan.</li>
+        <li>Mendorong pengembangan karier yang terstruktur dan berkeadilan bagi seluruh PTK.</li>
+        <li>Meningkatkan kesejahteraan PTK sebagai bentuk penghargaan atas dedikasi mereka.</li>
+        <li>Menciptakan lingkungan kerja yang kondusif, profesional, dan berkelanjutan.</li>
+        <li>Memastikan akuntabilitas dan transparansi dalam pengelolaan sumber daya manusia pendidikan.</li>
+      </ul>
+
+      <h3>Prinsip-Prinsip Pengelolaan PTK</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">P1</div>
+          <div class="step-content">
+            <h4>Profesionalisme</h4>
+            <p>Pengelolaan didasarkan pada kompetensi, kinerja, dan standar profesional yang terukur, bukan favoritisme atau nepotisme.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">P2</div>
+          <div class="step-content">
+            <h4>Keadilan dan Keterbukaan</h4>
+            <p>Setiap PTK memiliki kesempatan yang sama dalam rekrutmen, pengembangan, dan promosi jabatan.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">P3</div>
+          <div class="step-content">
+            <h4>Akuntabilitas</h4>
+            <p>Seluruh proses pengelolaan dapat dipertanggungjawabkan kepada pemangku kepentingan pendidikan.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">P4</div>
+          <div class="step-content">
+            <h4>Berkelanjutan</h4>
+            <p>Pengembangan PTK merupakan proses berkesinambungan (continuous improvement) sepanjang karier.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">P5</div>
+          <div class="step-content">
+            <h4>Kolaboratif</h4>
+            <p>Melibatkan partisipasi aktif PTK dalam perencanaan dan pengambilan keputusan yang menyangkut mereka.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="s3">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="sec-num">3</span>
+      <h2>Perencanaan dan Pengadaan PTK</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="lead">Perencanaan yang matang adalah fondasi pengadaan PTK yang tepat sasaran — <em>right person, right place, right time</em>.</p>
+
+      <h3>Perencanaan Kebutuhan PTK</h3>
+      <p>Perencanaan kebutuhan PTK dilakukan melalui analisis beban kerja, proyeksi jumlah peserta didik, dan peta jabatan yang tersedia. Formula dasar kebutuhan guru:</p>
+      <div class="highlight-box">
+        <strong>Formula Kebutuhan Guru:</strong><br><br>
+        \[ K_g = \frac{J_r \times J_m}{J_{wg}} \]
+        <br>Keterangan: \(K_g\) = kebutuhan guru, \(J_r\) = jumlah rombel, \(J_m\) = jam mata pelajaran/minggu, \(J_{wg}\) = jam wajib mengajar guru.
+      </div>
+
+      <h3>Tahapan Pengadaan PTK</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Analisis Kebutuhan</h4>
+            <p>Identifikasi jumlah, kualifikasi, dan bidang keahlian PTK yang dibutuhkan berdasarkan data sekolah.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Rekrutmen</h4>
+            <p>Proses menarik calon pelamar yang memenuhi syarat melalui pengumuman resmi, baik terbuka maupun tertutup.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Seleksi</h4>
+            <p>Penyaringan melalui tes tertulis, tes kompetensi, microteaching, wawancara, dan verifikasi dokumen.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Penempatan</h4>
+            <p>Penugasan PTK pada posisi yang sesuai dengan kompetensi, latar belakang pendidikan, dan kebutuhan satuan pendidikan.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Orientasi & Induksi</h4>
+            <p>Program pengenalan lingkungan kerja, budaya organisasi, dan tugas pokok bagi PTK baru.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Jalur Pengadaan PTK</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Jalur</th><th>Mekanisme</th><th>Keterangan</th></tr></thead>
+          <tbody>
+            <tr><td>CPNS / PNS</td><td>Seleksi CASN oleh BKN</td><td>Untuk PTK di sekolah negeri</td></tr>
+            <tr><td>PPPK</td><td>Seleksi P3K Guru oleh Kemendikbud</td><td>Pegawai Pemerintah dengan Perjanjian Kerja</td></tr>
+            <tr><td>GTT / PTT</td><td>Seleksi oleh dinas/sekolah</td><td>Guru/pegawai tidak tetap daerah</td></tr>
+            <tr><td>Swasta</td><td>Rekrutmen mandiri yayasan</td><td>Untuk sekolah swasta</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="s4">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="sec-num">4</span>
+      <h2>Pengembangan dan Pembinaan PTK</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="lead">Pengembangan PTK adalah investasi strategis yang berdampak langsung pada kualitas pembelajaran dan prestasi peserta didik.</p>
+
+      <h3>Program Pengembangan Profesional</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🎓</div>
+          <h4>Pendidikan & Pelatihan</h4>
+          <p>Diklat fungsional, diklat teknis, program beasiswa studi lanjut (S2/S3) bagi PTK berprestasi.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤝</div>
+          <h4>KKG / MGMP</h4>
+          <p>Kelompok Kerja Guru dan Musyawarah Guru Mata Pelajaran sebagai forum berbagi praktik terbaik.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔬</div>
+          <h4>Penelitian Tindakan</h4>
+          <p>PTK (Penelitian Tindakan Kelas) sebagai sarana refleksi dan perbaikan praktik pembelajaran berkelanjutan.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌐</div>
+          <h4>Pertukaran Guru</h4>
+          <p>Program pertukaran guru antar sekolah, daerah, bahkan internasional untuk memperluas wawasan.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📖</div>
+          <h4>Seminar & Workshop</h4>
+          <p>Kegiatan ilmiah untuk memutakhirkan pengetahuan dan keterampilan PTK sesuai perkembangan zaman.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏆</div>
+          <h4>Magang & Studi Banding</h4>
+          <p>Kunjungan ke lembaga pendidikan unggulan untuk mengadopsi praktik terbaik pengelolaan pembelajaran.</p>
+        </div>
+      </div>
+
+      <h3>Pembinaan dan Motivasi</h3>
+      <ul class="styled-list">
+        <li>Pemberian penghargaan atas prestasi, dedikasi, dan inovasi PTK (reward system).</li>
+        <li>Bimbingan dan supervisi klinis oleh kepala sekolah dan pengawas secara berkala.</li>
+        <li>Pembinaan karier melalui jalur kenaikan pangkat dan jabatan fungsional yang jelas.</li>
+        <li>Pemberian sanksi yang adil dan proporsional bagi PTK yang melanggar kode etik profesi.</li>
+        <li>Pembinaan kesejahteraan: tunjangan profesi, perumahan dinas, dan jaminan kesehatan.</li>
+      </ul>
+
+      <div class="quote-box">
+        "Seorang guru tidak pernah berhenti belajar; karena pada saat ia berhenti belajar, ia pun berhenti menjadi guru."
+        <cite>— Prinsip Pengembangan PTK Berkelanjutan</cite>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="s5">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="sec-num">5</span>
+      <h2>Penilaian Kinerja PTK</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="lead">Penilaian Kinerja Guru (PKG) dan tenaga kependidikan merupakan instrumen utama untuk menjamin akuntabilitas profesional dan mendorong peningkatan mutu secara berkelanjutan.</p>
+
+      <h3>Sistem Penilaian Kinerja Guru (PKG)</h3>
+      <p>PKG dilaksanakan berdasarkan <strong>Permendiknas No. 35 Tahun 2010</strong> dan mencakup 14 kompetensi yang dikelompokkan dalam empat domain:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Domain</th><th>Kompetensi yang Dinilai</th><th>Bobot</th></tr></thead>
+          <tbody>
+            <tr><td>Pedagogik</td><td>Perencanaan pembelajaran, pelaksanaan, evaluasi</td><td>45%</td></tr>
+            <tr><td>Kepribadian</td><td>Integritas, keteladanan, etos kerja</td><td>20%</td></tr>
+            <tr><td>Sosial</td><td>Komunikasi, kerjasama, partisipasi komunitas</td><td>15%</td></tr>
+            <tr><td>Profesional</td><td>Penguasaan materi, pengembangan diri, publikasi ilmiah</td><td>20%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Mekanisme PKG</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Persiapan</h4>
+            <p>Penilai dan guru yang dinilai memahami instrumen, indikator, dan prosedur PKG.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Pelaksanaan (Formatif & Sumatif)</h4>
+            <p>Observasi kelas, telaah dokumen perangkat pembelajaran, wawancara, dan pemantauan kegiatan di luar mengajar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Skoring dan Konversi</h4>
+            <p>Nilai PKG dikonversi ke nilai prestasi kerja: 91–100 (Amat Baik), 76–90 (Baik), 61–75 (Cukup), ≤60 (Sedang/Kurang).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Tindak Lanjut</h4>
+            <p>Hasil PKG digunakan untuk penetapan angka kredit, kenaikan pangkat, dan rancangan pengembangan keprofesian.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <strong>PKB (Pengembangan Keprofesian Berkelanjutan)</strong> terdiri dari tiga unsur: (1) Pengembangan Diri, (2) Publikasi Ilmiah, dan (3) Karya Inovatif — ketiganya wajib dipenuhi untuk kenaikan pangkat jabatan fungsional guru.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="s6">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="sec-num">6</span>
+      <h2>Implementasi Pengelolaan PTK di Lapangan</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="lead">Memahami kesenjangan antara regulasi dan realitas di lapangan adalah kunci mengelola PTK secara kontekstual dan solutif.</p>
+
+      <h3>Tantangan Implementasi</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">📍</div>
+          <h4>Distribusi Tidak Merata</h4>
+          <p>Konsentrasi guru di perkotaan sementara daerah 3T (Terdepan, Terluar, Tertinggal) kekurangan tenaga pendidik berkualitas.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <h4>Administrasi Berlebihan</h4>
+          <p>Beban administrasi yang terlalu berat menyita waktu dan energi guru dari tugas utama mengajar.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💰</div>
+          <h4>Kesenjangan Kesejahteraan</h4>
+          <p>Perbedaan signifikan antara guru PNS dan honorer menimbulkan ketidakmerataan motivasi kerja.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔄</div>
+          <h4>Resistensi Perubahan</h4>
+          <p>Sebagian PTK mengalami hambatan adaptasi terhadap kurikulum baru, metode pembelajaran inovatif, dan teknologi.</p>
+        </div>
+      </div>
+
+      <h3>Strategi Implementasi Efektif</h3>
+      <ul class="styled-list">
+        <li>Penerapan kebijakan afirmatif (tunjangan khusus, insentif daerah terpencil) untuk pemerataan distribusi guru.</li>
+        <li>Penyederhanaan administrasi melalui digitalisasi dan platform manajemen sekolah terintegrasi.</li>
+        <li>Penguatan supervisi klinis berbasis data untuk mendampingi guru secara personal dan profesional.</li>
+        <li>Pemberdayaan kepala sekolah sebagai instructional leader, bukan sekadar administrator.</li>
+        <li>Penguatan peran pengawas sekolah sebagai mitra profesional, bukan hanya inspektur.</li>
+        <li>Kolaborasi lintas dinas: Kemendikbud, BKN, Pemda, dan organisasi profesi (PGRI, IGI).</li>
+      </ul>
+
+      <h3>Contoh Praktik Baik</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Program</th><th>Deskripsi</th><th>Dampak</th></tr></thead>
+          <tbody>
+            <tr><td>Guru Penggerak</td><td>Pendidikan dan pendampingan intensif 6 bulan bagi guru terpilih</td><td>Agen perubahan di satuan pendidikan</td></tr>
+            <tr><td>Sekolah Penggerak</td><td>Transformasi satuan pendidikan secara holistik</td><td>Peningkatan kualitas PTK dan pembelajaran</td></tr>
+            <tr><td>SM3T / PPG</td><td>Sarjana Mengajar di 3T + Pendidikan Profesi Guru</td><td>Pemerataan akses pendidikan berkualitas</td></tr>
+            <tr><td>PMM (Platform Merdeka Mengajar)</td><td>Platform belajar digital mandiri bagi guru</td><td>Peningkatan kompetensi berkelanjutan</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section" id="s7">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="sec-num">7</span>
+      <h2>Pemanfaatan ICT dalam Pengelolaan PTK</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="lead">Revolusi digital membuka peluang besar untuk meningkatkan efisiensi, transparansi, dan efektivitas pengelolaan PTK melalui berbagai platform dan aplikasi berbasis ICT.</p>
+
+      <h3>Sistem Informasi Pengelolaan PTK</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🖥️</div>
+          <h4>DAPODIK</h4>
+          <p>Data Pokok Pendidikan: basis data nasional PTK yang terintegrasi dengan tunjangan, sertifikasi, dan kebijakan kepegawaian.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h4>SIM PTK</h4>
+          <p>Sistem Informasi Manajemen PTK untuk administrasi kepegawaian, absensi digital, dan rekam jejak karier.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h4>e-Kinerja</h4>
+          <p>Aplikasi penilaian kinerja ASN berbasis elektronik yang menggantikan SKP manual dengan sistem yang lebih akurat.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h4>PMM (Merdeka Mengajar)</h4>
+          <p>Platform belajar, berbagi, dan berkreasi bagi guru untuk pengembangan profesional mandiri secara digital.</p>
+        </div>
+      </div>
+
+      <h3>Manfaat Pemanfaatan ICT</h3>
+      <ul class="styled-list">
+        <li><strong>Efisiensi administrasi:</strong> Pengurangan paperwork, otomatisasi laporan, dan pengarsipan digital.</li>
+        <li><strong>Transparansi:</strong> Pemantauan real-time distribusi dan kinerja PTK oleh pemangku kepentingan.</li>
+        <li><strong>Akurasi data:</strong> Minimalkan kesalahan data dan duplikasi informasi PTK.</li>
+        <li><strong>Aksesibilitas pelatihan:</strong> E-learning dan webinar memungkinkan pengembangan PTK tanpa hambatan jarak.</li>
+        <li><strong>Kolaborasi:</strong> Platform komunitas digital (forum, grup diskusi) memfasilitasi berbagi pengetahuan antar guru.</li>
+        <li><strong>Analitik berbasis data:</strong> Pengambilan keputusan pengelolaan PTK berdasarkan data aktual, bukan intuisi.</li>
+      </ul>
+
+      <h3>Tantangan Digitalisasi Pengelolaan PTK</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Tantangan</th><th>Solusi yang Dapat Diterapkan</th></tr></thead>
+          <tbody>
+            <tr><td>Literasi digital yang rendah pada sebagian PTK</td><td>Pelatihan ICT wajib dan pendampingan berkelanjutan</td></tr>
+            <tr><td>Keterbatasan infrastruktur internet di daerah terpencil</td><td>Kebijakan offline mode dan sistem sinkronisasi berkala</td></tr>
+            <tr><td>Keamanan data dan privasi PTK</td><td>Enkripsi data, autentikasi berlapis, dan kebijakan keamanan siber</td></tr>
+            <tr><td>Resistensi budaya terhadap perubahan sistem</td><td>Change management yang melibatkan PTK sejak perencanaan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="quote-box">
+        "Teknologi bukanlah pengganti guru yang baik; namun di tangan guru yang kompeten, teknologi menjadi instrumen pembelajaran yang dahsyat."
+        <cite>— Prinsip Integrasi ICT dalam Pendidikan</cite>
+      </div>
+
+      <h3>Roadmap ICT untuk Pengelolaan PTK</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">→</div>
+          <div class="step-content">
+            <h4>Fase 1: Digitalisasi Data (Saat ini)</h4>
+            <p>Migrasi penuh ke sistem digital (DAPODIK, e-Kinerja, absensi biometrik).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">→</div>
+          <div class="step-content">
+            <h4>Fase 2: Integrasi Sistem</h4>
+            <p>Interoperabilitas antar platform: DAPODIK, SIM Kepegawaian, e-Tunjangan, dan PMM.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">→</div>
+          <div class="step-content">
+            <h4>Fase 3: Analitik Cerdas</h4>
+            <p>Pemanfaatan AI dan big data untuk prediksi kebutuhan PTK, deteksi dini masalah kinerja, dan personalisasi pengembangan profesional.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Martin Bernard, M.Pd. &nbsp;·&nbsp; IKIP Siliwangi, Cimahi &nbsp;·&nbsp; Program Studi Pendidikan Matematika &nbsp;·&nbsp; Pengelolaan Pendidikan
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // Toggle accordion
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    header.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progressBar').style.width = (scrolled / total * 100) + '%';
+    const btn = document.getElementById('backTop');
+    btn.classList.toggle('show', scrolled > 400);
+  });
+
+  // Intersection Observer for section animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+  // Smooth scroll for TOC links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Auto-open the section
+        const header = target.querySelector('.section-header');
+        const body = target.querySelector('.section-body');
+        if (header && !header.classList.contains('open')) {
+          header.classList.add('open');
+          body.classList.add('open');
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>
