@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengelolaan Keuangan Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-50: #E6F1FB; --blue-100: #B5D4F4; --blue-600: #185FA5; --blue-800: #0C447C; --blue-900: #042C53;
+    --teal-50: #E1F5EE; --teal-100: #9FE1CB; --teal-600: #0F6E56; --teal-800: #085041; --teal-900: #04342C;
+    --amber-50: #FAEEDA; --amber-100: #FAC775; --amber-600: #854F0B; --amber-800: #633806;
+    --green-50: #EAF3DE; --green-600: #3B6D11; --green-800: #27500A;
+    --coral-50: #FAECE7; --coral-100: #F5C4B3; --coral-600: #993C1D; --coral-800: #712B13;
+    --purple-50: #EEEDFE; --purple-100: #CECBF6; --purple-600: #534AB7; --purple-800: #3C3489;
+    --gray-50: #F1EFE8; --gray-100: #D3D1C7; --gray-200: #B4B2A9; --gray-600: #5F5E5A; --gray-800: #444441;
+    --text-primary: #1a1a1a;
+    --text-secondary: #5F5E5A;
+    --bg: #FAFAF8;
+    --white: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --border-md: rgba(0,0,0,0.12);
+    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 24px;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--blue-900);
+    color: white;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #B5D4F4;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 span { color: #85B7EB; }
+  .hero p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-size: 1.8rem; font-weight: 700; color: white; }
+  .hero-stat .lbl { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  /* NAV TABS */
+  .nav-tabs {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 2rem;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-tab:hover, .nav-tab.active {
+    color: var(--blue-600);
+    border-bottom-color: var(--blue-600);
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .section {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-600);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+  .section-lead {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 620px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+  .card-sm { padding: 1.25rem; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.875rem; }
+
+  /* METRIC CARD */
+  .metric-card {
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .metric-card .icon {
+    width: 44px; height: 44px;
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 0.75rem;
+    font-size: 20px;
+  }
+  .metric-card .label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+  .metric-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* PRINCIPLE CARD */
+  .principle-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .principle-num {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--blue-50);
+    color: var(--blue-800);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .principle-body h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+  .principle-body p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* SUMBER DANA */
+  .source-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .source-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+  }
+  .source-card.pemerintah::before { background: var(--blue-600); }
+  .source-card.orang-tua::before { background: var(--teal-600); }
+  .source-card.mandiri::before { background: var(--amber-600); }
+  .source-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .source-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .tag-blue { background: var(--blue-50); color: var(--blue-800); }
+  .tag-teal { background: var(--teal-50); color: var(--teal-800); }
+  .tag-amber { background: var(--amber-50); color: var(--amber-600); }
+  .tag-green { background: var(--green-50); color: var(--green-800); }
+
+  /* TIMELINE PERENCANAAN */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border-md);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.75rem;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 4px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 2px var(--border-md);
+  }
+  .timeline-dot.q1 { background: var(--blue-600); }
+  .timeline-dot.q2 { background: var(--teal-600); }
+  .timeline-dot.q3 { background: var(--amber-600); }
+  .timeline-dot.q4 { background: var(--coral-600); }
+  .timeline-item h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .timeline-item p {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  /* ANGGARAN TABLE */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .budget-table th {
+    background: var(--gray-50);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .budget-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+  }
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table .total-row td {
+    font-weight: 600;
+    background: var(--blue-50);
+    color: var(--blue-800);
+    border-bottom: none;
+  }
+  .pct-bar {
+    display: inline-block;
+    height: 6px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+
+  /* AKUNTABILITAS */
+  .accountability-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+  .acc-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .acc-icon {
+    width: 48px; height: 48px;
+    margin: 0 auto 0.75rem;
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .acc-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 0.35rem; }
+  .acc-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* TANTANGAN */
+  .challenge-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 0.75rem;
+    align-items: flex-start;
+  }
+  .challenge-item:last-child { margin-bottom: 0; }
+  .challenge-icon {
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .challenge-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 0.25rem; }
+  .challenge-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* SOLUSI */
+  .solution-item {
+    background: var(--green-50);
+    border-left: 3px solid #3B6D11;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .solution-item h4 { font-size: 13px; font-weight: 600; color: var(--green-800); margin-bottom: 0.2rem; }
+  .solution-item p { font-size: 13px; color: #3B6D11; line-height: 1.5; }
+
+  /* RANGKUMAN */
+  .summary-banner {
+    background: linear-gradient(135deg, var(--blue-900) 0%, #0F3A6E 100%);
+    border-radius: var(--radius-xl);
+    padding: 3rem 2.5rem;
+    color: white;
+    text-align: center;
+    margin: 2rem 0;
+  }
+  .summary-banner h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .summary-banner p {
+    color: rgba(255,255,255,0.75);
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    font-size: 14px;
+  }
+  .summary-points {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .summary-point {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  footer strong { color: var(--text-primary); }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .highlight-box.blue { background: var(--blue-50); border-left: 3px solid var(--blue-600); }
+  .highlight-box.amber { background: var(--amber-50); border-left: 3px solid var(--amber-600); }
+  .highlight-box h4 { font-size: 13px; font-weight: 600; margin-bottom: 0.35rem; }
+  .highlight-box.blue h4 { color: var(--blue-800); }
+  .highlight-box.amber h4 { color: var(--amber-600); }
+  .highlight-box p { font-size: 13px; color: var(--text-secondary); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { padding: 3.5rem 1.25rem 3rem; }
+    .hero-stats { gap: 1.5rem; }
+    .section { padding: 2.5rem 0; }
+    .nav-tabs { padding: 0 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">Manajemen Pendidikan</div>
+  <h1>Pengelolaan <span>Keuangan</span><br>Pendidikan</h1>
+  <p>Konsep, strategi, dan implementasi tata kelola keuangan yang transparan, akuntabel, dan efisien di lembaga pendidikan.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">7</div>
+      <div class="lbl">Prinsip Utama</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">4</div>
+      <div class="lbl">Sumber Dana</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">5</div>
+      <div class="lbl">Tahap Pengelolaan</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">3</div>
+      <div class="lbl">Jenis Laporan</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAVIGASI -->
+<nav class="nav-tabs">
+  <a class="nav-tab active" href="#pengertian">Pengertian</a>
+  <a class="nav-tab" href="#prinsip">Prinsip</a>
+  <a class="nav-tab" href="#sumber">Sumber Dana</a>
+  <a class="nav-tab" href="#perencanaan">Perencanaan</a>
+  <a class="nav-tab" href="#anggaran">Anggaran</a>
+  <a class="nav-tab" href="#akuntabilitas">Akuntabilitas</a>
+  <a class="nav-tab" href="#tantangan">Tantangan</a>
+</nav>
+
+<main>
+
+<!-- 1. PENGERTIAN -->
+<section id="pengertian" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Bagian 01</div>
+    <h2 class="section-title">Pengertian Pengelolaan Keuangan Pendidikan</h2>
+    <p class="section-lead">Pengelolaan keuangan pendidikan adalah serangkaian aktivitas perencanaan, pengorganisasian, pengarahan, dan pengendalian terhadap penggunaan sumber dana untuk mencapai tujuan pendidikan secara efektif dan efisien.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:0.75rem;">📖 Definisi Para Ahli</h3>
+        <div class="highlight-box blue" style="margin-bottom:0.75rem;">
+          <h4>Mulyono (2010)</h4>
+          <p>Pengelolaan keuangan pendidikan adalah kegiatan merencanakan, memperoleh, mengalokasikan, dan mempertanggungjawabkan dana dalam rangka penyelenggaraan pendidikan.</p>
+        </div>
+        <div class="highlight-box amber">
+          <h4>Nanang Fattah (2012)</h4>
+          <p>Manajemen keuangan sekolah mencakup kegiatan pembiayaan pendidikan mulai dari perencanaan, pelaksanaan, pengawasan hingga pelaporan keuangan.</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:1rem;">🎯 Tujuan Pengelolaan</h3>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;">
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="background:var(--blue-50);color:var(--blue-800);width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">1</span>
+            <div>
+              <strong style="font-size:13px;display:block;">Menjamin Ketersediaan Dana</strong>
+              <span style="font-size:12px;color:var(--text-secondary);">Memastikan dana selalu tersedia untuk kegiatan belajar mengajar</span>
+            </div>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="background:var(--teal-50);color:var(--teal-800);width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">2</span>
+            <div>
+              <strong style="font-size:13px;display:block;">Optimalisasi Penggunaan</strong>
+              <span style="font-size:12px;color:var(--text-secondary);">Menggunakan anggaran secara tepat guna dan tidak ada pemborosan</span>
+            </div>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="background:var(--amber-50);color:var(--amber-600);width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">3</span>
+            <div>
+              <strong style="font-size:13px;display:block;">Transparansi & Akuntabilitas</strong>
+              <span style="font-size:12px;color:var(--text-secondary);">Memberikan laporan keuangan yang jelas kepada semua pemangku kepentingan</span>
+            </div>
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="background:var(--green-50);color:var(--green-800);width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">4</span>
+            <div>
+              <strong style="font-size:13px;display:block;">Mendukung Mutu Pendidikan</strong>
+              <span style="font-size:12px;color:var(--text-secondary);">Menunjang program peningkatan kualitas pendidikan secara berkelanjutan</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <div class="grid-4">
+        <div class="metric-card">
+          <div class="icon" style="background:var(--blue-50);color:var(--blue-600);">📋</div>
+          <div class="label">Perencanaan</div>
+          <div class="value" style="font-size:1rem;margin-top:4px;">RKAS / RAPBS</div>
+        </div>
+        <div class="metric-card">
+          <div class="icon" style="background:var(--teal-50);color:var(--teal-600);">💰</div>
+          <div class="label">Pelaksanaan</div>
+          <div class="value" style="font-size:1rem;margin-top:4px;">Realisasi Dana</div>
+        </div>
+        <div class="metric-card">
+          <div class="icon" style="background:var(--amber-50);color:var(--amber-600);">🔍</div>
+          <div class="label">Pengawasan</div>
+          <div class="value" style="font-size:1rem;margin-top:4px;">Audit Internal</div>
+        </div>
+        <div class="metric-card">
+          <div class="icon" style="background:var(--green-50);color:var(--green-600);">📊</div>
+          <div class="label">Pelaporan</div>
+          <div class="value" style="font-size:1rem;margin-top:4px;">LPJ Keuangan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PRINSIP -->
+<section id="prinsip" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Bagian 02</div>
+    <h2 class="section-title">Prinsip Pengelolaan Keuangan Pendidikan</h2>
+    <p class="section-lead">Tata kelola keuangan pendidikan yang baik harus didasarkan pada tujuh prinsip fundamental yang menjamin integritas dan efektivitas penggunaan dana.</p>
+
+    <div class="grid-2">
+      <div class="principle-card">
+        <div class="principle-num">1</div>
+        <div class="principle-body">
+          <h4>Transparansi (Transparency)</h4>
+          <p>Keterbukaan informasi keuangan kepada seluruh pemangku kepentingan — orang tua, komite sekolah, dan masyarakat. Setiap penerimaan dan pengeluaran dapat diakses secara terbuka.</p>
+        </div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">2</div>
+        <div class="principle-body">
+          <h4>Akuntabilitas (Accountability)</h4>
+          <p>Pertanggungjawaban penggunaan dana secara hukum dan moral kepada pihak yang berwenang. Pengelola keuangan wajib mempertanggungjawabkan setiap rupiah yang digunakan.</p>
+        </div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">3</div>
+        <div class="principle-body">
+          <h4>Efektivitas (Effectiveness)</h4>
+          <p>Dana yang digunakan benar-benar mencapai tujuan yang telah ditetapkan. Keberhasilan program diukur dari pencapaian target pendidikan yang telah direncanakan.</p>
+        </div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">4</div>
+        <div class="principle-body">
+          <h4>Efisiensi (Efficiency)</h4>
+          <p>Penggunaan dana seminimal mungkin namun menghasilkan output semaksimal mungkin. Menghindari pemborosan dan pengeluaran yang tidak diperlukan.</p>
+        </div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">5</div>
+        <div class="principle-body">
+          <h4>Kemandirian (Independence)</h4>
+          <p>Lembaga pendidikan berusaha mengoptimalkan sumber pendapatan internal dan mengurangi ketergantungan berlebihan pada dana pihak luar.</p>
+        </div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">6</div>
+        <div class="principle-body">
+          <h4>Keadilan (Fairness)</h4>
+          <p>Distribusi alokasi dana yang merata dan berkeadilan bagi seluruh komponen pendidikan, termasuk pemenuhan hak peserta didik dari berbagai lapisan ekonomi.</p>
+        </div>
+      </div>
+      <div class="principle-card" style="grid-column: span 2;">
+        <div class="principle-num" style="background:var(--amber-50);color:var(--amber-600);">7</div>
+        <div class="principle-body">
+          <h4>Keberlangsungan (Sustainability)</h4>
+          <p>Pengelolaan keuangan yang memperhatikan kesinambungan jangka panjang lembaga pendidikan. Anggaran tidak hanya memenuhi kebutuhan saat ini tetapi juga mempersiapkan masa depan melalui investasi infrastruktur dan pengembangan sumber daya manusia pendidik.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SUMBER DANA -->
+<section id="sumber" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Bagian 03</div>
+    <h2 class="section-title">Sumber Dana Pendidikan</h2>
+    <p class="section-lead">Pembiayaan pendidikan bersumber dari berbagai pihak. Diversifikasi sumber dana penting untuk menjamin keberlanjutan operasional lembaga pendidikan.</p>
+
+    <div class="grid-2" style="margin-bottom:1.5rem;">
+      <div class="source-card pemerintah">
+        <h3 style="color:var(--blue-800);">🏛️ Dana Pemerintah</h3>
+        <p>Alokasi dana dari pemerintah pusat maupun daerah melalui berbagai skema bantuan dan program pendidikan nasional.</p>
+        <div class="tag-list">
+          <span class="tag tag-blue">BOS (Bantuan Operasional Sekolah)</span>
+          <span class="tag tag-blue">DAK Pendidikan</span>
+          <span class="tag tag-blue">APBN / APBD</span>
+          <span class="tag tag-blue">Dana PIP</span>
+        </div>
+      </div>
+      <div class="source-card orang-tua">
+        <h3 style="color:var(--teal-800);">👨‍👩‍👧 Dana Masyarakat</h3>
+        <p>Kontribusi dari orang tua, komite sekolah, dan masyarakat sekitar dalam mendukung pembiayaan pendidikan.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">SPP / Iuran Komite</span>
+          <span class="tag tag-teal">Donasi Orang Tua</span>
+          <span class="tag tag-teal">Sumbangan Alumni</span>
+          <span class="tag tag-teal">Zakat Pendidikan</span>
+        </div>
+      </div>
+      <div class="source-card mandiri">
+        <h3 style="color:var(--amber-600);">🏢 Dana Swasta / Kemitraan</h3>
+        <p>Dukungan dari dunia usaha, industri, dan yayasan swasta dalam bentuk beasiswa, CSR, atau kerja sama program pendidikan.</p>
+        <div class="tag-list">
+          <span class="tag tag-amber">CSR Perusahaan</span>
+          <span class="tag tag-amber">Beasiswa Swasta</span>
+          <span class="tag tag-amber">Kemitraan DUDI</span>
+          <span class="tag tag-amber">Hibah Yayasan</span>
+        </div>
+      </div>
+      <div class="source-card" style="border-left: 4px solid var(--green-600);">
+        <h3 style="color:var(--green-800);">💼 Dana Mandiri Sekolah</h3>
+        <p>Pendapatan yang dihasilkan dari kegiatan usaha dan unit produksi yang dikelola oleh lembaga pendidikan sendiri.</p>
+        <div class="tag-list">
+          <span class="tag tag-green">Koperasi Sekolah</span>
+          <span class="tag tag-green">Unit Produksi</span>
+          <span class="tag tag-green">Sewa Fasilitas</span>
+          <span class="tag tag-green">Kegiatan Wirausaha</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:14px;font-weight:600;margin-bottom:1rem;">Porsi Ideal Sumber Pembiayaan (Contoh Sekolah Negeri)</h3>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span>Dana BOS & Pemerintah</span><strong>60%</strong>
+          </div>
+          <div style="background:var(--gray-100);border-radius:4px;height:8px;"><div style="background:var(--blue-600);width:60%;height:8px;border-radius:4px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span>Kontribusi Masyarakat / Orang Tua</span><strong>25%</strong>
+          </div>
+          <div style="background:var(--gray-100);border-radius:4px;height:8px;"><div style="background:var(--teal-600);width:25%;height:8px;border-radius:4px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span>Dana Swasta / CSR / Hibah</span><strong>10%</strong>
+          </div>
+          <div style="background:var(--gray-100);border-radius:4px;height:8px;"><div style="background:var(--amber-600);width:10%;height:8px;border-radius:4px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+            <span>Dana Mandiri Sekolah</span><strong>5%</strong>
+          </div>
+          <div style="background:var(--gray-100);border-radius:4px;height:8px;"><div style="background:var(--green-600);width:5%;height:8px;border-radius:4px;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PERENCANAAN -->
+<section id="perencanaan" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Bagian 04</div>
+    <h2 class="section-title">Perencanaan Keuangan Pendidikan</h2>
+    <p class="section-lead">Perencanaan keuangan yang matang adalah fondasi dari pengelolaan keuangan yang baik. Proses ini mencakup analisis kebutuhan, penetapan prioritas, dan penyusunan rencana anggaran.</p>
+
+    <div class="grid-2">
+      <div>
+        <div class="card" style="margin-bottom:1rem;">
+          <h3 style="font-size:15px;font-weight:600;margin-bottom:0.75rem;">📅 Siklus Perencanaan Tahunan</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot q1"></div>
+              <h4>Juli – September (Awal Tahun Ajaran)</h4>
+              <p>Evaluasi anggaran tahun lalu, identifikasi kebutuhan, dan penyusunan draft RKAS untuk tahun ajaran baru.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot q2"></div>
+              <h4>Oktober – Desember</h4>
+              <p>Musyawarah dengan komite sekolah, finalisasi RKAS, dan penetapan program prioritas serta alokasi dana.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot q3"></div>
+              <h4>Januari – Juni (Semester 2)</h4>
+              <p>Pelaksanaan program, monitoring penggunaan anggaran, dan evaluasi tengah tahun serta penyesuaian bila perlu.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot q4"></div>
+              <h4>Juni – Juli (Akhir Tahun)</h4>
+              <p>Penyusunan laporan pertanggungjawaban, audit internal, dan persiapan perencanaan tahun ajaran berikutnya.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:1rem;">
+          <h3 style="font-size:15px;font-weight:600;margin-bottom:1rem;">📑 Dokumen Perencanaan</h3>
+          <div style="display:flex;flex-direction:column;gap:0.75rem;">
+            <div style="background:var(--blue-50);border-radius:var(--radius-md);padding:1rem;">
+              <h4 style="font-size:13px;font-weight:600;color:var(--blue-800);margin-bottom:0.35rem;">RKAS (Rencana Kegiatan dan Anggaran Sekolah)</h4>
+              <p style="font-size:12px;color:var(--blue-600);">Dokumen perencanaan tahunan yang memuat seluruh kegiatan dan estimasi biaya yang diperlukan.</p>
+            </div>
+            <div style="background:var(--teal-50);border-radius:var(--radius-md);padding:1rem;">
+              <h4 style="font-size:13px;font-weight:600;color:var(--teal-800);margin-bottom:0.35rem;">RAPBS (Rencana Anggaran Pendapatan & Belanja Sekolah)</h4>
+              <p style="font-size:12px;color:var(--teal-600);">Rincian proyeksi pendapatan dari berbagai sumber dan rencana pengeluaran untuk semua komponen kegiatan.</p>
+            </div>
+            <div style="background:var(--amber-50);border-radius:var(--radius-md);padding:1rem;">
+              <h4 style="font-size:13px;font-weight:600;color:var(--amber-600);margin-bottom:0.35rem;">RKS (Rencana Kerja Sekolah)</h4>
+              <p style="font-size:12px;color:var(--amber-600);">Perencanaan jangka menengah (4 tahun) yang memuat program strategis dan kebutuhan pembiayaannya.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:14px;font-weight:600;margin-bottom:0.75rem;">⚙️ Analisis Kebutuhan (Need Assessment)</h3>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:0.75rem;">Sebelum menyusun anggaran, lakukan analisis terhadap:</p>
+          <ul style="font-size:13px;color:var(--text-secondary);padding-left:1.25rem;display:flex;flex-direction:column;gap:4px;">
+            <li>Kebutuhan operasional harian (listrik, air, internet, ATK)</li>
+            <li>Kebutuhan program belajar mengajar</li>
+            <li>Kebutuhan pengembangan kompetensi guru</li>
+            <li>Kebutuhan pemeliharaan dan pengadaan sarana</li>
+            <li>Kebutuhan kegiatan kesiswaan dan ekstrakurikuler</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ANGGARAN -->
+<section id="anggaran" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Bagian 05</div>
+    <h2 class="section-title">Struktur Anggaran Pendidikan</h2>
+    <p class="section-lead">Pengelolaan anggaran yang baik memerlukan pemahaman tentang komponen biaya pendidikan dan cara mengalokasikannya secara proporsional.</p>
+
+    <div class="card" style="margin-bottom:1.5rem;overflow-x:auto;">
+      <h3 style="font-size:15px;font-weight:600;margin-bottom:1rem;">Contoh Alokasi Anggaran BOS (Per Siswa/Tahun)</h3>
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th style="width:40%;">Komponen Kegiatan</th>
+            <th>Alokasi (%)</th>
+            <th>Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kegiatan Pembelajaran & Ekstrakulikuler</td>
+            <td>
+              <span>≤ 50%</span>
+              <span class="pct-bar" style="width:80px;background:var(--blue-600);"></span>
+            </td>
+            <td style="color:var(--text-secondary);">Buku, LKS, alat praktik, kegiatan siswa</td>
+          </tr>
+          <tr>
+            <td>Pengembangan Perpustakaan</td>
+            <td>
+              <span>≥ 20%</span>
+              <span class="pct-bar" style="width:32px;background:var(--teal-600);"></span>
+            </td>
+            <td style="color:var(--text-secondary);">Buku teks, literasi, referensi</td>
+          </tr>
+          <tr>
+            <td>Kegiatan Penerimaan Peserta Didik Baru</td>
+            <td>
+              <span>≤ 2%</span>
+              <span class="pct-bar" style="width:8px;background:var(--amber-600);"></span>
+            </td>
+            <td style="color:var(--text-secondary);">Administrasi PPDB</td>
+          </tr>
+          <tr>
+            <td>Pengelolaan Sekolah</td>
+            <td>
+              <span>≤ 8%</span>
+              <span class="pct-bar" style="width:13px;background:var(--purple-600);"></span>
+            </td>
+            <td style="color:var(--text-secondary);">ATK, administrasi, laporan</td>
+          </tr>
+          <tr>
+            <td>Perawatan Sekolah & Sanitasi</td>
+            <td>
+              <span>≤ 15%</span>
+              <span class="pct-bar" style="width:24px;background:var(--coral-600);"></span>
+            </td>
+            <td style="color:var(--text-secondary);">Perbaikan ringan, kebersihan</td>
+          </tr>
+          <tr>
+            <td>Pembiayaan Langganan Daya & Jasa</td>
+            <td>
+              <span>≤ 15%</span>
+              <span class="pct-bar" style="width:24px;background:var(--green-600);"></span>
+            </td>
+            <td style="color:var(--text-secondary);">Listrik, air, internet, telepon</td>
+          </tr>
+          <tr class="total-row">
+            <td><strong>Total Anggaran BOS</strong></td>
+            <td colspan="2"><strong>100% — Sesuai Juknis BOS</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:0.75rem;">📂 Jenis Pengeluaran</h3>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;font-size:13px;">
+          <div style="display:flex;gap:8px;align-items:center;padding:8px;background:var(--blue-50);border-radius:var(--radius-sm);">
+            <span style="font-size:16px;">🏗️</span>
+            <div><strong style="color:var(--blue-800);">Belanja Modal</strong> — pengadaan aset tetap (gedung, mebel, komputer)</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;padding:8px;background:var(--teal-50);border-radius:var(--radius-sm);">
+            <span style="font-size:16px;">⚙️</span>
+            <div><strong style="color:var(--teal-800);">Belanja Operasional</strong> — biaya rutin harian dan bulanan</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;padding:8px;background:var(--amber-50);border-radius:var(--radius-sm);">
+            <span style="font-size:16px;">👩‍🏫</span>
+            <div><strong style="color:var(--amber-600);">Belanja Pegawai</strong> — honorarium, tunjangan, kesejahteraan</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;padding:8px;background:var(--green-50);border-radius:var(--radius-sm);">
+            <span style="font-size:16px;">📚</span>
+            <div><strong style="color:var(--green-800);">Belanja Barang/Jasa</strong> — ATK, bahan praktik, jasa layanan</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:0.75rem;">✅ Prinsip Penganggaran</h3>
+        <ul style="font-size:13px;color:var(--text-secondary);padding-left:1.25rem;display:flex;flex-direction:column;gap:8px;line-height:1.6;">
+          <li><strong style="color:var(--text-primary);">Anggaran berbasis kinerja</strong> — setiap rupiah dikaitkan dengan target pencapaian yang terukur</li>
+          <li><strong style="color:var(--text-primary);">Prioritas program</strong> — utamakan kegiatan yang langsung berdampak pada peserta didik</li>
+          <li><strong style="color:var(--text-primary);">Cadangan anggaran</strong> — sisihkan 5–10% untuk kebutuhan mendesak dan tidak terduga</li>
+          <li><strong style="color:var(--text-primary);">Larangan defisit</strong> — pengeluaran tidak boleh melebihi pendapatan yang telah dipastikan</li>
+          <li><strong style="color:var(--text-primary);">Konsistensi dengan program</strong> — anggaran harus selaras dengan program di RKS/RKAS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. AKUNTABILITAS -->
+<section id="akuntabilitas" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Bagian 06</div>
+    <h2 class="section-title">Akuntabilitas & Pelaporan Keuangan</h2>
+    <p class="section-lead">Laporan keuangan yang transparan dan akuntabel membangun kepercayaan publik terhadap lembaga pendidikan dan menjadi dasar pengambilan keputusan strategis.</p>
+
+    <div class="accountability-grid" style="margin-bottom:1.5rem;">
+      <div class="acc-card">
+        <div class="acc-icon" style="background:var(--blue-50);color:var(--blue-600);">📊</div>
+        <h4>Laporan Keuangan</h4>
+        <p>Neraca, laporan arus kas, dan laporan realisasi anggaran disusun setiap semester dan tahunan</p>
+      </div>
+      <div class="acc-card">
+        <div class="acc-icon" style="background:var(--teal-50);color:var(--teal-600);">🔎</div>
+        <h4>Audit Internal</h4>
+        <p>Pemeriksaan berkala oleh tim pengawas sekolah atau komite untuk memverifikasi kebenaran laporan</p>
+      </div>
+      <div class="acc-card">
+        <div class="acc-icon" style="background:var(--amber-50);color:var(--amber-600);">🏛️</div>
+        <h4>Audit Eksternal</h4>
+        <p>Pemeriksaan oleh BPK, Inspektorat Daerah, atau auditor independen yang ditunjuk pemerintah</p>
+      </div>
+      <div class="acc-card">
+        <div class="acc-icon" style="background:var(--green-50);color:var(--green-600);">📢</div>
+        <h4>Pelaporan Publik</h4>
+        <p>Penyampaian laporan keuangan kepada orang tua, komite sekolah, dan dipublikasikan secara terbuka</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:1rem;">📋 Jenis Laporan Keuangan</h3>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem;">
+              <h4 style="font-size:13px;font-weight:600;">Laporan Realisasi Anggaran (LRA)</h4>
+              <span class="tag tag-blue" style="font-size:10px;">Bulanan</span>
+            </div>
+            <p style="font-size:12px;color:var(--text-secondary);">Membandingkan anggaran yang direncanakan dengan realisasi pengeluaran aktual</p>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem;">
+              <h4 style="font-size:13px;font-weight:600;">Neraca Keuangan</h4>
+              <span class="tag tag-teal" style="font-size:10px;">Semesteran</span>
+            </div>
+            <p style="font-size:12px;color:var(--text-secondary);">Gambaran posisi keuangan meliputi aset, kewajiban, dan ekuitas sekolah</p>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem;">
+              <h4 style="font-size:13px;font-weight:600;">Laporan Pertanggungjawaban (LPJ)</h4>
+              <span class="tag tag-amber" style="font-size:10px;">Tahunan</span>
+            </div>
+            <p style="font-size:12px;color:var(--text-secondary);">Laporan menyeluruh atas penggunaan semua sumber dana dalam satu tahun anggaran</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:0.75rem;">🧾 Sistem Administrasi Keuangan</h3>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:1rem;">Administrasi keuangan yang tertib mencakup:</p>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--blue-600);font-weight:700;flex-shrink:0;">→</span>
+            <div><strong>Buku Kas Umum (BKU)</strong> — mencatat seluruh transaksi penerimaan dan pengeluaran secara kronologis</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--blue-600);font-weight:700;flex-shrink:0;">→</span>
+            <div><strong>Buku Pembantu</strong> — buku kas, buku bank, buku pajak untuk setiap sumber dana</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--blue-600);font-weight:700;flex-shrink:0;">→</span>
+            <div><strong>Dokumen Pendukung</strong> — kuitansi, nota, SPJ, dan bukti transaksi yang sah</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--blue-600);font-weight:700;flex-shrink:0;">→</span>
+            <div><strong>Arsip Digital</strong> — penyimpanan dokumen keuangan elektronik yang terorganisir</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="color:var(--blue-600);font-weight:700;flex-shrink:0;">→</span>
+            <div><strong>Rekonsiliasi Bank</strong> — pencocokan saldo buku kas dengan rekening bank secara berkala</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. TANTANGAN & SOLUSI -->
+<section id="tantangan" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Bagian 07</div>
+    <h2 class="section-title">Tantangan & Solusi</h2>
+    <p class="section-lead">Pengelolaan keuangan pendidikan menghadapi berbagai tantangan nyata. Pemahaman terhadap permasalahan ini penting untuk merancang solusi yang tepat.</p>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:1rem;color:var(--coral-600);">⚠️ Tantangan Utama</h3>
+        <div class="challenge-item" style="background:var(--coral-50);">
+          <div class="challenge-icon" style="background:var(--coral-100);color:var(--coral-600);">📉</div>
+          <div>
+            <h4>Keterbatasan Dana</h4>
+            <p>Anggaran yang tersedia sering kali tidak mencukupi seluruh kebutuhan operasional dan pengembangan pendidikan.</p>
+          </div>
+        </div>
+        <div class="challenge-item" style="background:var(--amber-50);">
+          <div class="challenge-icon" style="background:var(--amber-100);color:var(--amber-600);">🗂️</div>
+          <div>
+            <h4>Keterbatasan Kompetensi SDM</h4>
+            <p>Tidak semua tenaga kependidikan memiliki latar belakang akuntansi dan keuangan yang memadai.</p>
+          </div>
+        </div>
+        <div class="challenge-item" style="background:var(--purple-50);">
+          <div class="challenge-icon" style="background:var(--purple-100);color:var(--purple-600);">⚖️</div>
+          <div>
+            <h4>Kompleksitas Regulasi</h4>
+            <p>Perubahan peraturan tentang penggunaan BOS dan dana pendidikan yang sering berubah menyulitkan bendahara.</p>
+          </div>
+        </div>
+        <div class="challenge-item" style="background:var(--gray-50);">
+          <div class="challenge-icon" style="background:var(--gray-100);color:var(--gray-600);">👁️</div>
+          <div>
+            <h4>Minimnya Pengawasan</h4>
+            <p>Lemahnya fungsi pengawasan internal membuka celah bagi penyalahgunaan keuangan sekolah.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:15px;font-weight:600;margin-bottom:1rem;color:var(--green-600);">✅ Solusi Strategis</h3>
+        <div class="solution-item">
+          <h4>Diversifikasi Sumber Dana</h4>
+          <p>Aktif mencari sumber pendanaan alternatif seperti program CSR, kemitraan dengan industri, dan pengembangan unit usaha sekolah.</p>
+        </div>
+        <div class="solution-item">
+          <h4>Pelatihan Manajemen Keuangan</h4>
+          <p>Mengikutsertakan bendahara dan pengelola keuangan dalam pelatihan manajemen keuangan dan akuntansi pendidikan secara berkala.</p>
+        </div>
+        <div class="solution-item">
+          <h4>Sistem Informasi Keuangan</h4>
+          <p>Implementasi aplikasi manajemen keuangan sekolah (ARKAS, SIPLah) untuk otomatisasi pencatatan dan pelaporan.</p>
+        </div>
+        <div class="solution-item">
+          <h4>Penguatan Komite Sekolah</h4>
+          <p>Mengaktifkan peran komite sekolah sebagai mitra pengawas yang independen dalam pemantauan penggunaan anggaran.</p>
+        </div>
+        <div class="solution-item">
+          <h4>Budaya Transparansi</h4>
+          <p>Membangun budaya keterbukaan dengan mempublikasikan ringkasan laporan keuangan secara rutin di papan informasi dan website sekolah.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RANGKUMAN -->
+<section style="padding: 3rem 0;">
+  <div class="container">
+    <div class="summary-banner">
+      <h2>Rangkuman Materi</h2>
+      <p>Pengelolaan keuangan pendidikan yang baik mensyaratkan perencanaan matang, pelaksanaan disiplin, pengawasan konsisten, dan pelaporan transparan demi terwujudnya pendidikan berkualitas.</p>
+      <div class="summary-points">
+        <span class="summary-point">✓ Transparansi & Akuntabilitas</span>
+        <span class="summary-point">✓ RKAS berbasis kebutuhan</span>
+        <span class="summary-point">✓ Diversifikasi sumber dana</span>
+        <span class="summary-point">✓ Audit berkala</span>
+        <span class="summary-point">✓ Pelaporan publik</span>
+        <span class="summary-point">✓ Sistem informasi terintegrasi</span>
+        <span class="summary-point">✓ Kompetensi SDM keuangan</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong>Pengelolaan Keuangan Pendidikan</strong> · Materi Manajemen Pendidikan<br>
+  <span style="margin-top:4px;display:block;">Referensi: Permendikbud No. 18 Tahun 2022 • Juknis BOS 2024 • Mulyono (2010) • Nanang Fattah (2012)</span>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sections = document.querySelectorAll('section[id]');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', e => {
+      e.preventDefault();
+      const id = tab.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tabs.forEach(t => t.classList.remove('active'));
+        const active = document.querySelector(`.nav-tab[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
